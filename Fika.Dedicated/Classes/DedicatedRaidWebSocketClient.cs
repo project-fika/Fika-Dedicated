@@ -15,7 +15,7 @@ using Fika.Dedicated;
 
 namespace Fika.Core.Networking
 {
-    public class DedicatedRaidWebSocketServer
+    public class DedicatedRaidWebSocketClient
     {
         private static ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("Fika.DedicatedWebSocket");
 
@@ -32,7 +32,7 @@ namespace Fika.Core.Networking
 
         private WebSocket _webSocket;
 
-        public DedicatedRaidWebSocketServer()
+        public DedicatedRaidWebSocketClient()
         {
             Host = RequestHandler.Host.Replace("http", "ws");
             SessionId = RequestHandler.SessionId;

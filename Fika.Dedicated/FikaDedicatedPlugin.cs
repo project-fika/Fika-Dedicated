@@ -31,7 +31,7 @@ namespace Fika.Dedicated
     public class FikaDedicatedPlugin : BaseUnityPlugin
     {        
         public static FikaDedicatedPlugin Instance { get; private set; }
-        private static DedicatedRaidWebSocketServer fikaDedicatedWebSocket;
+        private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
 
         public Coroutine setDedicatedStatusRoutine;
 
@@ -57,7 +57,7 @@ namespace Fika.Dedicated
 
             Logger.LogInfo("Fika.Dedicated loaded!");
 
-            fikaDedicatedWebSocket = new DedicatedRaidWebSocketServer();
+            fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
             fikaDedicatedWebSocket.Connect();
         }
 

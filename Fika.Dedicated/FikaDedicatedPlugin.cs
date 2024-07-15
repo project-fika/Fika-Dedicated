@@ -233,7 +233,7 @@ namespace Fika.Dedicated
 
             FikaBackendUtils.HostExpectedNumberOfPlayers = request.ExpectedNumPlayers + 1;
             FikaBackendUtils.CreateMatch(session.Profile.ProfileId, session.Profile.Info.Nickname, raidSettings);
-            FikaBackendUtils.IsDedicated = true;
+            FikaBackendUtils.IsDedicatedGame = true;
 
             fikaMatchMakerScript.AcceptButton.OnClick.Invoke();
         }

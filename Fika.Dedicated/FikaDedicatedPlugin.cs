@@ -22,6 +22,7 @@ using SPT.Common.Http;
 using System.Threading.Tasks;
 using Fika.Core.Coop.Utils;
 using Fika.Core.Networking;
+using BepInEx.Logging;
 
 namespace Fika.Dedicated
 {
@@ -32,6 +33,7 @@ namespace Fika.Dedicated
     {        
         public static FikaDedicatedPlugin Instance { get; private set; }
         private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
+        public static ManualLogSource FikaDedicatedLogger;
 
         public Coroutine setDedicatedStatusRoutine;
 
@@ -47,6 +49,7 @@ namespace Fika.Dedicated
             new VRAMPatch2().Enable();
             new VRAMPatch3().Enable();
             new VRAMPatch4().Enable();
+            new SettingsPatch().Enable();
             new BetaLogoPatch().Disable();
             new SessionResultExitStatusPatch().Enable();
             new MenuScreenPatch().Enable();
@@ -55,10 +58,21 @@ namespace Fika.Dedicated
             new HealthControllerPlayerAfterInitPatch().Enable();
             //InvokeRepeating("ClearRenderables", 1f, 1f);
 
+            FikaDedicatedLogger = Logger;
+
             Logger.LogInfo("Fika.Dedicated loaded!");
 
             fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
             fikaDedicatedWebSocket.Connect();
+        }
+
+        private void Start()
+        {
+            SharedGameSettingsClass sharedSettings = Singleton<SharedGameSettingsClass>.Instance;
+            if (sharedSettings != null )
+            {
+                sharedSettings.Sound.Settings.OverallVolume.SetValue(0);
+            }
         }
 
         // Done every second as a way to minimize processing time

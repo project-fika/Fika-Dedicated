@@ -1,13 +1,6 @@
-﻿using SPT.Reflection.Patching;
-using EFT.UI.SessionEnd;
-using EFT;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using EFT.UI.SessionEnd;
+using SPT.Reflection.Patching;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using EFT.UI;
 
 namespace Fika.Dedicated.Patches
 {

@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Net;
-using System.Reflection;
-using BepInEx;
+﻿using BepInEx;
+using BepInEx.Logging;
 using Comfort.Common;
 using EFT;
-using EFT.HealthSystem;
 using EFT.UI;
 using EFT.UI.Matchmaker;
 using Fika.Core;
+using Fika.Core.Coop.Utils;
 using Fika.Core.Models;
+using Fika.Core.Networking;
+using Fika.Core.Networking.Http;
 using Fika.Core.UI.Custom;
 using Fika.Dedicated.Patches;
 using HarmonyLib;
 using Newtonsoft.Json;
-using SPT.SinglePlayer.Patches.MainMenu;
-using UnityEngine;
-using Fika.Core.Networking.Http;
 using SPT.Common.Http;
+using SPT.SinglePlayer.Patches.MainMenu;
+using System;
+using System.Collections;
+using System.Diagnostics;
+using System.Net;
 using System.Threading.Tasks;
-using Fika.Core.Coop.Utils;
-using Fika.Core.Networking;
-using BepInEx.Logging;
+using UnityEngine;
 
 namespace Fika.Dedicated
 {
@@ -30,7 +28,7 @@ namespace Fika.Dedicated
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.SPT.custom", BepInDependency.DependencyFlags.HardDependency)]
     public class FikaDedicatedPlugin : BaseUnityPlugin
-    {        
+    {
         public static FikaDedicatedPlugin Instance { get; private set; }
         private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
         public static ManualLogSource FikaDedicatedLogger;
@@ -69,7 +67,7 @@ namespace Fika.Dedicated
         private void Start()
         {
             SharedGameSettingsClass sharedSettings = Singleton<SharedGameSettingsClass>.Instance;
-            if (sharedSettings != null )
+            if (sharedSettings != null)
             {
                 sharedSettings.Sound.Settings.OverallVolume.SetValue(0);
             }
@@ -114,7 +112,7 @@ namespace Fika.Dedicated
             Task.Run(async () =>
             {
                 StopCoroutine(setDedicatedStatusRoutine);
-                SetDedicatedStatusRequest setDedicatedStatusRequest = new SetDedicatedStatusRequest(RequestHandler.SessionId, "inraid");
+                SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, "inraid");
 
                 await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
             });
@@ -254,9 +252,9 @@ namespace Fika.Dedicated
 
         public IEnumerator SetDedicatedStatus()
         {
-            while(true)
+            while (true)
             {
-                SetDedicatedStatusRequest setDedicatedStatusRequest = new SetDedicatedStatusRequest(RequestHandler.SessionId, "ready");
+                SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, "ready");
 
                 Task.Run(async () =>
                 {

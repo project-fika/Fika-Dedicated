@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SPT.Reflection.Patching;
+using System;
 using System.Reflection;
-using SPT.Reflection.Patching;
 using UnityEngine;
 
 namespace Fika.Dedicated.Patches

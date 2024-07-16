@@ -1,17 +1,10 @@
 ﻿using BepInEx.Logging;
-using EFT.UI.Matchmaker;
-using EFT.UI;
-using EFT;
-using Fika.Core.UI.Custom;
-using SPT.Common.Http;
-using System;
-using UnityEngine;
-using WebSocketSharp;
-using HarmonyLib;
-using Newtonsoft.Json.Linq;
-using Comfort.Common;
 using Fika.Core.Models;
 using Fika.Dedicated;
+using Newtonsoft.Json.Linq;
+using SPT.Common.Http;
+using System;
+using WebSocketSharp;
 
 namespace Fika.Core.Networking
 {
@@ -80,7 +73,7 @@ namespace Fika.Core.Networking
 
             JObject jsonObject = JObject.Parse(e.Data);
 
-            if(!jsonObject.ContainsKey("type"))
+            if (!jsonObject.ContainsKey("type"))
             {
                 return;
             }

@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-using EFT.UI;
+﻿using EFT.UI;
 using HarmonyLib;
 using SPT.Reflection.Patching;
+using System.Reflection;
 using UnityEngine;
 
 namespace Fika.Dedicated.Patches

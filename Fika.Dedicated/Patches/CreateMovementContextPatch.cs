@@ -1,8 +1,8 @@
-﻿using System;
-using System.Reflection;
-using EFT;
+﻿using EFT;
 using Fika.Core.Coop.ObservedClasses;
 using SPT.Reflection.Patching;
+using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace Fika.Dedicated.Patches

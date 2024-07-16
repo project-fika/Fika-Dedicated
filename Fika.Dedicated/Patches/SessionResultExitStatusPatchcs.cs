@@ -1,7 +1,7 @@
-﻿using SPT.Reflection.Patching;
-using EFT;
+﻿using EFT;
 using EFT.UI;
 using EFT.UI.SessionEnd;
+using SPT.Reflection.Patching;
 using System;
 using System.Reflection;
 namespace Fika.Dedicated.Patches

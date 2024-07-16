@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using EFT.UI.Settings;
+﻿using EFT.UI.Settings;
 using SPT.Reflection.Patching;
+using System.Reflection;
 
 namespace Fika.Dedicated.Patches
 {

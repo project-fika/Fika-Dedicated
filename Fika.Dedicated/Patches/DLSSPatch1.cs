@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using SPT.Reflection.Patching;
+﻿using SPT.Reflection.Patching;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Rendering;
 

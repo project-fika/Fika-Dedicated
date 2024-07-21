@@ -77,8 +77,8 @@ namespace Fika.Dedicated
         private void ClearRenderables()
         {
             Stopwatch sw = Stopwatch.StartNew();
-            var renderers = FindObjectsOfType<Renderer>();
-            foreach (var renderer in renderers)
+            Renderer[] renderers = FindObjectsOfType<Renderer>();
+            foreach (Renderer renderer in renderers)
             {
                 Destroy(renderer);
             }
@@ -90,7 +90,7 @@ namespace Fika.Dedicated
         {
             TarkovApplication tarkovApplication = (TarkovApplication)Singleton<ClientApplication<ISession>>.Instance;
             ISession session = tarkovApplication.GetClientBackEndSession();
-            if (!session.LocationSettings.locations.TryGetValue(request.LocationId, out var location))
+            if (!session.LocationSettings.locations.TryGetValue(request.LocationId, out LocationSettingsClass.Location? location))
             {
                 Logger.LogError($"Failed to find location {request.LocationId}");
                 return;

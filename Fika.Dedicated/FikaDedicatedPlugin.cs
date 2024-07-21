@@ -244,7 +244,11 @@ namespace Fika.Dedicated
             Logger.LogInfo($"Starting with: {JsonConvert.SerializeObject(request)}");
 
             FikaBackendUtils.HostExpectedNumberOfPlayers = request.ExpectedNumPlayers + 1;
-            FikaBackendUtils.CreateMatch(session.Profile.ProfileId, session.Profile.Info.Nickname, raidSettings);
+            Task createMatchTask = FikaBackendUtils.CreateMatch(session.Profile.ProfileId, session.Profile.Info.Nickname, raidSettings);
+            while (!createMatchTask.IsCompleted)
+            {
+                yield return null;
+            }
             FikaBackendUtils.IsDedicatedGame = true;
 
             fikaMatchMakerScript.AcceptButton.OnClick.Invoke();

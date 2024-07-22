@@ -4,6 +4,7 @@ using EFT.Settings.Graphics;
 using SPT.Reflection.Patching;
 using System;
 using System.Reflection;
+using UnityEngine;
 
 namespace Fika.Dedicated.Patches
 {
@@ -52,6 +53,13 @@ namespace Fika.Dedicated.Patches
             gameSettings.Graphics.Settings.DLSSMode.SetValue(EDLSSMode.Off);
             gameSettings.Graphics.Settings.FSRMode.SetValue(EFSRMode.Off);
             gameSettings.Graphics.Settings.FSR2Mode.SetValue(EFSR2Mode.Off);
+            gameSettings.Graphics.Settings.DisplaySettings.SetValue(new()
+            {
+                AspectRatio = new(4, 3),
+                Display = 0,
+                FullScreenMode = FullScreenMode.ExclusiveFullScreen,
+                Resolution = new(1024, 768)
+            });
 
             gameSettings.Sound.Save();
             gameSettings.Graphics.Save();

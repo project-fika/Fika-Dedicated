@@ -59,7 +59,7 @@ namespace Fika.Dedicated.Patches
             {
                 AspectRatio = new(1024 / ratio, 768 / ratio),
                 Display = 0,
-                FullScreenMode = FullScreenMode.ExclusiveFullScreen,
+                FullScreenMode = FullScreenMode.Windowed,
                 Resolution = new(1024, 768)
             });
 

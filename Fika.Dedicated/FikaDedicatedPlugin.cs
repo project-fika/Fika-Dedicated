@@ -38,8 +38,10 @@ namespace Fika.Dedicated
         private void Awake()
         {
             Instance = this;
+
             FikaPlugin.AutoExtract.Value = true;
             FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
+
             new DLSSPatch1().Enable();
             new DLSSPatch2().Enable();
             new DLSSPatch3().Enable();

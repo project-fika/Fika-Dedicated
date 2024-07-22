@@ -53,9 +53,11 @@ namespace Fika.Dedicated.Patches
             gameSettings.Graphics.Settings.DLSSMode.SetValue(EDLSSMode.Off);
             gameSettings.Graphics.Settings.FSRMode.SetValue(EFSRMode.Off);
             gameSettings.Graphics.Settings.FSR2Mode.SetValue(EFSR2Mode.Off);
+
+            int ratio = EftResolution.smethod_0(1024, 768);
             gameSettings.Graphics.Settings.DisplaySettings.SetValue(new()
             {
-                AspectRatio = new(4, 3),
+                AspectRatio = new(1024 / ratio, 768 / ratio),
                 Display = 0,
                 FullScreenMode = FullScreenMode.ExclusiveFullScreen,
                 Resolution = new(1024, 768)

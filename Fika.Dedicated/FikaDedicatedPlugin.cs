@@ -63,6 +63,7 @@ namespace Fika.Dedicated
             new ValidateFormatPatch2().Enable();
             new ValidateFormatPatch3().Enable();
             new GameWorld_OnGameStarted_Patch().Enable();
+            new MainMenuController_method_46_Patch().Enable();
             //InvokeRepeating("ClearRenderables", 1f, 1f);
 
             FikaDedicatedLogger = Logger;
@@ -116,8 +117,6 @@ namespace Fika.Dedicated
 
                 await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
             });
-
-            raidSettings.SelectedLocation.AccessKeys = [];
 
             MenuScreen menuScreen;
             do

@@ -55,14 +55,14 @@ namespace Fika.Dedicated
             new SettingsPatch().Enable();
             new BetaLogoPatch().Disable();
             new SessionResultExitStatusPatch().Enable();
-            new MenuScreenPatch().Enable();
-            new HealthTreatmentScreenPatch().Enable();
-            new CreateMovementContextPatch().Enable();
-            new HealthControllerPlayerAfterInitPatch().Enable();
+            new MenuScreen_Show_Patch().Enable();
+            new HealthTreatmentScreen_IsAvailable_Patch().Enable();
+            new CoopPlayer_CreateMovementContext_Patch().Enable();
+            new Player_Init_Patch().Enable();
             new ValidateFormatPatch1().Enable();
             new ValidateFormatPatch2().Enable();
             new ValidateFormatPatch3().Enable();
-            new CoopGameStopPatch().Enable();
+            new GameWorld_OnGameStarted_Patch().Enable();
             //InvokeRepeating("ClearRenderables", 1f, 1f);
 
             FikaDedicatedLogger = Logger;
@@ -169,14 +169,17 @@ namespace Fika.Dedicated
             yield return null;
             offlineRaidScreen.method_10(); // offline raid screen -> insurance screen
 
-            MatchmakerInsuranceScreen insuranceScreen;
-            do
+            if (raidSettings.Side != ESideType.Savage)
             {
-                yield return StaticManager.Instance.WaitFrames(5, null);
-                insuranceScreen = FindObjectOfType<MatchmakerInsuranceScreen>();
-            } while (insuranceScreen == null);
-            yield return null;
-            insuranceScreen.method_8(); // insurance screen -> accept screen
+                MatchmakerInsuranceScreen insuranceScreen;
+                do
+                {
+                    yield return StaticManager.Instance.WaitFrames(5, null);
+                    insuranceScreen = FindObjectOfType<MatchmakerInsuranceScreen>();
+                } while (insuranceScreen == null);
+                yield return null;
+                insuranceScreen.method_8(); // insurance screen -> accept screen 
+            }
 
             yield return null;
 
@@ -248,11 +251,6 @@ namespace Fika.Dedicated
                 yield return null;
             }
             FikaBackendUtils.IsDedicatedGame = true;
-
-            if (raidController == null)
-            {
-                raidController = new();
-            }
 
             fikaMatchMakerScript.AcceptButton.OnClick.Invoke();
         }

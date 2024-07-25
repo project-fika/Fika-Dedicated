@@ -5,7 +5,7 @@ using System.Reflection;
 namespace Fika.Dedicated.Patches
 {
     // Token: 0x02000008 RID: 8
-    internal class ErrorScreenShowPatch : ModulePatch
+    internal class ErrorScreen_Show_Patch : ModulePatch
     {
         // Token: 0x06000017 RID: 23 RVA: 0x0000237C File Offset: 0x0000057C
         protected override MethodBase GetTargetMethod()

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches
 {
-    public class CreateMovementContextPatch : ModulePatch
+    public class CoopPlayer_CreateMovementContext_Patch : ModulePatch
     {
         protected override MethodBase GetTargetMethod()
         {

@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches
 {
-    public class MenuScreenPatch : ModulePatch
+    public class MenuScreen_Show_Patch : ModulePatch
     {
         protected override MethodBase GetTargetMethod()
         {

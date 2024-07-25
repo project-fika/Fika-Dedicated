@@ -2,7 +2,6 @@
 using EFT;
 using EFT.Settings.Graphics;
 using SPT.Reflection.Patching;
-using System;
 using System.Reflection;
 using UnityEngine;
 
@@ -25,7 +24,12 @@ namespace Fika.Dedicated.Patches
                 return;
             }
 
-            SharedGameSettingsClass gameSettings = Singleton<SharedGameSettingsClass>.Instance ?? throw new NullReferenceException("SettingsPatch: gameSettings was null!");
+            SharedGameSettingsClass gameSettings = Singleton<SharedGameSettingsClass>.Instance;
+
+            if (gameSettings == null)
+            {
+                return;
+            }
 
             FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo("Setting graphics and volume");
 
@@ -36,7 +40,7 @@ namespace Fika.Dedicated.Patches
             gameSettings.Graphics.Settings.ShadowsQuality.SetValue(0);
             gameSettings.Graphics.Settings.TextureQuality.SetValue(0);
             gameSettings.Graphics.Settings.SuperSampling.SetValue(ESamplingMode.DownX05);
-            gameSettings.Graphics.Settings.AnisotropicFiltering.SetValue(UnityEngine.AnisotropicFiltering.Disable);
+            gameSettings.Graphics.Settings.AnisotropicFiltering.SetValue(AnisotropicFiltering.Disable);
             gameSettings.Graphics.Settings.OverallVisibility.SetValue(400);
             gameSettings.Graphics.Settings.LodBias.SetValue(2);
             gameSettings.Graphics.Settings.Ssao.SetValue(ESSAOMode.Off);

@@ -54,6 +54,9 @@ namespace Fika.Dedicated.Patches
             gameSettings.Graphics.Settings.FSRMode.SetValue(EFSRMode.Off);
             gameSettings.Graphics.Settings.FSR2Mode.SetValue(EFSR2Mode.Off);
 
+            gameSettings.Graphics.Settings.LobbyFramerate.SetValue(30);
+            gameSettings.Graphics.Settings.GameFramerate.SetValue(60);
+
             int ratio = EftResolution.smethod_0(1024, 768);
             gameSettings.Graphics.Settings.DisplaySettings.SetValue(new()
             {

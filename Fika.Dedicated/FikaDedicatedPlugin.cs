@@ -91,7 +91,7 @@ namespace Fika.Dedicated
         {
             TarkovApplication tarkovApplication = (TarkovApplication)Singleton<ClientApplication<ISession>>.Instance;
             ISession session = tarkovApplication.GetClientBackEndSession();
-            if (!session.LocationSettings.locations.TryGetValue(request.LocationId, out LocationSettingsClass.Location? location))
+            if (!session.LocationSettings.locations.TryGetValue(request.LocationId, out LocationSettingsClass.Location location))
             {
                 Logger.LogError($"Failed to find location {request.LocationId}");
                 return;

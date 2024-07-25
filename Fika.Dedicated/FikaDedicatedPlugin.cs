@@ -117,6 +117,8 @@ namespace Fika.Dedicated
                 await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
             });
 
+            raidSettings.SelectedLocation.AccessKeys = [];
+
             MenuScreen menuScreen;
             do
             {
@@ -250,7 +252,7 @@ namespace Fika.Dedicated
             {
                 yield return null;
             }
-            FikaBackendUtils.IsDedicatedGame = true;
+            FikaBackendUtils.IsDedicatedGame = true;            
 
             fikaMatchMakerScript.AcceptButton.OnClick.Invoke();
         }

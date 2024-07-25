@@ -2,6 +2,7 @@
   <Import Project="..\Build.props" />
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Classes\DedicatedPhysical.cs" />

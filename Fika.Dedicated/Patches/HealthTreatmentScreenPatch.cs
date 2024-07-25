@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches
 {
-    public class HealthTreamentScreenPatch : ModulePatch
+    public class HealthTreatmentScreenPatch : ModulePatch
     {
         protected override MethodBase GetTargetMethod()
         {

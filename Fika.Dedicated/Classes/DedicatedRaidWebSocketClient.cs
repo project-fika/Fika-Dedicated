@@ -1,5 +1,5 @@
 ﻿using BepInEx.Logging;
-using Fika.Core.Models;
+using Fika.Core.Networking.Models.Dedicated;
 using Fika.Dedicated;
 using Newtonsoft.Json.Linq;
 using SPT.Common.Http;

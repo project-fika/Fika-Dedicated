@@ -6,9 +6,9 @@ using EFT.UI;
 using EFT.UI.Matchmaker;
 using Fika.Core;
 using Fika.Core.Coop.Utils;
-using Fika.Core.Models;
 using Fika.Core.Networking;
 using Fika.Core.Networking.Http;
+using Fika.Core.Networking.Models.Dedicated;
 using Fika.Core.UI.Custom;
 using Fika.Dedicated.Classes;
 using Fika.Dedicated.Patches;
@@ -252,7 +252,7 @@ namespace Fika.Dedicated
             {
                 yield return null;
             }
-            FikaBackendUtils.IsDedicatedGame = true;            
+            FikaBackendUtils.IsDedicatedGame = true;
 
             fikaMatchMakerScript.AcceptButton.OnClick.Invoke();
         }

@@ -45,8 +45,11 @@ namespace Fika.Dedicated.Patches
             {
                 if (raidController != null)
                 {
-                    raidController.TargetPlayer = observedCoopPlayer;
-                    FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo($"Setting {observedCoopPlayer.Profile.Info.MainProfileNickname} as TargetPlayer");
+                    if (raidController.TargetPlayer == null)
+                    {
+                        raidController.TargetPlayer = observedCoopPlayer;
+                        FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo($"Setting {observedCoopPlayer.Profile.Info.MainProfileNickname} as TargetPlayer"); 
+                    }
                 }
             }
         }

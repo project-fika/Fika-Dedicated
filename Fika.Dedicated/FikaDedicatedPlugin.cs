@@ -10,6 +10,7 @@ using Fika.Core.Models;
 using Fika.Core.Networking;
 using Fika.Core.Networking.Http;
 using Fika.Core.UI.Custom;
+using Fika.Dedicated.Classes;
 using Fika.Dedicated.Patches;
 using HarmonyLib;
 using Newtonsoft.Json;
@@ -30,10 +31,11 @@ namespace Fika.Dedicated
     public class FikaDedicatedPlugin : BaseUnityPlugin
     {
         public static FikaDedicatedPlugin Instance { get; private set; }
-        private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
         public static ManualLogSource FikaDedicatedLogger;
-
+        public static DedicatedRaidController raidController;
         public Coroutine setDedicatedStatusRoutine;
+
+        private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
 
         private void Awake()
         {
@@ -54,12 +56,13 @@ namespace Fika.Dedicated
             new BetaLogoPatch().Disable();
             new SessionResultExitStatusPatch().Enable();
             new MenuScreenPatch().Enable();
-            new HealthTreamentScreenPatch().Enable();
+            new HealthTreatmentScreenPatch().Enable();
             new CreateMovementContextPatch().Enable();
             new HealthControllerPlayerAfterInitPatch().Enable();
             new ValidateFormatPatch1().Enable();
             new ValidateFormatPatch2().Enable();
             new ValidateFormatPatch3().Enable();
+            new CoopGameStopPatch().Enable();
             //InvokeRepeating("ClearRenderables", 1f, 1f);
 
             FikaDedicatedLogger = Logger;
@@ -68,15 +71,6 @@ namespace Fika.Dedicated
 
             fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
             fikaDedicatedWebSocket.Connect();
-        }
-
-        private void Start()
-        {
-            SharedGameSettingsClass sharedSettings = Singleton<SharedGameSettingsClass>.Instance;
-            if (sharedSettings != null)
-            {
-                sharedSettings.Sound.Settings.OverallVolume.SetValue(0);
-            }
         }
 
         // Done every second as a way to minimize processing time
@@ -208,8 +202,6 @@ namespace Fika.Dedicated
             } while (fikaMatchMakerScript == null);
             yield return null;
 
-
-
             if (FikaPlugin.ForceIP.Value != "")
             {
                 // We need to handle DNS entries as well
@@ -256,6 +248,11 @@ namespace Fika.Dedicated
                 yield return null;
             }
             FikaBackendUtils.IsDedicatedGame = true;
+
+            if (raidController == null)
+            {
+                raidController = new();
+            }
 
             fikaMatchMakerScript.AcceptButton.OnClick.Invoke();
         }

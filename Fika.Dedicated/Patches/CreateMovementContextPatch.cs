@@ -1,5 +1,6 @@
 ﻿using EFT;
 using Fika.Core.Coop.ObservedClasses;
+using Fika.Core.Coop.Players;
 using SPT.Reflection.Patching;
 using System;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace Fika.Dedicated.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(Player).GetMethod(nameof(Player.CreateMovementContext));
+            return typeof(CoopPlayer).GetMethod(nameof(CoopPlayer.CreateMovementContext));
         }
 
         [PatchPrefix]

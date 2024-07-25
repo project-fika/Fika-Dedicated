@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\Build.props" />
-	
+    
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>disable</Nullable>
   </PropertyGroup>
-	
+    
   <ItemGroup>
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="UnityEngine.Modules" Version="2019.4.39" IncludeAssets="compile" />
   </ItemGroup>
-	
+    
   <ItemGroup>
     <Reference Include="AnimationSystem.Types" HintPath="..\References\AnimationSystem.Types.dll" Private="false" />
     <Reference Include="Assembly-CSharp" HintPath="..\References\hollowed.dll" Private="false" />
@@ -34,9 +34,9 @@
     <Reference Include="Unity.TextMeshPro" HintPath="..\References\Unity.TextMeshPro.dll" Private="false" />
     <Reference Include="UnityEngine" HintPath="..\References\UnityEngine.dll" Private="false" />
     <Reference Include="UnityEngine.UI" HintPath="..\References\UnityEngine.UI.dll" Private="false" />
-	<Reference Include="websocket-sharp" HintPath="..\References\websocket-sharp.dll" Private="false" />
+    <Reference Include="websocket-sharp" HintPath="..\References\websocket-sharp.dll" Private="false" />
   </ItemGroup>
-	
+    
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
     <!-- <Exec Command="copy &quot;$(TargetPath)&quot; &quot;Y:\Users\Attacker\Downloads\SPT\BepInEx\plugins&quot;" /> -->
   </Target>

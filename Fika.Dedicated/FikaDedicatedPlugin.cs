@@ -57,6 +57,9 @@ namespace Fika.Dedicated
             new HealthTreamentScreenPatch().Enable();
             new CreateMovementContextPatch().Enable();
             new HealthControllerPlayerAfterInitPatch().Enable();
+            new ValidateFormatPatch1().Enable();
+            new ValidateFormatPatch2().Enable();
+            new ValidateFormatPatch3().Enable();
             //InvokeRepeating("ClearRenderables", 1f, 1f);
 
             FikaDedicatedLogger = Logger;

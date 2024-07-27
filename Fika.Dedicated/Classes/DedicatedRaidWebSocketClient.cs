@@ -4,6 +4,7 @@ using Fika.Dedicated;
 using Newtonsoft.Json.Linq;
 using SPT.Common.Http;
 using System;
+using System.Threading;
 using WebSocketSharp;
 
 namespace Fika.Core.Networking
@@ -39,6 +40,8 @@ namespace Fika.Core.Networking
 
             _webSocket.OnOpen += WebSocket_OnOpen;
             _webSocket.OnMessage += WebSocket_OnMessage;
+            _webSocket.OnError += WebSocket_OnError;
+            _webSocket.OnClose += WebSocket_OnClose;
         }
 
         public void Connect()
@@ -86,6 +89,23 @@ namespace Fika.Core.Networking
                     StartDedicatedRequest request = jsonObject.ToObject<StartDedicatedRequest>();
                     FikaDedicatedPlugin.Instance.OnFikaStartRaid(request);
                     break;
+            }
+        }
+
+        private void WebSocket_OnError(object sender, ErrorEventArgs e)
+        {
+            logger.LogInfo($"FikaDedicatedRaidWebSocket error: {e.Message}");
+        }
+
+        private void WebSocket_OnClose(object sender, CloseEventArgs closeEventArgs)
+        {
+            if (!closeEventArgs.WasClean)
+            {
+                if (!_webSocket.IsAlive)
+                {
+                    Thread.Sleep(15000);
+                    _webSocket.Connect();
+                }
             }
         }
     }

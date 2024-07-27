@@ -5,6 +5,7 @@ using EFT;
 using EFT.UI;
 using EFT.UI.Matchmaker;
 using Fika.Core;
+using Fika.Core.Coop.Patches.Overrides;
 using Fika.Core.Coop.Utils;
 using Fika.Core.Networking;
 using Fika.Core.Networking.Http;
@@ -97,6 +98,8 @@ namespace Fika.Dedicated
                 return;
             }
 
+            OfflineRaidSettingsMenuPatch_Override.UseCustomWeather = request.CustomWeather;
+
             Logger.LogInfo($"Starting on location {location.Name}");
             RaidSettings raidSettings = Traverse.Create(tarkovApplication).Field<RaidSettings>("_raidSettings").Value;
             Logger.LogInfo("Initialized raid settings");
@@ -188,6 +191,7 @@ namespace Fika.Dedicated
             raidSettings.MetabolismDisabled = request.MetabolismDisabled;
             raidSettings.BotSettings = request.BotSettings;
             raidSettings.WavesSettings = request.WavesSettings;
+            raidSettings.TimeAndWeatherSettings = request.TimeAndWeatherSettings;
 
             MatchMakerAcceptScreen acceptScreen;
             do

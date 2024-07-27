@@ -4,8 +4,6 @@
     <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>disable</Nullable>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>../Properties/signing/public.snk</AssemblyOriginatorKeyFile>
     <DelaySign>True</DelaySign>
     </PropertyGroup>
 

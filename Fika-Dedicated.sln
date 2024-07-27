@@ -14,8 +14,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{95F55C25-695F-4153-8F18-2637FC49FDE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{95F55C25-695F-4153-8F18-2637FC49FDE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{95F55C25-695F-4153-8F18-2637FC49FDE3}.GoldMaster|Any CPU.ActiveCfg = Debug|Any CPU
-		{95F55C25-695F-4153-8F18-2637FC49FDE3}.GoldMaster|Any CPU.Build.0 = Debug|Any CPU
+		{95F55C25-695F-4153-8F18-2637FC49FDE3}.GoldMaster|Any CPU.ActiveCfg = GoldMaster|Any CPU
+		{95F55C25-695F-4153-8F18-2637FC49FDE3}.GoldMaster|Any CPU.Build.0 = GoldMaster|Any CPU
 		{95F55C25-695F-4153-8F18-2637FC49FDE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95F55C25-695F-4153-8F18-2637FC49FDE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

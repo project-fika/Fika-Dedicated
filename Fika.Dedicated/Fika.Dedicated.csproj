@@ -1,17 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\Build.props" />
+    <Import Project="..\Build.props" />
     
-  <PropertyGroup>
+    <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>disable</Nullable>
-  </PropertyGroup>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>../Properties/signing/public.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>True</DelaySign>
+    </PropertyGroup>
+
+    <!-- targets -->
+    <PropertyGroup>
+	    <Configurations>Debug;Release;GoldMaster</Configurations>
+	    <DefineConstants Condition="'$(Configuration)' == 'GoldMaster|AnyCPU' ">TRACE;GOLDMASTER</DefineConstants>
+    </PropertyGroup>
     
-  <ItemGroup>
+    <ItemGroup>
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="UnityEngine.Modules" Version="2019.4.39" IncludeAssets="compile" />
-  </ItemGroup>
+    </ItemGroup>
     
-  <ItemGroup>
+    <ItemGroup>
     <Reference Include="AnimationSystem.Types" HintPath="..\References\AnimationSystem.Types.dll" Private="false" />
     <Reference Include="Assembly-CSharp" HintPath="..\References\hollowed.dll" Private="false" />
     <Reference Include="bsg.componentace.compression.libs.zlib" HintPath="..\References\bsg.componentace.compression.libs.zlib.dll" Private="false" />
@@ -35,9 +44,11 @@
     <Reference Include="UnityEngine" HintPath="..\References\UnityEngine.dll" Private="false" />
     <Reference Include="UnityEngine.UI" HintPath="..\References\UnityEngine.UI.dll" Private="false" />
     <Reference Include="websocket-sharp" HintPath="..\References\websocket-sharp.dll" Private="false" />
-  </ItemGroup>
-    
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
-    <!-- <Exec Command="copy &quot;$(TargetPath)&quot; &quot;Y:\Users\Attacker\Downloads\SPT\BepInEx\plugins&quot;" /> -->
-  </Target>
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
+	    <Exec Command="call ../Properties/build/postbuild-core.bat &quot;$(TargetPath)&quot; &quot;$(ProjectDir)&quot;" />
+	    <Exec Condition=" '$(Configuration)|$(Platform)' == 'GoldMaster|AnyCPU' " Command="call ../Properties/build/goldmaster-core.bat" />
+    </Target>
+	
 </Project>

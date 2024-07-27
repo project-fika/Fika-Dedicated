@@ -6,8 +6,8 @@ set bepinexDir=%buildDir%\BepInEx
 set pluginsDir=%bepinexDir%\plugins
 
 if exist %pluginsDir% (
-    if exist %pluginsDir%\Fika.Core.dll (
-        del /f /q %pluginsDir%\Fika.Core.dll
+    if exist %pluginsDir%\Fika.Dedicated.dll (
+        del /f /q %pluginsDir%\Fika.Dedicated.dll
     )
 )
 
@@ -23,4 +23,5 @@ if not exist %pluginsDir% (
     mkdir %pluginsDir%
 )
 
-copy %outputFile% %pluginsDir%\Fika.Core.dll
+copy %outputFile% %pluginsDir%\Fika.Dedicated.dll
+pause

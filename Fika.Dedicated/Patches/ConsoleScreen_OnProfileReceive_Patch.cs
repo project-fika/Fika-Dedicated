@@ -17,7 +17,7 @@ namespace Fika.Dedicated.Patches
         [PatchPostfix]
         public static void Prefix(Profile profile)
         {
-            if (profile.Nickname.Contains("dedicated_"))
+            if (!profile.Nickname.Contains("dedicated_"))
             {
                 if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
                 {

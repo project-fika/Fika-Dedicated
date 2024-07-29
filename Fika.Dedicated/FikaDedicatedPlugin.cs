@@ -71,7 +71,11 @@ namespace Fika.Dedicated
 
             FikaDedicatedLogger = Logger;
 
-            Logger.LogInfo("Fika.Dedicated loaded!");
+            Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
+            if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
+            {
+                Logger.LogWarning("You are not running an officially supported operating system by Fika. Minimal support will be given.");
+            }
 
             fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
             fikaDedicatedWebSocket.Connect();

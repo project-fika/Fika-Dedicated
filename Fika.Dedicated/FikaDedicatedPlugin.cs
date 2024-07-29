@@ -56,6 +56,7 @@ namespace Fika.Dedicated
             new SettingsPatch().Enable();
             new BetaLogoPatch().Disable();
             new SessionResultExitStatusPatch().Enable();
+            new MessageWindow_Show_Patch().Enable();
             new MenuScreen_Show_Patch().Enable();
             new HealthTreatmentScreen_IsAvailable_Patch().Enable();
             new CoopPlayer_CreateMovementContext_Patch().Enable();

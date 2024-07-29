@@ -16,7 +16,7 @@ namespace Fika.Dedicated.Patches
         [PatchPostfix]
         public static void Prefix(Profile profile)
         {
-            if (!profile.AccountId.Contains("dedicated_"))
+            if (!profile.Nickname.Contains("dedicated_"))
             {
                 FikaDedicatedPlugin.FikaDedicatedLogger.LogError("Not running a dedicated profile! Exiting...");
                 Application.Quit();

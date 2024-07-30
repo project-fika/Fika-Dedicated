@@ -21,7 +21,10 @@ namespace Fika.Dedicated.Patches
             {
                 if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
                 {
-                    MessageBoxHelper.Show($"You are not starting with a dedicated profile!\nRead the documentation again!", "FIKA ERROR", MessageBoxHelper.MessageBoxType.OK);
+                    MessageBoxHelper.Show(
+                        $"You are not starting with a dedicated profile!\nRead the documentation again!\n\nIf you are not planning to run the dedicated client with this instance of EFT, remove 'Fika.Dedicated.dll' immediately!",
+                        "FIKA ERROR",
+                        MessageBoxHelper.MessageBoxType.OK);
                 }
                 else
                 {

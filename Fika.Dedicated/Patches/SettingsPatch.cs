@@ -61,6 +61,8 @@ namespace Fika.Dedicated.Patches
             gameSettings.Graphics.Settings.LobbyFramerate.SetValue(30);
             gameSettings.Graphics.Settings.GameFramerate.SetValue(60);
 
+            gameSettings.Game.Settings.EnableHideoutPreload.SetValue(false);
+
             int ratio = EftResolution.smethod_0(1024, 768);
             gameSettings.Graphics.Settings.DisplaySettings.SetValue(new()
             {

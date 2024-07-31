@@ -1,4 +1,5 @@
-﻿using Fika.Core.Coop.Components;
+﻿using BepInEx.Logging;
+using Fika.Core.Coop.Components;
 using Fika.Core.Coop.Players;
 using UnityEngine;
 
@@ -8,18 +9,30 @@ namespace Fika.Dedicated.Classes
     {
         public CoopPlayer MainPlayer { get; set; }
         private CoopPlayer targetPlayer;
-        private int counter;
+        private ManualLogSource logger;
+        private float counter;
+        private float gcCounter;
 
         private void Start()
         {
             counter = 0;
+            gcCounter = 0;
+            logger = BepInEx.Logging.Logger.CreateLogSource(nameof(DedicatedRaidController));
         }
 
         private void Update()
         {
-            counter++;
+            counter += Time.deltaTime;
+            gcCounter += Time.deltaTime;
 
-            if (counter > 300)
+            if (gcCounter > 300)
+            {
+                logger.LogInfo("Clearing memory");
+                gcCounter = 0;
+                GClass773.EmptyWorkingSet();
+            }
+
+            if (counter > 10)
             {
                 counter = 0;
 
@@ -50,14 +63,14 @@ namespace Fika.Dedicated.Classes
                     if (player.HealthController.IsAlive && !player.IsYourPlayer)
                     {
                         targetPlayer = player;
-                        FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo("DedicatedRaidController: New player: " + player.Profile.Info.MainProfileNickname);
+                        logger.LogInfo("DedicatedRaidController: New player: " + player.Profile.Info.MainProfileNickname);
                         return;
                     }
                 }
             }
 
             targetPlayer = null;
-            FikaDedicatedPlugin.FikaDedicatedLogger.LogWarning("No more players found as targets");
+            logger.LogWarning("No more players found as targets");
             Destroy(this);
         }
     }

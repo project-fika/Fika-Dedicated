@@ -119,11 +119,11 @@ namespace Fika.Dedicated
              * but it works for now and I was getting a CTD with other method
             */
 
+            StopCoroutine(setDedicatedStatusRoutine);
+
             Task.Run(async () =>
             {
-                StopCoroutine(setDedicatedStatusRoutine);
                 SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, "inraid");
-
                 await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
             });
 
@@ -270,10 +270,9 @@ namespace Fika.Dedicated
         {
             while (true)
             {
-                SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, "ready");
-
                 Task.Run(async () =>
                 {
+                    SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, "ready");
                     await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
                 });
 

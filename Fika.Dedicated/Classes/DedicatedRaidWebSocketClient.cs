@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using SPT.Common.Http;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using WebSocketSharp;
 
 namespace Fika.Core.Networking
@@ -89,6 +90,9 @@ namespace Fika.Core.Networking
                     StartDedicatedRequest request = jsonObject.ToObject<StartDedicatedRequest>();
                     FikaDedicatedPlugin.Instance.OnFikaStartRaid(request);
                     break;
+                case "fikaDedicatedKeepAlive":
+                    _webSocket.Send("keepalive");
+                    break;
             }
         }
 
@@ -98,15 +102,19 @@ namespace Fika.Core.Networking
         }
 
         private void WebSocket_OnClose(object sender, CloseEventArgs closeEventArgs)
-        {
+        {           
             if (!closeEventArgs.WasClean)
             {
-                if (!_webSocket.IsAlive)
-                {
-                    Thread.Sleep(15000);
-                    _webSocket.Connect();
-                }
+                Task.Run(RetryConnect);
             }
+        }
+
+        private async void RetryConnect()
+        {
+            logger.LogWarning($"Websocket connection lost, retrying...");
+
+            await Task.Delay(5000);
+            Connect();
         }
     }
 }

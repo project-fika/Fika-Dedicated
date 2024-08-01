@@ -29,7 +29,7 @@ namespace Fika.Dedicated.Classes
             {
                 logger.LogInfo("Clearing memory");
                 gcCounter = 0;
-                GClass773.EmptyWorkingSet();
+                GClass788.EmptyWorkingSet();
             }
 
             if (counter > 10)

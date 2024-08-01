@@ -16,7 +16,6 @@ using Fika.Dedicated.Patches;
 using HarmonyLib;
 using Newtonsoft.Json;
 using SPT.Common.Http;
-using SPT.SinglePlayer.Patches.MainMenu;
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -54,7 +53,6 @@ namespace Fika.Dedicated
             new VRAMPatch3().Enable();
             new VRAMPatch4().Enable();
             new SettingsPatch().Enable();
-            new BetaLogoPatch().Disable();
             new SessionResultExitStatusPatch().Enable();
             new MessageWindow_Show_Patch().Enable();
             new MenuScreen_Show_Patch().Enable();

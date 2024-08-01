@@ -12,16 +12,28 @@ namespace Fika.Dedicated.Classes
         private ManualLogSource logger;
         private float counter;
         private float gcCounter;
+        private bool paused;
 
         private void Start()
         {
             counter = 0;
             gcCounter = 0;
             logger = BepInEx.Logging.Logger.CreateLogSource(nameof(DedicatedRaidController));
+            paused = false;
+        }
+
+        private void Pause(bool state)
+        {
+            paused = state;
         }
 
         private void Update()
         {
+            if (paused)
+            {
+                return;
+            }
+
             counter += Time.deltaTime;
             gcCounter += Time.deltaTime;
 

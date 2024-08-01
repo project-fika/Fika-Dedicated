@@ -44,6 +44,7 @@ namespace Fika.Dedicated
 
             FikaPlugin.AutoExtract.Value = true;
             FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
+            FikaPlugin.ConnectionTimeout.Value = 20;
 
             new DLSSPatch1().Enable();
             new DLSSPatch2().Enable();

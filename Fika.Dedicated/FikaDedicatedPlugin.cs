@@ -19,13 +19,14 @@ using SPT.Common.Http;
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Fika.Dedicated
 {
-    [BepInPlugin("com.fika.dedicated", "Dedicated", "1.0.1")]
+    [BepInPlugin("com.fika.dedicated", "Dedicated", "1.0.2")]
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.SPT.custom", BepInDependency.DependencyFlags.HardDependency)]
     public class FikaDedicatedPlugin : BaseUnityPlugin
@@ -33,6 +34,7 @@ namespace Fika.Dedicated
         public static FikaDedicatedPlugin Instance { get; private set; }
         public static ManualLogSource FikaDedicatedLogger;
         public static DedicatedRaidController raidController;
+        public static int UpdateRate { get; internal set; }
         public Coroutine setDedicatedStatusRoutine;
 
         private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
@@ -40,9 +42,27 @@ namespace Fika.Dedicated
         private void Awake()
         {
             Instance = this;
+            UpdateRate = 60;
+
+            FikaDedicatedLogger = Logger;
 
             FikaPlugin.AutoExtract.Value = true;
             FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
+            FikaPlugin.ConnectionTimeout.Value = 20;
+
+            string[] commandLineArgs = Environment.GetCommandLineArgs();
+            foreach (string arg in commandLineArgs )
+            {
+                if (arg.StartsWith("-updateRate="))
+                {
+                    string trimmed = arg.Replace("-updateRate=", "");
+                    if (int.TryParse(trimmed, out int updateFreq))
+                    {
+                        UpdateRate = Mathf.Clamp(updateFreq, 30, 120);
+                        Logger.LogInfo("Setting UpdateRate to " + UpdateRate);
+                    }
+                }
+            }
 
             new DLSSPatch1().Enable();
             new DLSSPatch2().Enable();
@@ -66,9 +86,7 @@ namespace Fika.Dedicated
             new MainMenuController_method_46_Patch().Enable();
             new ConsoleScreen_OnProfileReceive_Patch().Enable();
             //InvokeRepeating("ClearRenderables", 1f, 1f);
-
-            FikaDedicatedLogger = Logger;
-
+            
             Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
             if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
             {

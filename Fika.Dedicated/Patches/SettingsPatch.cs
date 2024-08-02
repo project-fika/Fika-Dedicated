@@ -59,7 +59,7 @@ namespace Fika.Dedicated.Patches
             gameSettings.Graphics.Settings.FSR2Mode.SetValue(EFSR2Mode.Off);
 
             gameSettings.Graphics.Settings.LobbyFramerate.SetValue(30);
-            gameSettings.Graphics.Settings.GameFramerate.SetValue(60);
+            gameSettings.Graphics.Settings.GameFramerate.SetValue(FikaDedicatedPlugin.UpdateRate);
 
             gameSettings.Game.Settings.EnableHideoutPreload.SetValue(false);
 

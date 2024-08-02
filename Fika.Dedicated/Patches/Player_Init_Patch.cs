@@ -26,7 +26,7 @@ namespace Fika.Dedicated.Patches
                 }
 
                 Vector3 currentPosition = __instance.Position;
-                __instance.Teleport(new(currentPosition.x, currentPosition.y - 50f, currentPosition.z));
+                __instance.Teleport(new(currentPosition.x, currentPosition.y - 100f, currentPosition.z));
             }
         }
     }

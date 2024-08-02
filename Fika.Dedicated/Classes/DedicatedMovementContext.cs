@@ -16,5 +16,10 @@ namespace Fika.Core.Coop.ObservedClasses
             DedicatedMovementContext movementContext = Create<DedicatedMovementContext>(player, animatorGetter, characterControllerGetter, groundMask);
             return movementContext;
         }
+
+        public override void DirectApplyMotion(Vector3 motion, float deltaTime)
+        {
+            // Do nothing
+        }
     }
 }

@@ -11,13 +11,11 @@ namespace Fika.Dedicated.Classes
         private CoopPlayer targetPlayer;
         private ManualLogSource logger;
         private float counter;
-        private float gcCounter;
         private bool paused;
 
         private void Start()
         {
             counter = 0;
-            gcCounter = 0;
             logger = BepInEx.Logging.Logger.CreateLogSource(nameof(DedicatedRaidController));
             paused = false;
         }
@@ -35,14 +33,6 @@ namespace Fika.Dedicated.Classes
             }
 
             counter += Time.deltaTime;
-            gcCounter += Time.deltaTime;
-
-            if (gcCounter > 300)
-            {
-                logger.LogInfo("Clearing memory");
-                gcCounter = 0;
-                GClass773.EmptyWorkingSet();
-            }
 
             if (counter > 10)
             {

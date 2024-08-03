@@ -5,6 +5,7 @@ using EFT;
 using EFT.UI;
 using EFT.UI.Matchmaker;
 using Fika.Core;
+using Fika.Core.Coop.GameMode;
 using Fika.Core.Coop.Patches.Overrides;
 using Fika.Core.Coop.Utils;
 using Fika.Core.Networking;
@@ -20,14 +21,13 @@ using SPT.SinglePlayer.Patches.MainMenu;
 using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Fika.Dedicated
 {
-    [BepInPlugin("com.fika.dedicated", "Dedicated", "1.0.2")]
+    [BepInPlugin("com.fika.dedicated", "Dedicated", "1.0.3")]
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.SPT.custom", BepInDependency.DependencyFlags.HardDependency)]
     public class FikaDedicatedPlugin : BaseUnityPlugin
@@ -39,11 +39,14 @@ namespace Fika.Dedicated
         public Coroutine setDedicatedStatusRoutine;
 
         private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
+        private float gcCounter;
+        private Coroutine verifyConnectionsRoutine;
 
         private void Awake()
         {
             Instance = this;
             UpdateRate = 60;
+            gcCounter = 0;
 
             FikaDedicatedLogger = Logger;
 
@@ -52,7 +55,7 @@ namespace Fika.Dedicated
             FikaPlugin.ConnectionTimeout.Value = 20;
 
             string[] commandLineArgs = Environment.GetCommandLineArgs();
-            foreach (string arg in commandLineArgs )
+            foreach (string arg in commandLineArgs)
             {
                 if (arg.StartsWith("-updateRate="))
                 {
@@ -88,7 +91,7 @@ namespace Fika.Dedicated
             new MainMenuController_method_46_Patch().Enable();
             new ConsoleScreen_OnProfileReceive_Patch().Enable();
             //InvokeRepeating("ClearRenderables", 1f, 1f);
-            
+
             Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
             if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
             {
@@ -97,6 +100,18 @@ namespace Fika.Dedicated
 
             fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
             fikaDedicatedWebSocket.Connect();
+        }
+
+        protected void Update()
+        {
+            gcCounter += Time.deltaTime;
+
+            if (gcCounter > 300)
+            {
+                Logger.LogInfo("Clearing memory");
+                gcCounter = 0;
+                GClass773.EmptyWorkingSet();
+            }
         }
 
         // Done every second as a way to minimize processing time
@@ -128,6 +143,28 @@ namespace Fika.Dedicated
             RaidSettings raidSettings = Traverse.Create(tarkovApplication).Field<RaidSettings>("_raidSettings").Value;
             Logger.LogInfo("Initialized raid settings");
             StartCoroutine(BeginFikaStartRaid(request, session, raidSettings, location));
+        }
+
+        private IEnumerator VerifyPlayersRoutine()
+        {
+            yield return new WaitForSeconds(300);
+            if (Singleton<FikaServer>.Instance.NetServer.ConnectedPeersCount < 1)
+            {
+                int attempts = 0;
+                while ((CoopGame)Singleton<IFikaGame>.Instance == null && attempts < 5)
+                {
+                    yield return new WaitForSeconds(5);
+                    attempts++;
+                    if (attempts >= 5)
+                    {
+                        Logger.LogError("More than 5 attempts were required to get the CoopGame instance. Something is probably very wrong!");
+                    }
+                }
+
+                CoopGame coopGame = (CoopGame)Singleton<IFikaGame>.Instance;
+                coopGame.StopFromCancel(FikaBackendUtils.Profile.ProfileId, ExitStatus.Runner);
+                Logger.LogWarning("The were no connections after 5 minutes, terminating session...");
+            }
         }
 
         private IEnumerator BeginFikaStartRaid(StartDedicatedRequest request, ISession session, RaidSettings raidSettings, LocationSettingsClass.Location location)
@@ -280,6 +317,8 @@ namespace Fika.Dedicated
                 yield return null;
             }
             FikaBackendUtils.IsDedicatedGame = true;
+
+            verifyConnectionsRoutine = StartCoroutine(VerifyPlayersRoutine());
 
             fikaMatchMakerScript.AcceptButton.OnClick.Invoke();
         }

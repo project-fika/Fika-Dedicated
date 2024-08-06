@@ -324,7 +324,7 @@ namespace Fika.Dedicated
             fikaMatchMakerScript.AcceptButton.OnClick.Invoke();
         }
 
-        public IEnumerator SetDedicatedStatus()
+        public IEnumerator SetDedicatedStatusReady()
         {
             while (Status == DedicatedStatus.READY)
             {
@@ -340,10 +340,10 @@ namespace Fika.Dedicated
             yield break;
         }
 
-        public void StartSetDedicatedStatusRoutine()
+        public void StartSetDedicatedStatusReadyRoutine()
         {
             Status = DedicatedStatus.READY;
-            StartCoroutine(SetDedicatedStatus());
+            StartCoroutine(SetDedicatedStatusReady());
         }
     }
 }

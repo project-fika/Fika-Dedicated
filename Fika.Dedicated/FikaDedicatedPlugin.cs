@@ -174,7 +174,7 @@ namespace Fika.Dedicated
 
             Task.Run(async () =>
             {
-                SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, Status);
+                SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, DedicatedStatus.IN_RAID);
                 await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
             });
 
@@ -330,7 +330,7 @@ namespace Fika.Dedicated
             {
                 Task.Run(async () =>
                 {
-                    SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, Status);
+                    SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, DedicatedStatus.READY);
                     await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
                 });
 

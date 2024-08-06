@@ -37,7 +37,6 @@ namespace Fika.Dedicated
         public static ManualLogSource FikaDedicatedLogger;
         public static DedicatedRaidController raidController;
         public static int UpdateRate { get; internal set; }
-        public Coroutine setDedicatedStatusRoutine;
         public string Status { get; set; }
 
         private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
@@ -344,7 +343,7 @@ namespace Fika.Dedicated
         public void StartSetDedicatedStatusRoutine()
         {
             Status = DedicatedStatus.READY;
-            setDedicatedStatusRoutine = StartCoroutine(SetDedicatedStatus());
+            StartCoroutine(SetDedicatedStatus());
         }
     }
 }

@@ -13,7 +13,6 @@ using Fika.Core.Networking.Http;
 using Fika.Core.Networking.Models.Dedicated;
 using Fika.Core.UI.Custom;
 using Fika.Dedicated.Classes;
-using Fika.Dedicated.Models;
 using Fika.Dedicated.Patches;
 using HarmonyLib;
 using Newtonsoft.Json;
@@ -37,7 +36,7 @@ namespace Fika.Dedicated
         public static ManualLogSource FikaDedicatedLogger;
         public static DedicatedRaidController raidController;
         public static int UpdateRate { get; internal set; }
-        public string Status { get; set; }
+        public DedicatedStatus Status { get; set; }
 
         private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
         private float gcCounter;

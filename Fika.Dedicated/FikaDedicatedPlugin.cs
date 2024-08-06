@@ -13,6 +13,7 @@ using Fika.Core.Networking.Http;
 using Fika.Core.Networking.Models.Dedicated;
 using Fika.Core.UI.Custom;
 using Fika.Dedicated.Classes;
+using Fika.Dedicated.Models;
 using Fika.Dedicated.Patches;
 using HarmonyLib;
 using Newtonsoft.Json;
@@ -37,6 +38,7 @@ namespace Fika.Dedicated
         public static DedicatedRaidController raidController;
         public static int UpdateRate { get; internal set; }
         public Coroutine setDedicatedStatusRoutine;
+        public string Status { get; set; }
 
         private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
         private float gcCounter;
@@ -169,18 +171,18 @@ namespace Fika.Dedicated
 
         private IEnumerator BeginFikaStartRaid(StartDedicatedRequest request, ISession session, RaidSettings raidSettings, LocationSettingsClass.Location location)
         {
+            Status = DedicatedStatus.IN_RAID;
+
+            Task.Run(async () =>
+            {
+                SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, Status);
+                await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
+            });
+
             /*
              * Runs through the menus. Eventually this can be replaced
              * but it works for now and I was getting a CTD with other method
             */
-
-            StopCoroutine(setDedicatedStatusRoutine);
-
-            Task.Run(async () =>
-            {
-                SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, "inraid");
-                await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
-            });
 
             MenuScreen menuScreen;
             do
@@ -325,20 +327,23 @@ namespace Fika.Dedicated
 
         public IEnumerator SetDedicatedStatus()
         {
-            while (true)
+            while (Status == DedicatedStatus.READY)
             {
                 Task.Run(async () =>
                 {
-                    SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, "ready");
+                    SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, Status);
                     await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
                 });
 
                 yield return new WaitForSeconds(15.0f);
             }
+
+            yield break;
         }
 
         public void StartSetDedicatedStatusRoutine()
         {
+            Status = DedicatedStatus.READY;
             setDedicatedStatusRoutine = StartCoroutine(SetDedicatedStatus());
         }
     }

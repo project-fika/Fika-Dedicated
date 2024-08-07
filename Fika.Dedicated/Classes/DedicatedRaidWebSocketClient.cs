@@ -82,7 +82,7 @@ namespace Fika.Core.Networking
                 return;
             }
 
-            string type = jsonObject["type"].ToString();
+            string type = jsonObject["type"].Value<string>();
 
             switch (type)
             {

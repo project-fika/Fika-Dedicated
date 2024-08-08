@@ -24,6 +24,7 @@ namespace Fika.Dedicated.Patches
                 raidController = FikaDedicatedPlugin.raidController;
 
                 raidController.MainPlayer = (CoopPlayer)__instance.MainPlayer;
+                raidController.MainPlayer.MovementContext.PitchLimit = new UnityEngine.Vector2(-90, -90);
             }
         }
     }

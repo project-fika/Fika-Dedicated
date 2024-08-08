@@ -54,7 +54,7 @@ namespace Fika.Dedicated.Classes
                     }
 
                     Vector3 currentPosition = targetPlayer.Position;
-                    MainPlayer.Teleport(new(currentPosition.x, currentPosition.y - 100, currentPosition.z));					
+                    MainPlayer.Teleport(new(currentPosition.x, currentPosition.y - 100, currentPosition.z));
                 }
                 else
                 {

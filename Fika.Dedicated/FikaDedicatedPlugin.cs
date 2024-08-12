@@ -53,8 +53,9 @@ namespace Fika.Dedicated
             FikaPlugin.AutoExtract.Value = true;
             FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
             FikaPlugin.ConnectionTimeout.Value = 20;
+			FikaPlugin.DynamicAI.Value = true;
 
-            string[] commandLineArgs = Environment.GetCommandLineArgs();
+			string[] commandLineArgs = Environment.GetCommandLineArgs();
             foreach (string arg in commandLineArgs)
             {
                 if (arg.StartsWith("-updateRate="))
@@ -65,7 +66,15 @@ namespace Fika.Dedicated
                         UpdateRate = Mathf.Clamp(updateFreq, 30, 120);
                         Logger.LogInfo("Setting UpdateRate to " + UpdateRate);
                     }
+
+					continue;
                 }
+
+				if (arg.StartsWith("-noDynamicAi"))
+				{
+					FikaPlugin.DynamicAI.Value = false;
+					Logger.LogInfo("Disabling DynamicAI");
+				}
             }
 
             new DLSSPatch1().Enable();
@@ -97,6 +106,8 @@ namespace Fika.Dedicated
             {
                 Logger.LogWarning("You are not running an officially supported operating system by Fika. Minimal support will be given.");
             }
+
+			EFTHardSettings.Instance.CULL_GROUNDER = 1000f;
 
             fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
             fikaDedicatedWebSocket.Connect();

@@ -54,7 +54,7 @@ namespace Fika.Dedicated.Classes
                     }
 
                     Vector3 currentPosition = targetPlayer.Position;
-					MainPlayer.Teleport(new(currentPosition.x, currentPosition.y - 50, currentPosition.z));
+					MainPlayer.Teleport(new(currentPosition.x, currentPosition.y - 75, currentPosition.z));
 					MainPlayer.MovementContext.SetPitchSmoothly(new(-90, -90));
 				}
                 else
@@ -78,6 +78,7 @@ namespace Fika.Dedicated.Classes
 						{
 							freeCameraController.ToggleCamera();
 						}
+						freeCam.SetCurrentPlayer(targetPlayer);
 						freeCam.AttachDedicated(targetPlayer);
 						return;
                     }

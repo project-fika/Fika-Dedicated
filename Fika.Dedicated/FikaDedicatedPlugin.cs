@@ -54,6 +54,9 @@ namespace Fika.Dedicated
 			FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
 			FikaPlugin.ConnectionTimeout.Value = 20;
 
+			FikaPlugin.Instance.AllowFreeCam = true;
+			FikaPlugin.Instance.AllowSpectateFreeCam = true;
+
 			string[] commandLineArgs = Environment.GetCommandLineArgs();
 			foreach (string arg in commandLineArgs)
 			{

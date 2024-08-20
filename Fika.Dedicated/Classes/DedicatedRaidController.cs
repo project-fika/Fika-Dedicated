@@ -78,6 +78,7 @@ namespace Fika.Dedicated.Classes
 						{
 							freeCameraController.ToggleCamera();
 						}
+						freeCam.SetCurrentPlayer(targetPlayer);
 						freeCam.AttachDedicated(targetPlayer);
 						return;
                     }

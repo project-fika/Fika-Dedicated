@@ -4,22 +4,22 @@ using UnityEngine;
 
 namespace Fika.Core.Coop.ObservedClasses
 {
-    public class DedicatedMovementContext : MovementContext
-    {
-        public override void ApplyGravity(ref Vector3 motion, float deltaTime, bool stickToGround)
-        {
-            // Do nothing
-        }
+	public class DedicatedMovementContext : MovementContext
+	{
+		public override void ApplyGravity(ref Vector3 motion, float deltaTime, bool stickToGround)
+		{
+			// Do nothing
+		}
 
-        public new static DedicatedMovementContext Create(Player player, Func<IAnimator> animatorGetter, Func<ICharacterController> characterControllerGetter, LayerMask groundMask)
-        {
-            DedicatedMovementContext movementContext = Create<DedicatedMovementContext>(player, animatorGetter, characterControllerGetter, groundMask);
-            return movementContext;
-        }
+		public new static DedicatedMovementContext Create(Player player, Func<IAnimator> animatorGetter, Func<ICharacterController> characterControllerGetter, LayerMask groundMask)
+		{
+			DedicatedMovementContext movementContext = Create<DedicatedMovementContext>(player, animatorGetter, characterControllerGetter, groundMask);
+			return movementContext;
+		}
 
-        public override void DirectApplyMotion(Vector3 motion, float deltaTime)
-        {
-            // Do nothing
-        }
-    }
+		public override void DirectApplyMotion(Vector3 motion, float deltaTime)
+		{
+			// Do nothing
+		}
+	}
 }

@@ -55,10 +55,10 @@ namespace Fika.Dedicated.Patches
             gameSettings.Graphics.Settings.MipStreaming.SetValue(false);
             gameSettings.Graphics.Settings.SdTarkovStreets.SetValue(true);
             gameSettings.Graphics.Settings.DLSSMode.SetValue(EDLSSMode.Off);
-            gameSettings.Graphics.Settings.FSRMode.SetValue(EFSRMode.Off);
             gameSettings.Graphics.Settings.FSR2Mode.SetValue(EFSR2Mode.Off);
+			gameSettings.Graphics.Settings.FSR3Mode.SetValue(EFSR3Mode.Off);
 
-            gameSettings.Graphics.Settings.LobbyFramerate.SetValue(30);
+			gameSettings.Graphics.Settings.LobbyFramerate.SetValue(30);
             gameSettings.Graphics.Settings.GameFramerate.SetValue(FikaDedicatedPlugin.UpdateRate);
 
             gameSettings.Game.Settings.EnableHideoutPreload.SetValue(false);

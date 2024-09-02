@@ -26,7 +26,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated
 {
-	[BepInPlugin("com.fika.dedicated", "Dedicated", "1.0.5")]
+	[BepInPlugin("com.fika.dedicated", "Fika.Dedicated", "1.1.0")]
 	[BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
 	[BepInDependency("com.SPT.custom", BepInDependency.DependencyFlags.HardDependency)]
 	public class FikaDedicatedPlugin : BaseUnityPlugin
@@ -121,7 +121,7 @@ namespace Fika.Dedicated
 			{
 				Logger.LogInfo("Clearing memory");
 				gcCounter = 0;
-				GClass773.EmptyWorkingSet();
+				GClass813.EmptyWorkingSet();
 			}
 		}
 
@@ -233,8 +233,8 @@ namespace Fika.Dedicated
 			yield return null;
 
 			locationSelectionScreen.Location_0 = session.LocationSettings.locations[request.LocationId];
-			locationSelectionScreen.method_6(request.Time); // set time
-			locationSelectionScreen.method_10(); // location selection screen -> offline raid screen
+			locationSelectionScreen.method_7(request.Time); // set time
+			locationSelectionScreen.method_11(); // location selection screen -> offline raid screen
 
 			MatchmakerOfflineRaidScreen offlineRaidScreen;
 			do
@@ -243,7 +243,7 @@ namespace Fika.Dedicated
 				offlineRaidScreen = FindObjectOfType<MatchmakerOfflineRaidScreen>();
 			} while (offlineRaidScreen == null);
 			yield return null;
-			offlineRaidScreen.method_10(); // offline raid screen -> insurance screen
+			offlineRaidScreen.method_4(); // offline raid screen -> insurance screen
 
 			if (raidSettings.Side != ESideType.Savage)
 			{

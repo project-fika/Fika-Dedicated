@@ -1,5 +1,8 @@
 ﻿using BepInEx.Logging;
+using Comfort.Common;
+using EFT;
 using Fika.Core.Coop.Components;
+using Fika.Core.Coop.FreeCamera;
 using Fika.Core.Coop.Players;
 using UnityEngine;
 
@@ -11,16 +14,18 @@ namespace Fika.Dedicated.Classes
         private CoopPlayer targetPlayer;
         private ManualLogSource logger;
         private float counter;
-        private float gcCounter;
         private bool paused;
+		private Core.Coop.FreeCamera.FreeCamera freeCam;
+		private FreeCameraController freeCameraController;
 
         private void Start()
         {
             counter = 0;
-            gcCounter = 0;
             logger = BepInEx.Logging.Logger.CreateLogSource(nameof(DedicatedRaidController));
             paused = false;
-        }
+			freeCam = CameraClass.Instance.Camera.gameObject.GetComponent<Core.Coop.FreeCamera.FreeCamera>();
+			freeCameraController = Singleton<GameWorld>.Instance.gameObject.GetComponent<FreeCameraController>();
+		}
 
         private void Pause(bool state)
         {
@@ -35,14 +40,6 @@ namespace Fika.Dedicated.Classes
             }
 
             counter += Time.deltaTime;
-            gcCounter += Time.deltaTime;
-
-            if (gcCounter > 300)
-            {
-                logger.LogInfo("Clearing memory");
-                gcCounter = 0;
-                GClass788.EmptyWorkingSet();
-            }
 
             if (counter > 10)
             {
@@ -57,8 +54,9 @@ namespace Fika.Dedicated.Classes
                     }
 
                     Vector3 currentPosition = targetPlayer.Position;
-                    MainPlayer.Teleport(new(currentPosition.x, currentPosition.y - 100, currentPosition.z));
-                }
+					MainPlayer.Teleport(new(currentPosition.x, currentPosition.y - 75, currentPosition.z));
+					MainPlayer.MovementContext.SetPitchSmoothly(new(-90, -90));
+				}
                 else
                 {
                     FindNewPlayer();
@@ -76,7 +74,13 @@ namespace Fika.Dedicated.Classes
                     {
                         targetPlayer = player;
                         logger.LogInfo("DedicatedRaidController: New player: " + player.Profile.Info.MainProfileNickname);
-                        return;
+						if (!freeCam.IsActive)
+						{
+							freeCameraController.ToggleCamera();
+						}
+						freeCam.SetCurrentPlayer(targetPlayer);
+						freeCam.AttachDedicated(targetPlayer);
+						return;
                     }
                 }
             }

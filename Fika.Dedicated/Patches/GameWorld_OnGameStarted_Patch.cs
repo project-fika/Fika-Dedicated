@@ -4,6 +4,7 @@ using Fika.Core.Coop.Players;
 using Fika.Dedicated.Classes;
 using SPT.Reflection.Patching;
 using System.Reflection;
+using UnityEngine;
 
 namespace Fika.Dedicated.Patches
 {
@@ -24,6 +25,7 @@ namespace Fika.Dedicated.Patches
                 raidController = FikaDedicatedPlugin.raidController;
 
                 raidController.MainPlayer = (CoopPlayer)__instance.MainPlayer;
+                raidController.MainPlayer.MovementContext.PitchLimit = new Vector2(-90, -90);
             }
         }
     }

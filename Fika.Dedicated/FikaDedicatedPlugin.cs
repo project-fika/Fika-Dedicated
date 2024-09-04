@@ -168,7 +168,7 @@ namespace Fika.Dedicated
 
 		private void VerifyPlugins()
 		{
-			List<string> InvalidPluginList =
+			List<string> invalidPluginList =
 			[
 				"com.Amanda.Graphics",
 				"VIP.TommySoucy.MoreCheckmarks",
@@ -179,7 +179,7 @@ namespace Fika.Dedicated
 
 			foreach (PluginInfo Info in pluginInfos)
 			{
-				if (InvalidPluginList.Contains(Info.Metadata.GUID))
+				if (invalidPluginList.Contains(Info.Metadata.GUID))
 				{
 					unsupportedMods.Add($"{Info.Metadata.Name}, GUID: {Info.Metadata.GUID}");
 				}

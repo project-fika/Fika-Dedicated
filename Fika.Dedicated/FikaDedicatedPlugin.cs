@@ -39,7 +39,7 @@ namespace Fika.Dedicated
 		public static int UpdateRate { get; internal set; }
 		public DedicatedStatus Status { get; set; }
 
-		public readonly static HashSet<string> InvalidPluginList = new()
+		public readonly static List<string> InvalidPluginList = new()
 		{
 			"com.Amanda.Graphics",
 			"VIP.TommySoucy.MoreCheckmarks",

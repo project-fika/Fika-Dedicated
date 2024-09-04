@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Bootstrap;
 using BepInEx.Logging;
 using Comfort.Common;
 using EFT;
@@ -19,6 +20,7 @@ using Newtonsoft.Json;
 using SPT.Common.Http;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
@@ -36,6 +38,15 @@ namespace Fika.Dedicated
 		public static DedicatedRaidController raidController;
 		public static int UpdateRate { get; internal set; }
 		public DedicatedStatus Status { get; set; }
+
+		public readonly static List<string> InvalidPluginList = new()
+		{
+			"com.Amanda.Graphics",
+			"VIP.TommySoucy.MoreCheckmarks",
+			"com.kmyuhkyuk.EFTApi",
+			// Not necessary, has a dependency on EFTApi
+			//"com.kmyuhkyuk.GamePanelHUDCore"
+		};
 
 		private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
 		private float gcCounter;
@@ -111,6 +122,8 @@ namespace Fika.Dedicated
 
 			fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
 			fikaDedicatedWebSocket.Connect();
+
+			StartCoroutine(RunPluginValidation());
 		}
 
 		protected void Update()
@@ -154,6 +167,37 @@ namespace Fika.Dedicated
 			RaidSettings raidSettings = Traverse.Create(tarkovApplication).Field<RaidSettings>("_raidSettings").Value;
 			Logger.LogInfo("Initialized raid settings");
 			StartCoroutine(BeginFikaStartRaid(request, session, raidSettings, location));
+		}
+
+		private IEnumerator RunPluginValidation()
+		{
+			yield return new WaitForSeconds(5);
+			VerifyPlugins();
+		}
+
+		private void VerifyPlugins()
+		{
+			PluginInfo[] pluginInfos = [.. Chainloader.PluginInfos.Values];
+			int invalidPluginCount = 0;
+
+			foreach(PluginInfo Info in pluginInfos)
+			{
+				if(InvalidPluginList.Contains(Info.Metadata.GUID))
+				{
+					Logger.LogError($"Invalid plugin found: {Info.Metadata.GUID}");
+					invalidPluginCount++;
+				}
+			}
+
+			if(invalidPluginCount > 0)
+			{
+				Logger.LogError($"{invalidPluginCount} invalid plugins found, closing");
+				Application.Quit();
+			}
+			else
+			{
+				Logger.LogInfo("Plugins verified successfully");
+			}
 		}
 
 		private IEnumerator VerifyPlayersRoutine()

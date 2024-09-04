@@ -39,15 +39,6 @@ namespace Fika.Dedicated
 		public static int UpdateRate { get; internal set; }
 		public DedicatedStatus Status { get; set; }
 
-		public readonly static List<string> InvalidPluginList = new()
-		{
-			"com.Amanda.Graphics",
-			"VIP.TommySoucy.MoreCheckmarks",
-			"com.kmyuhkyuk.EFTApi",
-			// Not necessary, has a dependency on EFTApi
-			//"com.kmyuhkyuk.GamePanelHUDCore"
-		};
-
 		private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
 		private float gcCounter;
 		private Coroutine verifyConnectionsRoutine;
@@ -177,27 +168,32 @@ namespace Fika.Dedicated
 
 		private void VerifyPlugins()
 		{
+			List<string> InvalidPluginList =
+			[
+				"com.Amanda.Graphics",
+				"VIP.TommySoucy.MoreCheckmarks",
+				"com.kmyuhkyuk.EFTApi"
+			];
 			PluginInfo[] pluginInfos = [.. Chainloader.PluginInfos.Values];
-			int invalidPluginCount = 0;
+			List<string> unsupportedMods = [];
 
-			foreach(PluginInfo Info in pluginInfos)
+			foreach (PluginInfo Info in pluginInfos)
 			{
-				if(InvalidPluginList.Contains(Info.Metadata.GUID))
+				if (InvalidPluginList.Contains(Info.Metadata.GUID))
 				{
-					Logger.LogError($"Invalid plugin found: {Info.Metadata.GUID}");
-					invalidPluginCount++;
+					unsupportedMods.Add($"{Info.Metadata.Name}, GUID: {Info.Metadata.GUID}");
 				}
 			}
 
-			if(invalidPluginCount > 0)
+			if (unsupportedMods.Count > 0)
 			{
-				Logger.LogError($"{invalidPluginCount} invalid plugins found, closing");
+				string modsString = string.Join("; ", unsupportedMods);
+				Logger.LogFatal($"{unsupportedMods.Count} invalid plugins found, the game will be forcibly closed! Remove these mods: {modsString}");
 				Application.Quit();
+				return;
 			}
-			else
-			{
-				Logger.LogInfo("Plugins verified successfully");
-			}
+
+			Logger.LogInfo("Plugins verified successfully");
 		}
 
 		private IEnumerator VerifyPlayersRoutine()

@@ -13,7 +13,7 @@ namespace Fika.Dedicated.Patches
 
 		protected override MethodBase GetTargetMethod()
 		{
-			return typeof(TarkovApplication).GetMethod(nameof(TarkovApplication.method_23));
+			return typeof(TarkovApplication).GetMethod(nameof(TarkovApplication.method_22));
 		}
 
 		[PatchPostfix]
@@ -41,7 +41,7 @@ namespace Fika.Dedicated.Patches
 			gameSettings.Graphics.Settings.TextureQuality.SetValue(0);
 			gameSettings.Graphics.Settings.SuperSampling.SetValue(ESamplingMode.DownX05);
 			gameSettings.Graphics.Settings.AnisotropicFiltering.SetValue(AnisotropicFiltering.Disable);
-			gameSettings.Graphics.Settings.OverallVisibility.SetValue(400);
+			gameSettings.Graphics.Settings.OverallVisibility.SetValue(4000);
 			gameSettings.Graphics.Settings.LodBias.SetValue(2);
 			gameSettings.Graphics.Settings.Ssao.SetValue(ESSAOMode.Off);
 			gameSettings.Graphics.Settings.SSR.SetValue(ESSRMode.Off);

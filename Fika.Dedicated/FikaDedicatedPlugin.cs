@@ -179,7 +179,10 @@ namespace Fika.Dedicated
 			[
 				"com.Amanda.Graphics",
 				"VIP.TommySoucy.MoreCheckmarks",
-				"com.kmyuhkyuk.EFTApi"
+				"com.kmyuhkyuk.EFTApi",
+				"com.mpstark.DynamicMaps",
+				"IhanaMies.LootValue",
+				"com.cactuspie.ramcleanerinterval"
 			];
 			PluginInfo[] pluginInfos = [.. Chainloader.PluginInfos.Values];
 			List<string> unsupportedMods = [];

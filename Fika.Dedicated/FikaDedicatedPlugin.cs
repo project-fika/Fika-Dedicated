@@ -101,6 +101,7 @@ namespace Fika.Dedicated
 			new GameWorld_OnGameStarted_Patch().Enable();
 			new MainMenuController_method_46_Patch().Enable();
 			new ConsoleScreen_OnProfileReceive_Patch().Enable();
+			new Class417_Run_Patch().Enable();
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");

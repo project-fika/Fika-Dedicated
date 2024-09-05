@@ -21,7 +21,8 @@ namespace Fika.Dedicated.Patches
         {
             __instance.Reset();
             __instance.Camera = camera;
-            __instance.method_2();
+			__instance.SetOcclusionCullingEnabled(false);
+			__instance.method_2();
             Action action = Traverse.Create(__instance).Field<Action>("action_1").Value;
             if (action != null)
             {

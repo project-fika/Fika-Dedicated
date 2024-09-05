@@ -109,7 +109,13 @@ namespace Fika.Dedicated
 				Logger.LogWarning("You are not running an officially supported operating system by Fika. Minimal support will be given.");
 			}
 
-			EFTHardSettings.Instance.CULL_GROUNDER = 1000f;
+			EFTHardSettings hardSettings = EFTHardSettings.Instance;
+			hardSettings.CULL_GROUNDER = 1000f;
+			hardSettings.AnimatorCullDistance = 1000f;
+			hardSettings.DEFERRED_DECALS_ENABLED = false;
+			hardSettings.DRAW_DEFERRED_DECALS = false;
+			hardSettings.PLAYER_HIT_DECALS_ENEBLED = false;
+			hardSettings.STATIC_DEFERRED_DECALS_ENABLED = false;
 
 			fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
 			fikaDedicatedWebSocket.Connect();

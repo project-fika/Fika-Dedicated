@@ -7,35 +7,35 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches
 {
-    internal class ConsoleScreen_OnProfileReceive_Patch : ModulePatch
-    {
-        protected override MethodBase GetTargetMethod()
-        {
-            return typeof(ConsoleScreen).GetMethod(nameof(ConsoleScreen.OnProfileReceive));
-        }
+	internal class ConsoleScreen_OnProfileReceive_Patch : ModulePatch
+	{
+		protected override MethodBase GetTargetMethod()
+		{
+			return typeof(ConsoleScreen).GetMethod(nameof(ConsoleScreen.OnProfileReceive));
+		}
 
-        [PatchPostfix]
-        public static void Prefix(Profile profile)
-        {
-            if (!profile.Nickname.Contains("dedicated_"))
-            {
-                if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
-                {
-                    MessageBoxHelper.Show(
-                        $"You are not starting with a dedicated profile!\nRead the documentation again!\n\nIf you are not planning to run the dedicated client with this instance of EFT, remove 'Fika.Dedicated.dll' immediately!",
-                        "FIKA ERROR",
-                        MessageBoxHelper.MessageBoxType.OK);
-                }
-                else
-                {
-                    FikaDedicatedPlugin.FikaDedicatedLogger.LogError("Not running a dedicated profile! Read the documentation again! Exiting...");
-                }
-                Application.Quit();
-            }
-            else
-            {
-                FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo("Profile verified");
-            }
-        }
-    }
+		[PatchPostfix]
+		public static void Prefix(Profile profile)
+		{
+			if (!profile.Nickname.Contains("dedicated_"))
+			{
+				if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
+				{
+					MessageBoxHelper.Show(
+						$"You are not starting with a dedicated profile!\nRead the documentation again!\n\nIf you are not planning to run the dedicated client with this instance of EFT, remove 'Fika.Dedicated.dll' immediately!",
+						"FIKA ERROR",
+						MessageBoxHelper.MessageBoxType.OK);
+				}
+				else
+				{
+					FikaDedicatedPlugin.FikaDedicatedLogger.LogError("Not running a dedicated profile! Read the documentation again! Exiting...");
+				}
+				Application.Quit();
+			}
+			else
+			{
+				FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo("Profile verified");
+			}
+		}
+	}
 }

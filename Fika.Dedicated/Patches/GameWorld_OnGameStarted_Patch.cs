@@ -27,6 +27,8 @@ namespace Fika.Dedicated.Patches
 				raidController.MainPlayer = (CoopPlayer)__instance.MainPlayer;
 				raidController.MainPlayer.MovementContext.PitchLimit = new Vector2(-90, -90);
 			}
+
+			CameraClass.Instance.SetOcclusionCullingEnabled(false);
 		}
 	}
 }

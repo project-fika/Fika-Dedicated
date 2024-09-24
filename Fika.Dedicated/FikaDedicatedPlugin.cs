@@ -181,7 +181,8 @@ namespace Fika.Dedicated
 				"com.kmyuhkyuk.EFTApi",
 				"com.mpstark.DynamicMaps",
 				"IhanaMies.LootValue",
-				"com.cactuspie.ramcleanerinterval"
+				"com.cactuspie.ramcleanerinterval",
+				"com.TYR.DeClutter"
 			];
 			PluginInfo[] pluginInfos = [.. Chainloader.PluginInfos.Values];
 			List<string> unsupportedMods = [];

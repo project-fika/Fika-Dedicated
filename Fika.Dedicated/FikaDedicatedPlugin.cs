@@ -72,10 +72,25 @@ namespace Fika.Dedicated
 					continue;
 				}
 
+				if (arg.StartsWith("-sendRate="))
+				{
+					string trimmed = arg.Replace("-sendRate=", "");
+					if (int.TryParse(trimmed, out int sendFreq))
+					{
+						int sendRate = Mathf.Clamp(sendFreq, 20, 60);
+						FikaPlugin.SendRate.Value = sendRate;
+						Logger.LogInfo("Setting SendRate to " + sendRate);
+					}
+
+					continue;
+				}
+
 				if (arg.StartsWith("-noDynamicAi"))
 				{
 					FikaPlugin.DynamicAI.Value = false;
 					Logger.LogInfo("Disabling DynamicAI");
+
+					continue;
 				}
 			}
 
@@ -101,6 +116,7 @@ namespace Fika.Dedicated
 			new MainMenuController_method_46_Patch().Enable();
 			new ConsoleScreen_OnProfileReceive_Patch().Enable();
 			new Class417_Run_Patch().Enable();
+			new Player_VisualPass_Patch().Enable();
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
@@ -136,6 +152,7 @@ namespace Fika.Dedicated
 		}
 
 		// Done every second as a way to minimize processing time
+		[Obsolete("Do not use", true)]
 		private void ClearRenderables()
 		{
 			Stopwatch sw = Stopwatch.StartNew();

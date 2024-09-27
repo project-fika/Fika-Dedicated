@@ -4,14 +4,16 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches
 {
-	// https://github.com/Unity-Technologies/UnityCsReference/blob/77b37cd9f002e27b45be07d6e3667ee53985ec82/Runtime/Export/Graphics/Texture.cs#L709
+	/// <summary>
+	/// <see href="https://github.com/Unity-Technologies/UnityCsReference/blob/77b37cd9f002e27b45be07d6e3667ee53985ec82/Runtime/Export/Graphics/Texture.cs#L709"/>
+	/// </summary>
 	public class ValidateFormatPatch2 : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{
-			var methods = typeof(Texture).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
+			MethodInfo[] methods = typeof(Texture).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
 
-			foreach (var method in methods)
+			foreach (MethodInfo method in methods)
 			{
 				if (method.Name == "ValidateFormat" && method.GetParameters().Length == 1 && method.GetParameters()[0].ParameterType == typeof(TextureFormat))
 				{

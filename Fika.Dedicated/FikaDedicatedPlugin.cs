@@ -66,7 +66,8 @@ namespace Fika.Dedicated
 					if (int.TryParse(trimmed, out int updateFreq))
 					{
 						UpdateRate = Mathf.Clamp(updateFreq, 30, 120);
-						Logger.LogInfo("Setting UpdateRate to " + UpdateRate);
+						Application.targetFrameRate = UpdateRate;
+						Logger.LogInfo("Setting UpdateRate to: " + UpdateRate);
 					}
 
 					continue;
@@ -75,11 +76,10 @@ namespace Fika.Dedicated
 				if (arg.StartsWith("-sendRate="))
 				{
 					string trimmed = arg.Replace("-sendRate=", "");
-					if (int.TryParse(trimmed, out int sendFreq))
+					if (Enum.TryParse(trimmed, out FikaPlugin.ESendRate sendRate))
 					{
-						int sendRate = Mathf.Clamp(sendFreq, 20, 60);
 						FikaPlugin.SendRate.Value = sendRate;
-						Logger.LogInfo("Setting SendRate to " + sendRate);
+						Logger.LogInfo("Setting SendRate to: " + sendRate);
 					}
 
 					continue;
@@ -117,6 +117,8 @@ namespace Fika.Dedicated
 			new ConsoleScreen_OnProfileReceive_Patch().Enable();
 			new Class428_Run_Patch().Enable();
 			new Player_VisualPass_Patch().Enable();
+			new IsReflexAvailablePatch().Enable();
+			new AudioSourcePlayPatch().Enable();
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");

@@ -12,6 +12,7 @@ using Fika.Core.Coop.Utils;
 using Fika.Core.Networking;
 using Fika.Core.Networking.Http;
 using Fika.Core.UI.Custom;
+using Fika.Core.UI.Patches;
 using Fika.Dedicated.Classes;
 using Fika.Dedicated.Patches;
 using HarmonyLib;
@@ -120,6 +121,8 @@ namespace Fika.Dedicated
 			new IsReflexAvailablePatch().Enable();
 			new AudioSourcePlayPatch().Enable();
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
+
+			new TarkovApplication_method_18_Patch().Disable();
 
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
 			if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)

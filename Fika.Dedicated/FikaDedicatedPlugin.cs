@@ -123,6 +123,7 @@ namespace Fika.Dedicated
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 
 			new TarkovApplication_method_18_Patch().Disable();
+			new MenuScreen_Awake_Patch().Disable();
 
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
 			if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)

@@ -139,6 +139,8 @@ namespace Fika.Dedicated
 			hardSettings.PLAYER_HIT_DECALS_ENEBLED = false;
 			hardSettings.STATIC_DEFERRED_DECALS_ENABLED = false;
 
+			FikaBackendUtils.IsDedicated = true;
+
 			fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
 			fikaDedicatedWebSocket.Connect();
 

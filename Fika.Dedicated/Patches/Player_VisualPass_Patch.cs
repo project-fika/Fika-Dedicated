@@ -16,7 +16,7 @@ namespace Fika.Dedicated.Patches
 		}
 
 		[PatchPrefix]
-		public static bool Prefix(Player __instance, bool ____bodyupdated, bool ____armsupdated)
+		public static bool Prefix(Player __instance, bool ____bodyupdated, bool ____armsupdated, float ____bodyTime, float ___ThirdPersonWeaponRootAuthority)
 		{
 			__instance.BodyAnimatorCommon.cullingMode = AnimatorCullingMode.AlwaysAnimate;
 			__instance.ArmsAnimatorCommon.cullingMode = AnimatorCullingMode.AlwaysAnimate;
@@ -29,11 +29,17 @@ namespace Fika.Dedicated.Patches
 
 			if (____armsupdated || __instance.ArmsUpdateMode is Player.EUpdateMode.Auto)
 			{
+				float rootAuth = __instance.MovementContext.StationaryWeapon != null ? 0f : ___ThirdPersonWeaponRootAuthority;
+
 				__instance.ProceduralWeaponAnimation.LateTransformations(Time.deltaTime);
 				if (__instance.HandsController != null)
 				{
 					__instance.HandsController.ManualLateUpdate(Time.deltaTime);
 				}
+				__instance.PlayerBones.ShiftWeaponRoot(____bodyTime, EPointOfView.ThirdPerson,
+					rootAuth, false, 0f, 0f, __instance.CurrentState.Name == EPlayerState.Sprint,
+					__instance.MovementContext.LeftStanceController.LastAnimValue, __instance.MovementContext.LeftStanceController.LeftStance,
+					__instance.ProceduralWeaponAnimation.IsAiming, __instance.MovementContext.PlayerAnimator.AnimatedInteractions.IsInteractionPlaying);
 			}
 
 			return false;

@@ -120,6 +120,8 @@ namespace Fika.Dedicated
 			new Player_VisualPass_Patch().Enable();
 			new IsReflexAvailablePatch().Enable();
 			new AudioSourcePlayPatch().Enable();
+			new LevelSettings_ApplySettings_Patch().Enable();
+			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 
 			new TarkovApplication_method_18_Patch().Disable();

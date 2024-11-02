@@ -7,17 +7,17 @@ namespace Fika.Dedicated.Patches
 	/// <summary>
 	/// THis prevents the season controller from running due to no graphics being used
 	/// </summary>
-	internal class Class428_Run_Patch : ModulePatch
+	internal class Class442_Run_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{
-			return typeof(Class428).GetMethod(nameof(Class428.Run));
+			return typeof(Class442).GetMethod(nameof(Class442.Run));
 		}
 
 		[PatchPrefix]
-		public static bool Prefix(Class428 __instance, ref Task __result, Class428.Interface3 ___interface3_0)
+		public static bool Prefix(Class442 __instance, ref Task __result, Class442.Interface3 ___interface3_0)
 		{
-			___interface3_0 = new Class428.Class436(__instance);
+			___interface3_0 = new Class442.Class452(__instance);
 			__result = Task.CompletedTask;
 			return false;
 		}

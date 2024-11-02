@@ -114,9 +114,9 @@ namespace Fika.Dedicated
 			new ValidateFormatPatch2().Enable();
 			new ValidateFormatPatch3().Enable();
 			new GameWorld_OnGameStarted_Patch().Enable();
-			new MainMenuController_method_46_Patch().Enable();
+			new MainMenuController_method_47_Patch().Enable();
 			new ConsoleScreen_OnProfileReceive_Patch().Enable();
-			new Class428_Run_Patch().Enable();
+			new Class442_Run_Patch().Enable();
 			new Player_VisualPass_Patch().Enable();
 			new IsReflexAvailablePatch().Enable();
 			new AudioSourcePlayPatch().Enable();
@@ -157,7 +157,7 @@ namespace Fika.Dedicated
 			{
 				Logger.LogInfo("Clearing memory");
 				gcCounter = 0;
-				GClass823.EmptyWorkingSet();
+				GClass839.EmptyWorkingSet();
 			}
 		}
 

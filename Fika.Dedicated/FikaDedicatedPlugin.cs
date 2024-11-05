@@ -157,7 +157,7 @@ namespace Fika.Dedicated
 			{
 				Logger.LogInfo("Clearing memory");
 				gcCounter = 0;
-				GClass839.EmptyWorkingSet();
+				MemoryControllerClass.EmptyWorkingSet();
 			}
 		}
 

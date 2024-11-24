@@ -18,6 +18,7 @@ using Fika.Dedicated.Patches;
 using HarmonyLib;
 using Newtonsoft.Json;
 using SPT.Common.Http;
+using SPT.Custom.Patches;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -126,6 +127,7 @@ namespace Fika.Dedicated
 
 			new TarkovApplication_method_18_Patch().Disable();
 			new MenuScreen_Awake_Patch().Disable();
+			new MemoryCollectionPatch().Disable();
 
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
 			if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)

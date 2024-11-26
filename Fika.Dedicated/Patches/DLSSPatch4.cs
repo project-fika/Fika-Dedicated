@@ -11,11 +11,11 @@ namespace Fika.Dedicated.Patches
 		// Token: 0x06000014 RID: 20 RVA: 0x00002318 File Offset: 0x00000518
 		protected override MethodBase GetTargetMethod()
 		{
-			return typeof(DLSSWrapper).GetConstructor(new Type[]
-			{
+			return typeof(DLSSWrapper).GetConstructor(
+			[
 				typeof(Material),
 				typeof(Material)
-			});
+			]);
 		}
 
 		// Token: 0x06000015 RID: 21 RVA: 0x00002359 File Offset: 0x00000559

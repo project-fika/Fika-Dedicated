@@ -17,10 +17,9 @@ namespace Fika.Dedicated.Patches
 		}
 
 		[PatchPostfix]
-		static GClass3109 PatchPostfix(GClass3109 __result, MessageWindow __instance, string title, string message, Action acceptAction, Action cancelAction, float time)
+		static GClass3109 PatchPostfix(GClass3109 __result, MessageWindow __instance)
 		{
 			__instance.Close(ECloseState.Accept);
-
 			return __result;
 		}
 	}

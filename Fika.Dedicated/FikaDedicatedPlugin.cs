@@ -7,18 +7,18 @@ using EFT.UI;
 using EFT.UI.Matchmaker;
 using Fika.Core;
 using Fika.Core.Coop.GameMode;
-using Fika.Core.Coop.Patches.Overrides;
+using Fika.Core.Coop.Patches;
 using Fika.Core.Coop.Utils;
 using Fika.Core.Networking;
 using Fika.Core.Networking.Http;
-using Fika.Core.Networking.Models.Dedicated;
 using Fika.Core.UI.Custom;
+using Fika.Core.UI.Patches;
 using Fika.Dedicated.Classes;
 using Fika.Dedicated.Patches;
 using HarmonyLib;
 using Newtonsoft.Json;
 using SPT.Common.Http;
-using SPT.SinglePlayer.Patches.MainMenu;
+using SPT.Custom.Patches;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated
 {
-	[BepInPlugin("com.fika.dedicated", "Dedicated", "1.0.6")]
+	[BepInPlugin("com.fika.dedicated", "Fika.Dedicated", "1.1.0")]
 	[BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
 	[BepInDependency("com.SPT.custom", BepInDependency.DependencyFlags.HardDependency)]
 	public class FikaDedicatedPlugin : BaseUnityPlugin
@@ -68,7 +68,20 @@ namespace Fika.Dedicated
 					if (int.TryParse(trimmed, out int updateFreq))
 					{
 						UpdateRate = Mathf.Clamp(updateFreq, 30, 120);
-						Logger.LogInfo("Setting UpdateRate to " + UpdateRate);
+						Application.targetFrameRate = UpdateRate;
+						Logger.LogInfo("Setting UpdateRate to: " + UpdateRate);
+					}
+
+					continue;
+				}
+
+				if (arg.StartsWith("-sendRate="))
+				{
+					string trimmed = arg.Replace("-sendRate=", "");
+					if (Enum.TryParse(trimmed, out FikaPlugin.ESendRate sendRate))
+					{
+						FikaPlugin.SendRate.Value = sendRate;
+						Logger.LogInfo("Setting SendRate to: " + sendRate);
 					}
 
 					continue;
@@ -78,6 +91,8 @@ namespace Fika.Dedicated
 				{
 					FikaPlugin.DynamicAI.Value = false;
 					Logger.LogInfo("Disabling DynamicAI");
+
+					continue;
 				}
 			}
 
@@ -90,7 +105,6 @@ namespace Fika.Dedicated
 			new VRAMPatch3().Enable();
 			new VRAMPatch4().Enable();
 			new SettingsPatch().Enable();
-			new BetaLogoPatch().Disable();
 			new SessionResultExitStatusPatch().Enable();
 			new MessageWindow_Show_Patch().Enable();
 			new MenuScreen_Show_Patch().Enable();
@@ -101,9 +115,19 @@ namespace Fika.Dedicated
 			new ValidateFormatPatch2().Enable();
 			new ValidateFormatPatch3().Enable();
 			new GameWorld_OnGameStarted_Patch().Enable();
-			new MainMenuController_method_46_Patch().Enable();
+			new MainMenuController_method_47_Patch().Enable();
 			new ConsoleScreen_OnProfileReceive_Patch().Enable();
+			new Class442_Run_Patch().Enable();
+			new Player_VisualPass_Patch().Enable();
+			new IsReflexAvailablePatch().Enable();
+			new AudioSourcePlayPatch().Enable();
+			new LevelSettings_ApplySettings_Patch().Enable();
+			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
+
+			new TarkovApplication_method_18_Patch().Disable();
+			new MenuScreen_Awake_Patch().Disable();
+			new MemoryCollectionPatch().Disable();
 
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
 			if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
@@ -119,6 +143,8 @@ namespace Fika.Dedicated
 			hardSettings.PLAYER_HIT_DECALS_ENEBLED = false;
 			hardSettings.STATIC_DEFERRED_DECALS_ENABLED = false;
 
+			FikaBackendUtils.IsDedicated = true;
+
 			fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
 			fikaDedicatedWebSocket.Connect();
 
@@ -133,11 +159,12 @@ namespace Fika.Dedicated
 			{
 				Logger.LogInfo("Clearing memory");
 				gcCounter = 0;
-				GClass773.EmptyWorkingSet();
+				MemoryControllerClass.EmptyWorkingSet();
 			}
 		}
 
 		// Done every second as a way to minimize processing time
+		[Obsolete("Do not use", true)]
 		private void ClearRenderables()
 		{
 			Stopwatch sw = Stopwatch.StartNew();
@@ -285,8 +312,8 @@ namespace Fika.Dedicated
 			yield return null;
 
 			locationSelectionScreen.Location_0 = session.LocationSettings.locations[request.LocationId];
-			locationSelectionScreen.method_6(request.Time); // set time
-			locationSelectionScreen.method_10(); // location selection screen -> offline raid screen
+			locationSelectionScreen.method_7(request.Time); // set time
+			locationSelectionScreen.method_11(); // location selection screen -> offline raid screen
 
 			MatchmakerOfflineRaidScreen offlineRaidScreen;
 			do
@@ -295,7 +322,7 @@ namespace Fika.Dedicated
 				offlineRaidScreen = FindObjectOfType<MatchmakerOfflineRaidScreen>();
 			} while (offlineRaidScreen == null);
 			yield return null;
-			offlineRaidScreen.method_10(); // offline raid screen -> insurance screen
+			offlineRaidScreen.method_4(); // offline raid screen -> insurance screen
 
 			if (raidSettings.Side != ESideType.Savage)
 			{

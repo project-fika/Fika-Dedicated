@@ -1,5 +1,5 @@
 ﻿using BepInEx.Logging;
-using Fika.Core.Networking.Models.Dedicated;
+using Fika.Core.Networking.Http;
 using Fika.Dedicated;
 using Newtonsoft.Json.Linq;
 using SPT.Common.Http;
@@ -30,13 +30,15 @@ namespace Fika.Core.Networking
 		{
 			Host = RequestHandler.Host.Replace("http", "ws");
 			SessionId = RequestHandler.SessionId;
-			Url = $"{Host}/fika/dedicatedraidservice/{SessionId}?";
+			Url = $"{Host}/fika/dedicatedraidservice/";
 
 			_webSocket = new WebSocket(Url)
 			{
 				WaitTime = TimeSpan.FromMinutes(1),
 				EmitOnPing = true
 			};
+
+			_webSocket.SetCredentials(SessionId, "", true);
 
 			_webSocket.OnOpen += WebSocket_OnOpen;
 			_webSocket.OnMessage += WebSocket_OnMessage;

@@ -13,7 +13,7 @@ namespace Fika.Dedicated.Patches
 
 		protected override MethodBase GetTargetMethod()
 		{
-			return typeof(TarkovApplication).GetMethod(nameof(SharedGameSettingsClass.method_0));
+			return typeof(SharedGameSettingsClass).GetMethod(nameof(SharedGameSettingsClass.method_0));
 		}
 
 		[PatchPostfix]

@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Dedicated.Patches.DLSS
 {
 	// Token: 0x02000007 RID: 7
 	public class DLSSPatch4 : ModulePatch

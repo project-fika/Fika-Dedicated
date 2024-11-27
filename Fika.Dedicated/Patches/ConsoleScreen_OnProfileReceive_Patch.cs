@@ -1,5 +1,6 @@
 ﻿using EFT;
 using EFT.UI;
+using SPT.Core.Utils;
 using SPT.Custom.Utils;
 using SPT.Reflection.Patching;
 using System.Reflection;
@@ -34,6 +35,7 @@ namespace Fika.Dedicated.Patches
 			}
 			else
 			{
+				ValidationUtil._crashHandler = "FikaDedicated";
 				FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo("Profile verified");
 			}
 		}

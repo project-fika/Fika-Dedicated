@@ -15,6 +15,10 @@ using Fika.Core.UI.Custom;
 using Fika.Core.UI.Patches;
 using Fika.Dedicated.Classes;
 using Fika.Dedicated.Patches;
+using Fika.Dedicated.Patches.DestroyGraphics;
+using Fika.Dedicated.Patches.DLSS;
+using Fika.Dedicated.Patches.TextureValidateFormat;
+using Fika.Dedicated.Patches.VRAM;
 using HarmonyLib;
 using Newtonsoft.Json;
 using SPT.Common.Http;
@@ -124,6 +128,20 @@ namespace Fika.Dedicated
 			new AudioSourcePlayPatch().Enable();
 			new LevelSettings_ApplySettings_Patch().Enable();
 			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
+			new GPUInstancerManager_Update_Patch().Enable();
+			new GPUInstancerDetailManager_Awake_Patch().Enable();
+			new TextureDecalsPainter_Awake_Patch().Enable();
+			new VolumetricLightRenderer_Awake_Patch().Enable();
+			new GClass3324_SetResolution_Patch().Enable();
+			new DistantShadow_Awake_Patch().Enable();
+			new DistantShadow_Update_Patch().Enable();
+			new AmbientLight_Start_Patch().Enable();
+			new CloudController_OnEnable_Patch().Enable();
+			new CloudController_UpdateAmbient_Patch().Enable();
+			new GPUInstancerHiZOcclusionGenerator_Awake_Patch().Enable();
+			new WindowsManager_Awake_Patch().Enable();
+			new ImpostorsRenderer_OnEnable_Patch().Enable();
+
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 
 			new TarkovApplication_method_18_Patch().Disable();

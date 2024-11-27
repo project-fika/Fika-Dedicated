@@ -1,14 +1,13 @@
 using SPT.Reflection.Patching;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Dedicated.Patches.TextureValidateFormat
 {
 	/// <summary>
-	/// <see href="https://github.com/Unity-Technologies/UnityCsReference/blob/77b37cd9f002e27b45be07d6e3667ee53985ec82/Runtime/Export/Graphics/Texture.cs#L730"/>
+	/// <see href="https://github.com/Unity-Technologies/UnityCsReference/blob/77b37cd9f002e27b45be07d6e3667ee53985ec82/Runtime/Export/Graphics/Texture.cs#L709"/>
 	/// </summary>
-	public class ValidateFormatPatch3 : ModulePatch
+	public class ValidateFormatPatch2 : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{
@@ -16,7 +15,7 @@ namespace Fika.Dedicated.Patches
 
 			foreach (MethodInfo method in methods)
 			{
-				if (method.Name == "ValidateFormat" && method.GetParameters().Length == 2 && method.GetParameters()[0].ParameterType == typeof(GraphicsFormat))
+				if (method.Name == "ValidateFormat" && method.GetParameters().Length == 1 && method.GetParameters()[0].ParameterType == typeof(TextureFormat))
 				{
 					return method;
 				}

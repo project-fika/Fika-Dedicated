@@ -15,6 +15,7 @@ using Fika.Core.UI.Custom;
 using Fika.Core.UI.Patches;
 using Fika.Dedicated.Classes;
 using Fika.Dedicated.Patches;
+using Fika.Dedicated.Patches.DestroyGraphics;
 using HarmonyLib;
 using Newtonsoft.Json;
 using SPT.Common.Http;
@@ -131,6 +132,11 @@ namespace Fika.Dedicated
 			new DistantShadow_Awake_Patch().Enable();
 			new DistantShadow_Update_Patch().Enable();
 			new AmbientLight_Start_Patch().Enable();
+			new CloudController_OnEnable_Patch().Enable();
+			new CloudController_UpdateAmbient_Patch().Enable();
+			new GPUInstancerHiZOcclusionGenerator_Awake_Patch().Enable();
+			new WindowsManager_Awake_Patch().Enable();
+			new ImpostorsRenderer_OnEnable_Patch().Enable();
 
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 

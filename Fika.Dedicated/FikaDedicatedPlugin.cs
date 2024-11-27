@@ -124,6 +124,14 @@ namespace Fika.Dedicated
 			new LevelSettings_ApplySettings_Patch().Enable();
 			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
 			new GPUInstancerManager_Update_Patch().Enable();
+			new GPUInstancerDetailManager_Awake_Patch().Enable();
+			new TextureDecalsPainter_Awake_Patch().Enable();
+			new VolumetricLightRenderer_Awake_Patch().Enable();
+			new GClass3324_SetResolution_Patch().Enable();
+			new DistantShadow_Awake_Patch().Enable();
+			new DistantShadow_Update_Patch().Enable();
+			new AmbientLight_Start_Patch().Enable();
+
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 
 			new TarkovApplication_method_18_Patch().Disable();

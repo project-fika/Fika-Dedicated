@@ -57,6 +57,7 @@ namespace Fika.Dedicated.Patches
 			gameSettings.Graphics.Settings.DLSSMode.SetValue(EDLSSMode.Off);
 			gameSettings.Graphics.Settings.FSR2Mode.SetValue(EFSR2Mode.Off);
 			gameSettings.Graphics.Settings.FSR3Mode.SetValue(EFSR3Mode.Off);
+			gameSettings.Graphics.Settings.CloudsQuality.SetValue(CloudsMode.Low);
 
 			gameSettings.Graphics.Settings.LobbyFramerate.SetValue(30);
 			gameSettings.Graphics.Settings.GameFramerate.SetValue(FikaDedicatedPlugin.UpdateRate);

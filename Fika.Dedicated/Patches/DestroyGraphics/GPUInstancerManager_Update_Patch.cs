@@ -2,7 +2,7 @@
 using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Dedicated.Patches.DestroyGraphics
 {
 	internal class GPUInstancerManager_Update_Patch : ModulePatch
 	{

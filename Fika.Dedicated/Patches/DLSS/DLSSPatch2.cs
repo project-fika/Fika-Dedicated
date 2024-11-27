@@ -1,7 +1,7 @@
 ﻿using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Dedicated.Patches.DLSS
 {
 	// Token: 0x02000005 RID: 5
 	public class DLSSPatch2 : ModulePatch

@@ -3,7 +3,7 @@ using SPT.Reflection.Patching;
 using System.Reflection;
 using UnityEngine;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Dedicated.Patches.DestroyGraphics
 {
 	internal class GPUInstancerDetailManager_Awake_Patch : ModulePatch
 	{
@@ -15,7 +15,7 @@ namespace Fika.Dedicated.Patches
 		[PatchPrefix]
 		public static bool Prefix(GPUInstancerDetailManager __instance)
 		{
-			GameObject.Destroy(__instance);
+			Object.Destroy(__instance);
 			return false;
 		}
 	}

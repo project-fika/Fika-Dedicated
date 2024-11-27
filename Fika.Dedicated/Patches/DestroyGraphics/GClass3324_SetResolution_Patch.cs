@@ -1,13 +1,13 @@
 ﻿using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class DistantShadow_Update_Patch : ModulePatch
+	internal class GClass3324_SetResolution_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{
-			return typeof(DistantShadow).GetMethod(nameof(DistantShadow.Update));
+			return typeof(GClass3324).GetMethod(nameof(GClass3324.SetResolution));
 		}
 
 		[PatchPrefix]

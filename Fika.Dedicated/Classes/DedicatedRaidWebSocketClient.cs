@@ -58,7 +58,6 @@ namespace Fika.Core.Networking
 			_webSocket.Close();
 		}
 
-
 		private void WebSocket_OnOpen(object sender, EventArgs e)
 		{
 			logger.LogInfo("Connected to FikaDedicatedRaidWebSocket as server");

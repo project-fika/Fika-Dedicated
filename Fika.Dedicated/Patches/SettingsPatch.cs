@@ -91,6 +91,14 @@ namespace Fika.Dedicated.Patches
 			await gameSettings.Sound.Save();
 			await gameSettings.Graphics.Save();
 
+			EFTHardSettings hardSettings = EFTHardSettings.Instance;
+			hardSettings.CULL_GROUNDER = 1000f;
+			hardSettings.AnimatorCullDistance = 1000f;
+			hardSettings.DEFERRED_DECALS_ENABLED = false;
+			hardSettings.DRAW_DEFERRED_DECALS = false;
+			hardSettings.PLAYER_HIT_DECALS_ENEBLED = false;
+			hardSettings.STATIC_DEFERRED_DECALS_ENABLED = false;
+
 			HasSet = true;
 		}
 	}

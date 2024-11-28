@@ -94,19 +94,8 @@ namespace Fika.Dedicated
 			new AudioSourcePlayPatch().Enable();
 			new LevelSettings_ApplySettings_Patch().Enable();
 			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
-			new GPUInstancerManager_Update_Patch().Enable();
-			new GPUInstancerDetailManager_Awake_Patch().Enable();
-			new TextureDecalsPainter_Awake_Patch().Enable();
-			new VolumetricLightRenderer_Awake_Patch().Enable();
-			new GClass3324_SetResolution_Patch().Enable();
-			new DistantShadow_Awake_Patch().Enable();
-			new DistantShadow_Update_Patch().Enable();
-			new AmbientLight_Start_Patch().Enable();
-			new CloudController_OnEnable_Patch().Enable();
-			new CloudController_UpdateAmbient_Patch().Enable();
-			new GPUInstancerHiZOcclusionGenerator_Awake_Patch().Enable();
-			new WindowsManager_Awake_Patch().Enable();
-			new ImpostorsRenderer_OnEnable_Patch().Enable();
+
+			DestroyGraphicsAutoloader.EnableDestroyGraphicsPatches();
 
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 

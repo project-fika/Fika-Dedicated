@@ -12,7 +12,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		}
 
 		[PatchPrefix]
-		public static bool Prefix(ScopeMaskRenderer __instance)
+		public static bool Prefix(StaticDeferredDecal __instance)
 		{
 			Object.Destroy(__instance);
 			return false;

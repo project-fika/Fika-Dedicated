@@ -12,7 +12,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		}
 
 		[PatchPrefix]
-		public static bool Prefix(WindowsManager __instance)
+		public static bool Prefix(AnticheatMipMapChecker __instance)
 		{
 			Object.Destroy(__instance);
 			return false;

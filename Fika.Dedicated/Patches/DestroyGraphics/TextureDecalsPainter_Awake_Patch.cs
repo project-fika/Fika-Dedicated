@@ -14,12 +14,12 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		[PatchPrefix]
 		public static bool Prefix(TextureDecalsPainter __instance, ref GClass803<RenderTexture> ___gclass803_0)
 		{
-			___gclass803_0 = new(0, fakeClassFunc);
+			___gclass803_0 = new(0, FakeClassFunc);
 			Object.Destroy(__instance);
 			return false;
 		}
 
-		public static RenderTexture fakeClassFunc()
+		private static RenderTexture FakeClassFunc()
 		{
 			return new();
 		}

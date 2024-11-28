@@ -60,7 +60,7 @@ namespace Fika.Dedicated.Patches
 			gameSettings.Graphics.Settings.CloudsQuality.SetValue(CloudsMode.Low);
 
 			gameSettings.Graphics.Settings.LobbyFramerate.SetValue(30);
-			gameSettings.Graphics.Settings.GameFramerate.SetValue(FikaDedicatedPlugin.UpdateRate);
+			gameSettings.Graphics.Settings.GameFramerate.SetValue(FikaDedicatedPlugin.UpdateRate.Value);
 
 			gameSettings.Game.Settings.EnableHideoutPreload.SetValue(false);
 

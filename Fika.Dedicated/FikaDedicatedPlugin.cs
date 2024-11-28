@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Bootstrap;
+using BepInEx.Configuration;
 using BepInEx.Logging;
 using Comfort.Common;
 using EFT;
@@ -41,65 +42,30 @@ namespace Fika.Dedicated
 		public static FikaDedicatedPlugin Instance { get; private set; }
 		public static ManualLogSource FikaDedicatedLogger;
 		public static DedicatedRaidController raidController;
-		public static int UpdateRate { get; internal set; }
 		public DedicatedStatus Status { get; set; }
 
 		private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
 		private float gcCounter;
 		private Coroutine verifyConnectionsRoutine;
 
+		public static ConfigEntry<int> UpdateRate { get; private set; }
+		public static ConfigEntry<int> RAMCleanInterval { get; private set; }
+
 		private void Awake()
 		{
 			Instance = this;
-			UpdateRate = 60;
 			gcCounter = 0;
 
 			FikaDedicatedLogger = Logger;
 
 			FikaPlugin.AutoExtract.Value = true;
 			FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
-			FikaPlugin.ConnectionTimeout.Value = 20;
+			FikaPlugin.ConnectionTimeout.Value = 30;
 
 			FikaPlugin.Instance.AllowFreeCam = true;
 			FikaPlugin.Instance.AllowSpectateFreeCam = true;
 
-			string[] commandLineArgs = Environment.GetCommandLineArgs();
-			foreach (string arg in commandLineArgs)
-			{
-				if (arg.StartsWith("-updateRate="))
-				{
-					string trimmed = arg.Replace("-updateRate=", "");
-					if (int.TryParse(trimmed, out int updateFreq))
-					{
-						UpdateRate = Mathf.Clamp(updateFreq, 30, 120);
-						Application.targetFrameRate = UpdateRate;
-						QualitySettings.vSyncCount = 0;
-						Logger.LogInfo("Setting UpdateRate to: " + UpdateRate);
-					}
-
-					continue;
-				}
-
-				if (arg.StartsWith("-sendRate="))
-				{
-					string trimmed = arg.Replace("-sendRate=", "");
-					if (Enum.TryParse(trimmed, out FikaPlugin.ESendRate sendRate))
-					{
-						FikaPlugin.SendRate.Value = sendRate;
-						Logger.LogInfo("Setting SendRate to: " + sendRate);
-					}
-
-					continue;
-				}
-
-				if (arg.StartsWith("-noDynamicAi"))
-				{
-					FikaPlugin.DynamicAI.Value = false;
-					Logger.LogInfo("Disabling DynamicAI");
-
-					continue;
-				}
-			}
+			SetupConfig();
 
 			new DLSSPatch1().Enable();
 			new DLSSPatch2().Enable();
@@ -170,13 +136,24 @@ namespace Fika.Dedicated
 			StartCoroutine(RunPluginValidation());
 		}
 
+		private void SetupConfig()
+		{
+			UpdateRate = Config.Bind("Dedicated", "Send Rate", 60,
+				new ConfigDescription("How often the server should update (frame cap). Only works when running without '-nographics'",
+				new AcceptableValueRange<int>(30, 120)));
+
+			RAMCleanInterval = Config.Bind("Dedicated", "RAM Clean Interval", 5,
+				new ConfigDescription("How often in minutes the RAM cleaner should run",
+				new AcceptableValueRange<int>(1, 30)));
+		}
+
 		protected void Update()
 		{
 			gcCounter += Time.deltaTime;
 
-			if (gcCounter > 300)
+			if (gcCounter > (RAMCleanInterval.Value * 60))
 			{
-				Logger.LogInfo("Clearing memory");
+				Logger.LogDebug("Clearing memory");
 				gcCounter = 0;
 				MemoryControllerClass.EmptyWorkingSet();
 			}

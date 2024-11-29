@@ -47,6 +47,7 @@ namespace Fika.Dedicated
 		private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
 		private float gcCounter;
 		private Coroutine verifyConnectionsRoutine;
+		private bool invalidPluginsFound = false;
 
 		public static ConfigEntry<int> UpdateRate { get; private set; }
 		public static ConfigEntry<int> RAMCleanInterval { get; private set; }
@@ -112,7 +113,6 @@ namespace Fika.Dedicated
 			FikaBackendUtils.IsDedicated = true;
 
 			fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
-			fikaDedicatedWebSocket.Connect();
 
 			StartCoroutine(RunPluginValidation());
 		}
@@ -204,12 +204,14 @@ namespace Fika.Dedicated
 			if (unsupportedMods.Count > 0)
 			{
 				string modsString = string.Join("; ", unsupportedMods);
-				Logger.LogFatal($"{unsupportedMods.Count} invalid plugins found, the game will be forcibly closed! Remove these mods: {modsString}");
-				Application.Quit();
+				Logger.LogFatal($"{unsupportedMods.Count} invalid plugins found, this dedicated host will not be available for hosting! Remove these mods: {modsString}");
+				invalidPluginsFound = true;
 				return;
 			}
 
 			Logger.LogInfo("Plugins verified successfully");
+
+			fikaDedicatedWebSocket.Connect();
 		}
 
 		private IEnumerator VerifyPlayersRoutine()
@@ -408,7 +410,7 @@ namespace Fika.Dedicated
 
 		public void StartSetDedicatedStatusReadyRoutine()
 		{
-			Status = DedicatedStatus.READY;
+			Status = invalidPluginsFound ? DedicatedStatus.IN_RAID : DedicatedStatus.READY;
 			StartCoroutine(SetDedicatedStatusReady());
 		}
 	}

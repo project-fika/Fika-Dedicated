@@ -36,7 +36,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 				yield return null;
 			}
 
-			FikaDedicatedPlugin.FikaDedicatedLogger.LogDebug($"Scene {sceneName} is fully loaded.");
+			FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo($"Scene {sceneName} is fully loaded.");
 
 			Scene loadedScene = SceneManager.GetSceneByName(sceneName);
 			if (loadedScene.IsValid())
@@ -57,7 +57,6 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		}
 
 		private static readonly Type[] ProtectedComponents = { 
-			typeof(MeshFilter),
 			typeof(AmbientLight),
 			typeof(AreaLight),
 			typeof(HotObject),

@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	/*
 	internal class WindowsManager_Awake_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
@@ -19,5 +18,4 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 			return false;
 		}
 	}
-	*/
 }

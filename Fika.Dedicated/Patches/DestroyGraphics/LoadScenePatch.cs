@@ -74,19 +74,14 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 			foreach (Renderer renderer in renderers)
 			{
 				// Check for protected components we absolutely cannot unload, these would break the game someway or another.
-				bool hasProtectedComponent = false;
+				bool hasProtectedRenderer = false;
 				foreach (Type componentType in ProtectedComponents)
 				{
 					if (renderer.gameObject.GetComponent(componentType) != null)
 					{
-						hasProtectedComponent = true;
+						hasProtectedRenderer = true;
 						break;
 					}
-				}
-
-				if (hasProtectedComponent)
-				{
-					continue;
 				}
 
 				// Unload materials and textures.
@@ -94,7 +89,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 				{
 					if (material != null)
 					{
-						if(material.HasProperty("_MainTex"))
+						if (material.HasProperty("_MainTex"))
 						{
 							material.mainTexture = null;
 						}
@@ -103,8 +98,13 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 					}
 				}
 
+				if (hasProtectedRenderer)
+				{
+					continue;
+				}
+
 				// Destroy the renderer itself, note: This should not remove any colliders and such.
-				FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo($"Removing Renderer: {renderer.gameObject.name}");
+				FikaDedicatedPlugin.FikaDedicatedLogger.LogDebug($"Removing Renderer: {renderer.gameObject.name}");
 				Destroy(renderer);
 			}
 		}

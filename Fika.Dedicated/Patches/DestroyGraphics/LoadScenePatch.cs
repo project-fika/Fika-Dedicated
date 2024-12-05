@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
+using BSG.Unity.Wires;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
@@ -61,7 +62,9 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 			typeof(HotObject),
 			typeof(RoadSplineGenerator),
 			typeof(RoadSolidMarkGenerator),
-			typeof(RoadMarksGenerator) 
+			typeof(RoadMarksGenerator),
+			typeof(WireGenerator), // These can't be removed, MeshRenderers keeps these alive at the moment
+			typeof(WireSplineGenerator)
 		};
 
 		private void DestroyRenderers(GameObject prefab)

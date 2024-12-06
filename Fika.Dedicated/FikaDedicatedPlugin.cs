@@ -109,6 +109,7 @@ namespace Fika.Dedicated
 			new TarkovApplication_method_18_Patch().Disable();
 			new MenuScreen_Awake_Patch().Disable();
 			new MemoryCollectionPatch().Disable();
+			new SetPreRaidSettingsScreenDefaultsPatch().Disable();
 
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
 			if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)

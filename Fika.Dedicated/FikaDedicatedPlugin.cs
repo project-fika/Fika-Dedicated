@@ -396,16 +396,17 @@ namespace Fika.Dedicated
 		{
 			while (Status == DedicatedStatus.READY)
 			{
-				Task.Run(async () =>
-				{
-					SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, DedicatedStatus.READY);
-					await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
-				});
-
+				Task.Run(SetStatusToReady);
 				yield return new WaitForSeconds(15.0f);
 			}
 
 			yield break;
+		}
+
+		private async void SetStatusToReady()
+		{
+			SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, DedicatedStatus.READY);
+			await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
 		}
 
 		public void StartSetDedicatedStatusReadyRoutine()

@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
 using BSG.Unity.Wires;
+using EFT.Interactive;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
@@ -57,6 +58,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		}
 
 		private static readonly Type[] ProtectedComponents = {
+			typeof(WindowBreaker),
 			typeof(AmbientLight),
 			typeof(AreaLight),
 			typeof(HotObject),
@@ -89,7 +91,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 				bool hasProtectedRenderer = false;
 				foreach (Type componentType in ProtectedComponents)
 				{
-					if (renderer.gameObject.GetComponent(componentType) != null || renderer.gameObject.name.ToLower().Contains("door"))
+					if (renderer.gameObject.GetComponent(componentType) != null || renderer.gameObject.name.ToLower().Contains("door") || renderer.gameObject.name.ToLower().Contains("window"))
 					{
 						hasProtectedRenderer = true;
 						break;

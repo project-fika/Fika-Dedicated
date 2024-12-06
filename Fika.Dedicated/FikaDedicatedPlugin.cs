@@ -51,6 +51,7 @@ namespace Fika.Dedicated
 
 		public static ConfigEntry<int> UpdateRate { get; private set; }
 		public static ConfigEntry<int> RAMCleanInterval { get; private set; }
+		public static ConfigEntry<bool> ShouldBotsSleep { get; private set; }
 
 		private void Awake()
 		{
@@ -96,6 +97,11 @@ namespace Fika.Dedicated
 			new LevelSettings_ApplySettings_Patch().Enable();
 			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
 
+			if (!ShouldBotsSleep.Value)
+			{
+				new BotStandBy_Update_Patch().Enable();
+			}
+
 			DestroyGraphicsAutoloader.EnableDestroyGraphicsPatches();
 
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
@@ -126,6 +132,9 @@ namespace Fika.Dedicated
 			RAMCleanInterval = Config.Bind("Dedicated", "RAM Clean Interval", 5,
 				new ConfigDescription("How often in minutes the RAM cleaner should run",
 				new AcceptableValueRange<int>(1, 30)));
+
+			ShouldBotsSleep = Config.Bind("Dedicated", "Bot sleeping", false,
+				new ConfigDescription("Should the dedicated host allow bots to sleep? (BSG bot sleeping logic)"));
 		}
 
 		protected void Update()

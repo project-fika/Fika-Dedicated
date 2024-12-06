@@ -74,7 +74,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 
 			foreach (ParticleSystem particle in particles)
 			{
-				if(particle.gameObject.name.Contains("door"))
+				if(particle.gameObject.name.ToLower().Contains("door"))
 				{
 					continue;
 				}
@@ -89,7 +89,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 				bool hasProtectedRenderer = false;
 				foreach (Type componentType in ProtectedComponents)
 				{
-					if (renderer.gameObject.GetComponent(componentType) != null || renderer.gameObject.name.Contains("door"))
+					if (renderer.gameObject.GetComponent(componentType) != null || renderer.gameObject.name.ToLower().Contains("door"))
 					{
 						hasProtectedRenderer = true;
 						break;

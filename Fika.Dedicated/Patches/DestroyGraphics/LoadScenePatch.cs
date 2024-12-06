@@ -70,6 +70,13 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		private void DestroyRenderers(GameObject prefab)
 		{
 			Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>(true);
+			ParticleSystem[] particles = prefab.GetComponentsInChildren<ParticleSystem>(true);
+
+			foreach(ParticleSystem particle in particles)
+			{
+				particle.Stop();
+				Destroy(particle);
+			}
 
 			foreach (Renderer renderer in renderers)
 			{

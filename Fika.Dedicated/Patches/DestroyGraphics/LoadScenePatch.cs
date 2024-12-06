@@ -56,7 +56,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 			}
 		}
 
-		private static readonly Type[] ProtectedComponents = { 
+		private static readonly Type[] ProtectedComponents = {
 			typeof(AmbientLight),
 			typeof(AreaLight),
 			typeof(HotObject),
@@ -72,8 +72,13 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 			Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>(true);
 			ParticleSystem[] particles = prefab.GetComponentsInChildren<ParticleSystem>(true);
 
-			foreach(ParticleSystem particle in particles)
+			foreach (ParticleSystem particle in particles)
 			{
+				if(particle.gameObject.name.Contains("door"))
+				{
+					continue;
+				}
+
 				particle.Stop();
 				Destroy(particle);
 			}
@@ -84,7 +89,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 				bool hasProtectedRenderer = false;
 				foreach (Type componentType in ProtectedComponents)
 				{
-					if (renderer.gameObject.GetComponent(componentType) != null)
+					if (renderer.gameObject.GetComponent(componentType) != null || renderer.gameObject.name.Contains("door"))
 					{
 						hasProtectedRenderer = true;
 						break;

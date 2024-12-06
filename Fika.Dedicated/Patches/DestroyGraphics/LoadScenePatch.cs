@@ -76,7 +76,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 
 			foreach (ParticleSystem particle in particles)
 			{
-				if(particle.gameObject.name.ToLower().Contains("door"))
+				if (particle.gameObject.name.ToLower().Contains("door"))
 				{
 					continue;
 				}
@@ -91,7 +91,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 				bool hasProtectedRenderer = false;
 				foreach (Type componentType in ProtectedComponents)
 				{
-					if (renderer.gameObject.GetComponent(componentType) != null || renderer.gameObject.name.ToLower().Contains("door") || renderer.gameObject.name.ToLower().Contains("window"))
+					if (renderer.gameObject.GetComponent(componentType) != null || renderer.gameObject.name.ToLower().Contains("door") || renderer.gameObject.name.ToLower().Contains("glass"))
 					{
 						hasProtectedRenderer = true;
 						break;
@@ -103,6 +103,11 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 				{
 					if (material != null)
 					{
+						if (material.name.ToLower().Contains("glass"))
+						{
+							continue;
+						}
+
 						if (material.HasProperty("_MainTex"))
 						{
 							material.mainTexture = null;

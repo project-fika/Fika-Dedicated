@@ -15,7 +15,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		[PatchPrefix]
 		public static bool Prefix(ParticleIntensityFromAnimator __instance)
 		{
-			GameObject.Destroy(__instance.gameObject);
+			GameObject.Destroy(__instance);
 			return false;
 		}
 	}

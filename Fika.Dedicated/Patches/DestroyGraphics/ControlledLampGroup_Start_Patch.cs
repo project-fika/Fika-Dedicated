@@ -1,0 +1,21 @@
+﻿using SPT.Reflection.Patching;
+using System.Reflection;
+using UnityEngine;
+
+namespace Fika.Dedicated.Patches.DestroyGraphics
+{
+	internal class ControlledLampGroup_Start_Patch : ModulePatch
+	{
+		protected override MethodBase GetTargetMethod()
+		{
+			return typeof(ControlledLampGroup).GetMethod(nameof(ControlledLampGroup.Start));
+		}
+
+		[PatchPrefix]
+		public static bool Prefix(ControlledLampGroup __instance)
+		{
+			GameObject.Destroy(__instance);
+			return false;
+		}
+	}
+}

@@ -18,7 +18,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		}
 
 		[PatchPostfix]
-		static void Postfix(string sceneName, LoadSceneMode mode, AsyncOperation __result)
+		static void Postfix(string sceneName, AsyncOperation __result)
 		{
 			GameObject tempGameObject = new("SceneModificationHandler");
 			SceneModificationHandler handler = tempGameObject.AddComponent<SceneModificationHandler>();
@@ -57,7 +57,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 			}
 		}
 
-		private static readonly Type[] ProtectedComponents = {
+		private static readonly Type[] ProtectedComponents = [
 			typeof(WindowBreaker),
 			typeof(AmbientLight),
 			typeof(AreaLight),
@@ -67,7 +67,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 			typeof(RoadMarksGenerator),
 			typeof(WireGenerator), // These can't be removed, MeshRenderers keeps these alive at the moment
 			typeof(WireSplineGenerator)
-		};
+		];
 
 		private void DestroyRenderers(GameObject prefab)
 		{

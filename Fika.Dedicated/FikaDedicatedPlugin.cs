@@ -176,7 +176,7 @@ namespace Fika.Dedicated
 				new ConfigDescription("If the dedicated plugin should run patches to disable various graphical elements"));
 
 			DestroyRenderersOnSceneLoad = Config.Bind("Dedicated", "Destroy Renderers", true,
-				new ConfigDescription("If the dedicated plugin should hook scene loading to disable unecessary renderers as well as unloading all materials (Requires 'Destroy Graphics' to be enabled)"));
+				new ConfigDescription("If the dedicated plugin should hook scene loading to disable unnecessary renderers as well as unloading all materials (Requires 'Destroy Graphics' to be enabled)"));
 		}
 
 		protected void Update()

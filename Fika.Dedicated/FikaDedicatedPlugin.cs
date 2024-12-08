@@ -28,6 +28,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -53,7 +54,7 @@ namespace Fika.Dedicated
 		public static ConfigEntry<int> RAMCleanInterval { get; private set; }
 		public static ConfigEntry<bool> ShouldBotsSleep { get; private set; }
 
-		private void Awake()
+		protected void Awake()
 		{
 			Instance = this;
 			gcCounter = 0;
@@ -77,7 +78,7 @@ namespace Fika.Dedicated
 			new VRAMPatch2().Enable();
 			new VRAMPatch3().Enable();
 			new VRAMPatch4().Enable();
-			new SettingsPatch().Enable();
+			//new SettingsPatch().Enable();
 			new SessionResultExitStatusPatch().Enable();
 			new MessageWindow_Show_Patch().Enable();
 			new MenuScreen_Show_Patch().Enable();
@@ -114,7 +115,11 @@ namespace Fika.Dedicated
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
 			if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
 			{
-				Logger.LogWarning("You are not running an officially supported operating system by Fika. Minimal support will be given.");
+				Logger.LogWarning("You are not running an officially supported operating system by Fika. Minimal support will be given. Please cleanup your '/Logs' folder manually.");
+			}
+			else
+			{
+				CleanupLogFiles();
 			}
 
 			FikaBackendUtils.IsDedicated = true;
@@ -122,6 +127,31 @@ namespace Fika.Dedicated
 			fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
 
 			StartCoroutine(RunPluginValidation());
+		}
+
+		private void CleanupLogFiles()
+		{
+			string exePath = AppContext.BaseDirectory;
+			string logsPath = Path.Combine(exePath, "Logs");
+			if (!Directory.Exists(logsPath))
+			{
+				Logger.LogError("CleanupLogFiles: Could not finds '/Logs' folder!");
+				return;
+			}
+
+			DirectoryInfo logsDir = new(logsPath);
+			foreach (DirectoryInfo dir in logsDir.EnumerateDirectories())
+			{
+				try
+				{
+					Logger.LogInfo($"CleanupLogFiles: Deleting {dir.Name}");
+					dir.Delete(true);
+				}
+				catch
+				{
+					Logger.LogWarning($"CleanupLogFiles: Could not delete {dir.Name}, it's probably being used");
+				}
+			}
 		}
 
 		private void SetupConfig()

@@ -35,7 +35,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated
 {
-	[BepInPlugin("com.fika.dedicated", "Fika.Dedicated", "1.1.2")]
+	[BepInPlugin("com.fika.dedicated", "Fika.Dedicated", "1.1.3")]
 	[BepInDependency("com.fika.core", BepInDependency.DependencyFlags.HardDependency)]
 	[BepInDependency("com.SPT.custom", BepInDependency.DependencyFlags.HardDependency)]
 	public class FikaDedicatedPlugin : BaseUnityPlugin

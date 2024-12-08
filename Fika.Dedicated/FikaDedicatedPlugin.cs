@@ -28,6 +28,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -52,8 +53,10 @@ namespace Fika.Dedicated
 		public static ConfigEntry<int> UpdateRate { get; private set; }
 		public static ConfigEntry<int> RAMCleanInterval { get; private set; }
 		public static ConfigEntry<bool> ShouldBotsSleep { get; private set; }
+		public static ConfigEntry<bool> ShouldDestroyGraphics { get; private set; }
+		public static ConfigEntry<bool> DestroyRenderersOnSceneLoad { get; private set; }
 
-		private void Awake()
+		protected void Awake()
 		{
 			Instance = this;
 			gcCounter = 0;
@@ -102,7 +105,10 @@ namespace Fika.Dedicated
 				new BotStandBy_Update_Patch().Enable();
 			}
 
-			DestroyGraphicsAutoloader.EnableDestroyGraphicsPatches();
+			if (ShouldDestroyGraphics.Value)
+			{
+				DestroyGraphicsAutoloader.EnableDestroyGraphicsPatches();
+			}
 
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 
@@ -114,7 +120,11 @@ namespace Fika.Dedicated
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
 			if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
 			{
-				Logger.LogWarning("You are not running an officially supported operating system by Fika. Minimal support will be given.");
+				Logger.LogWarning("You are not running an officially supported operating system by Fika. Minimal support will be given. Please cleanup your '/Logs' folder manually.");
+			}
+			else
+			{
+				CleanupLogFiles();
 			}
 
 			FikaBackendUtils.IsDedicated = true;
@@ -122,6 +132,31 @@ namespace Fika.Dedicated
 			fikaDedicatedWebSocket = new DedicatedRaidWebSocketClient();
 
 			StartCoroutine(RunPluginValidation());
+		}
+
+		private void CleanupLogFiles()
+		{
+			string exePath = AppContext.BaseDirectory;
+			string logsPath = Path.Combine(exePath, "Logs");
+			if (!Directory.Exists(logsPath))
+			{
+				Logger.LogError("CleanupLogFiles: Could not finds '/Logs' folder!");
+				return;
+			}
+
+			DirectoryInfo logsDir = new(logsPath);
+			foreach (DirectoryInfo dir in logsDir.EnumerateDirectories())
+			{
+				try
+				{
+					Logger.LogInfo($"CleanupLogFiles: Deleting {dir.Name}");
+					dir.Delete(true);
+				}
+				catch
+				{
+					Logger.LogWarning($"CleanupLogFiles: Could not delete {dir.Name}, it's probably being used");
+				}
+			}
 		}
 
 		private void SetupConfig()
@@ -136,6 +171,12 @@ namespace Fika.Dedicated
 
 			ShouldBotsSleep = Config.Bind("Dedicated", "Bot sleeping", false,
 				new ConfigDescription("Should the dedicated host allow bots to sleep? (BSG bot sleeping logic)"));
+
+			ShouldDestroyGraphics = Config.Bind("Dedicated", "Destroy Graphics", true,
+				new ConfigDescription("If the dedicated plugin should run patches to disable various graphical elements"));
+
+			DestroyRenderersOnSceneLoad = Config.Bind("Dedicated", "Destroy Renderers", true,
+				new ConfigDescription("If the dedicated plugin should hook scene loading to disable unnecessary renderers as well as unloading all materials (Requires 'Destroy Graphics' to be enabled)"));
 		}
 
 		protected void Update()

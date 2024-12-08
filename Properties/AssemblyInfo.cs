@@ -1,3 +1,4 @@
+using Fika.Dedicated;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -5,4 +6,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("https://github.com/project-fika")]
 [assembly: AssemblyCopyright("Copyright © Lacyway 2024")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion(FikaDedicatedPlugin.DediVersion)]

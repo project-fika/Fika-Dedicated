@@ -15,9 +15,18 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 			FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo("Autoloading patches in the DestroyGraphics namespace");
 			int i = 0;
 
-
 			foreach (Type patch in query)
 			{
+				if (patch.Name == "LoadScenePatch")
+				{
+					if (!FikaDedicatedPlugin.DestroyRenderersOnSceneLoad.Value)
+					{
+						FikaDedicatedPlugin.FikaDedicatedLogger.LogInfo("DestroyRenderersOnSceneLoad is disabled! skipping LoadScenePatch");
+
+						continue;
+					}
+				}
+
 				((ModulePatch)Activator.CreateInstance(patch)).Enable();
 				i++;
 			}

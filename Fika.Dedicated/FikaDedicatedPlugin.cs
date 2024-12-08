@@ -53,6 +53,8 @@ namespace Fika.Dedicated
 		public static ConfigEntry<int> UpdateRate { get; private set; }
 		public static ConfigEntry<int> RAMCleanInterval { get; private set; }
 		public static ConfigEntry<bool> ShouldBotsSleep { get; private set; }
+		public static ConfigEntry<bool> ShouldDestroyGraphics { get; private set; }
+		public static ConfigEntry<bool> DestroyRenderersOnSceneLoad { get; private set; }
 
 		protected void Awake()
 		{
@@ -103,7 +105,10 @@ namespace Fika.Dedicated
 				new BotStandBy_Update_Patch().Enable();
 			}
 
-			DestroyGraphicsAutoloader.EnableDestroyGraphicsPatches();
+			if (ShouldDestroyGraphics.Value)
+			{
+				DestroyGraphicsAutoloader.EnableDestroyGraphicsPatches();
+			}
 
 			//InvokeRepeating("ClearRenderables", 1f, 1f);
 
@@ -166,6 +171,12 @@ namespace Fika.Dedicated
 
 			ShouldBotsSleep = Config.Bind("Dedicated", "Bot sleeping", false,
 				new ConfigDescription("Should the dedicated host allow bots to sleep? (BSG bot sleeping logic)"));
+
+			ShouldDestroyGraphics = Config.Bind("Dedicated", "Destroy Graphics", true,
+				new ConfigDescription("If the dedicated plugin should run patches to disable various graphical elements"));
+
+			DestroyRenderersOnSceneLoad = Config.Bind("Dedicated", "Destroy Renderers", true,
+				new ConfigDescription("If the dedicated plugin should hook scene loading to disable unecessary renderers as well as unloading all materials (Requires 'Destroy Graphics' to be enabled)"));
 		}
 
 		protected void Update()

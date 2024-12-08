@@ -78,7 +78,7 @@ namespace Fika.Dedicated
 			new VRAMPatch2().Enable();
 			new VRAMPatch3().Enable();
 			new VRAMPatch4().Enable();
-			//new SettingsPatch().Enable();
+			new SettingsPatch().Enable();
 			new SessionResultExitStatusPatch().Enable();
 			new MessageWindow_Show_Patch().Enable();
 			new MenuScreen_Show_Patch().Enable();

@@ -63,14 +63,7 @@ namespace Fika.Dedicated
 			Instance = this;
 			gcCounter = 0;
 
-			FikaDedicatedLogger = Logger;
-
-			FikaPlugin.AutoExtract.Value = true;
-			FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
-			FikaPlugin.ConnectionTimeout.Value = 30;
-
-			FikaPlugin.Instance.AllowFreeCam = true;
-			FikaPlugin.Instance.AllowSpectateFreeCam = true;
+			FikaDedicatedLogger = Logger;			
 
 			SetupConfig();
 
@@ -100,7 +93,7 @@ namespace Fika.Dedicated
 			new IsReflexAvailablePatch().Enable();
 			new AudioSourcePlayPatch().Enable();
 			new LevelSettings_ApplySettings_Patch().Enable();
-			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
+			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();			
 
 			if (!ShouldBotsSleep.Value)
 			{
@@ -229,6 +222,17 @@ namespace Fika.Dedicated
 		{
 			yield return new WaitForSeconds(5);
 			VerifyPlugins();
+			while (FikaPlugin.OfficialVersion == null)
+			{
+				yield return new WaitForSeconds(1);
+			}
+
+			FikaPlugin.AutoExtract.Value = true;
+			FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
+			FikaPlugin.ConnectionTimeout.Value = 30;
+
+			FikaPlugin.Instance.AllowFreeCam = true;
+			FikaPlugin.Instance.AllowSpectateFreeCam = true;
 		}
 
 		private void VerifyPlugins()

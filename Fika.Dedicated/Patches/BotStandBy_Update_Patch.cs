@@ -1,5 +1,8 @@
-﻿using SPT.Reflection.Patching;
+﻿using HarmonyLib;
+using SPT.Reflection.Patching;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Reflection.Emit;
 
 namespace Fika.Dedicated.Patches
 {
@@ -13,10 +16,16 @@ namespace Fika.Dedicated.Patches
 			return typeof(BotStandBy).GetMethod(nameof(BotStandBy.Update));
 		}
 
-		[PatchPrefix]
-		public static bool Prefix()
+		[PatchTranspiler]
+		public static IEnumerable<CodeInstruction> Transpile(IEnumerable<CodeInstruction> instructions)
 		{
-			return false;
+			// Create a new set of instructions
+			List<CodeInstruction> instructionsList =
+			[
+				new CodeInstruction(OpCodes.Ret) // Return immediately
+            ];
+
+			return instructionsList;
 		}
 	}
 }

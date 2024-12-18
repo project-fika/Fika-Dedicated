@@ -240,6 +240,7 @@ namespace Fika.Dedicated
 			List<string> invalidPluginList =
 			[
 				"com.Amanda.Graphics",
+				"com.Amanda.Sense",
 				"VIP.TommySoucy.MoreCheckmarks",
 				"com.kmyuhkyuk.EFTApi",
 				"com.mpstark.DynamicMaps",

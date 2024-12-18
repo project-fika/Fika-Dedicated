@@ -24,12 +24,14 @@ using HarmonyLib;
 using Newtonsoft.Json;
 using SPT.Common.Http;
 using SPT.Custom.Patches;
+using SPT.Custom.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -45,12 +47,20 @@ namespace Fika.Dedicated
 		public static FikaDedicatedPlugin Instance { get; private set; }
 		public static ManualLogSource FikaDedicatedLogger;
 		public static DedicatedRaidController raidController;
+		public static bool IsRunningWindows
+		{
+			get
+			{
+				return SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows;
+			}
+		}
 		public DedicatedStatus Status { get; set; }
 
 		private static DedicatedRaidWebSocketClient fikaDedicatedWebSocket;
 		private float gcCounter;
 		private Coroutine verifyConnectionsRoutine;
 		private bool invalidPluginsFound = false;
+
 
 		public static ConfigEntry<int> UpdateRate { get; private set; }
 		public static ConfigEntry<int> RAMCleanInterval { get; private set; }
@@ -63,7 +73,7 @@ namespace Fika.Dedicated
 			Instance = this;
 			gcCounter = 0;
 
-			FikaDedicatedLogger = Logger;			
+			FikaDedicatedLogger = Logger;
 
 			SetupConfig();
 
@@ -93,7 +103,7 @@ namespace Fika.Dedicated
 			new IsReflexAvailablePatch().Enable();
 			new AudioSourcePlayPatch().Enable();
 			new LevelSettings_ApplySettings_Patch().Enable();
-			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();			
+			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
 
 			if (!ShouldBotsSleep.Value)
 			{
@@ -113,7 +123,7 @@ namespace Fika.Dedicated
 			new SetPreRaidSettingsScreenDefaultsPatch().Disable();
 
 			Logger.LogInfo($"Fika.Dedicated loaded! OS: {SystemInfo.operatingSystem}");
-			if (SystemInfo.operatingSystemFamily != OperatingSystemFamily.Windows)
+			if (!IsRunningWindows)
 			{
 				Logger.LogWarning("You are not running an officially supported operating system by Fika. Minimal support will be given. Please cleanup your '/Logs' folder manually.");
 			}
@@ -264,6 +274,12 @@ namespace Fika.Dedicated
 				string modsString = string.Join("; ", unsupportedMods);
 				Logger.LogFatal($"{unsupportedMods.Count} invalid plugins found, this dedicated host will not be available for hosting! Remove these mods: {modsString}");
 				invalidPluginsFound = true;
+				if (IsRunningWindows)
+				{
+					MessageBoxHelper.Show($"{unsupportedMods.Count} invalid plugins found, this dedicated host will not be available for hosting! Check your log files for more information.",
+						"DEDICATED ERROR", MessageBoxHelper.MessageBoxType.OK);
+				}
+				Thread.Sleep(-1);
 				return;
 			}
 
@@ -298,11 +314,12 @@ namespace Fika.Dedicated
 		{
 			Status = DedicatedStatus.IN_RAID;
 
-			Task.Run(async () =>
+			SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, DedicatedStatus.IN_RAID);
+			Task statusTask = FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
+			while (!statusTask.IsCompleted)
 			{
-				SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, DedicatedStatus.IN_RAID);
-				await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
-			});
+				yield return new WaitForEndOfFrame();
+			}
 
 			/*
              * Runs through the menus. Eventually this can be replaced

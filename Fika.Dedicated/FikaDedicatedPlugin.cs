@@ -326,22 +326,18 @@ namespace Fika.Dedicated
              * but it works for now and I was getting a CTD with other method
             */
 
-			MenuScreen menuScreen;
-			do
-			{
-				yield return StaticManager.Instance.WaitFrames(5, null);
-				menuScreen = FindObjectOfType<MenuScreen>();
-			} while (menuScreen == null);
-			yield return null;
+			CommonUI commonUI = MonoBehaviourSingleton<CommonUI>.Instance;
+			MenuScreen menuScreen = commonUI.MenuScreen;
 
 			menuScreen.method_9(); // main menu -> faction selection screen
 
-			MatchMakerSideSelectionScreen sideSelectionScreen;
+			MenuUI menuUI = MonoBehaviourSingleton<MenuUI>.Instance;
+
+			MatchMakerSideSelectionScreen sideSelectionScreen = menuUI.MatchMakerSideSelectionScreen;
 			do
 			{
 				yield return StaticManager.Instance.WaitFrames(5, null);
-				sideSelectionScreen = FindObjectOfType<MatchMakerSideSelectionScreen>();
-			} while (sideSelectionScreen == null);
+			} while (!sideSelectionScreen.isActiveAndEnabled);
 			yield return null;
 
 			Action<bool> targetFactionCallback = raidSettings.Side == ESideType.Pmc ?
@@ -357,35 +353,32 @@ namespace Fika.Dedicated
 			sideSelectionScreen.method_17(); // faction selection screen -> location selection screen
 			yield return null;
 
-			MatchMakerSelectionLocationScreen locationSelectionScreen;
+			MatchMakerSelectionLocationScreen locationSelectionScreen = menuUI.MatchMakerSelectionLocationScreen;
 			do
 			{
 				yield return StaticManager.Instance.WaitFrames(5, null);
-				locationSelectionScreen = FindObjectOfType<MatchMakerSelectionLocationScreen>();
-			} while (locationSelectionScreen == null);
+			} while (!locationSelectionScreen.isActiveAndEnabled);
 			yield return null;
 
 			locationSelectionScreen.Location_0 = session.LocationSettings.locations[request.LocationId];
 			locationSelectionScreen.method_7(request.Time); // set time
 			locationSelectionScreen.method_11(); // location selection screen -> offline raid screen
 
-			MatchmakerOfflineRaidScreen offlineRaidScreen;
+			MatchmakerOfflineRaidScreen offlineRaidScreen = menuUI.MatchmakerOfflineRaidScreen;
 			do
 			{
 				yield return StaticManager.Instance.WaitFrames(5, null);
-				offlineRaidScreen = FindObjectOfType<MatchmakerOfflineRaidScreen>();
-			} while (offlineRaidScreen == null);
+			} while (!offlineRaidScreen.isActiveAndEnabled);
 			yield return null;
 			offlineRaidScreen.method_4(); // offline raid screen -> insurance screen
 
 			if (raidSettings.Side != ESideType.Savage)
 			{
-				MatchmakerInsuranceScreen insuranceScreen;
+				MatchmakerInsuranceScreen insuranceScreen = menuUI.MatchmakerInsuranceScreen;
 				do
 				{
 					yield return StaticManager.Instance.WaitFrames(5, null);
-					insuranceScreen = FindObjectOfType<MatchmakerInsuranceScreen>();
-				} while (insuranceScreen == null);
+				} while (!insuranceScreen.isActiveAndEnabled);
 				yield return null;
 				insuranceScreen.method_8(); // insurance screen -> accept screen 
 			}
@@ -398,12 +391,11 @@ namespace Fika.Dedicated
 			raidSettings.WavesSettings = request.WavesSettings;
 			raidSettings.TimeAndWeatherSettings = request.TimeAndWeatherSettings;
 
-			MatchMakerAcceptScreen acceptScreen;
+			MatchMakerAcceptScreen acceptScreen = menuUI.MatchMakerAcceptScreen;
 			do
 			{
 				yield return StaticManager.Instance.WaitFrames(5, null);
-				acceptScreen = FindObjectOfType<MatchMakerAcceptScreen>();
-			} while (acceptScreen == null);
+			} while (!acceptScreen.isActiveAndEnabled);
 			yield return null;
 
 			yield return new WaitForSeconds(1f);
@@ -411,7 +403,7 @@ namespace Fika.Dedicated
 			do
 			{
 				yield return StaticManager.Instance.WaitFrames(5, null);
-				fikaMatchMakerScript = FindObjectOfType<MatchMakerUIScript>();
+				fikaMatchMakerScript = acceptScreen.gameObject.GetComponent<MatchMakerUIScript>();
 			} while (fikaMatchMakerScript == null);
 			yield return null;
 

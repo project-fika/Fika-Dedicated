@@ -23,7 +23,6 @@ using Fika.Dedicated.Patches.VRAM;
 using HarmonyLib;
 using Newtonsoft.Json;
 using SPT.Common.Http;
-using SPT.Custom;
 using SPT.Custom.Patches;
 using SPT.Custom.Utils;
 using System;
@@ -74,7 +73,7 @@ namespace Fika.Dedicated
 			Instance = this;
 			gcCounter = 0;
 
-			FikaDedicatedLogger = Logger;			
+			FikaDedicatedLogger = Logger;
 
 			SetupConfig();
 
@@ -104,7 +103,7 @@ namespace Fika.Dedicated
 			new IsReflexAvailablePatch().Enable();
 			new AudioSourcePlayPatch().Enable();
 			new LevelSettings_ApplySettings_Patch().Enable();
-			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();			
+			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
 
 			if (!ShouldBotsSleep.Value)
 			{

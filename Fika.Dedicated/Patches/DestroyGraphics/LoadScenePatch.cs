@@ -123,7 +123,9 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 				}
 
 				// Destroy the renderer itself, note: This should not remove any colliders and such.
-				FikaDedicatedPlugin.FikaDedicatedLogger.LogDebug($"Removing Renderer: {renderer.gameObject.name}");
+#if DEBUG
+				FikaDedicatedPlugin.FikaDedicatedLogger.LogDebug($"Removing Renderer: {renderer.gameObject.name}"); 
+#endif
 				Destroy(renderer);
 			}
 		}

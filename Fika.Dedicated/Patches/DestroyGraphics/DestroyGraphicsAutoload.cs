@@ -6,9 +6,9 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class DestroyGraphicsAutoloader
+	public class DestroyGraphicsAutoloader
 	{
-		internal static void EnableDestroyGraphicsPatches()
+		public static void EnableDestroyGraphicsPatches()
 		{
 			IEnumerable<Type> query = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.BaseType == typeof(ModulePatch) && t.Namespace == "Fika.Dedicated.Patches.DestroyGraphics");
 

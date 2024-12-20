@@ -14,7 +14,7 @@ namespace Fika.Dedicated.Patches.DLSS
 
 		// Token: 0x0600000F RID: 15 RVA: 0x000022B0 File Offset: 0x000004B0
 		[PatchPrefix]
-		private static bool Prefix(ref bool __result)
+		public static bool Prefix(ref bool __result)
 		{
 			__result = false;
 			return false;

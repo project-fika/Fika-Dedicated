@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class StaticDeferredDecalRenderer_Awake_Patch : ModulePatch
+	public class StaticDeferredDecalRenderer_Awake_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

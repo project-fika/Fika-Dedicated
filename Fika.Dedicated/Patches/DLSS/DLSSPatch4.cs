@@ -20,7 +20,7 @@ namespace Fika.Dedicated.Patches.DLSS
 
 		// Token: 0x06000015 RID: 21 RVA: 0x00002359 File Offset: 0x00000559
 		[PatchPostfix]
-		private static void Postfix(SSAAImpl __instance)
+		public static void Postfix(SSAAImpl __instance)
 		{
 			__instance.DLSSDebug = true;
 			__instance.DLSSDebugDisable = true;

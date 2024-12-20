@@ -16,7 +16,7 @@ namespace Fika.Dedicated.Patches
 		}
 
 		[PatchPostfix]
-		private static void Postfix(GameWorld __instance)
+		public static void Postfix(GameWorld __instance)
 		{
 			DedicatedRaidController raidController = FikaDedicatedPlugin.raidController;
 			if (raidController == null)

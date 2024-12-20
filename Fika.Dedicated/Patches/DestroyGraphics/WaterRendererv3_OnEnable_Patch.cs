@@ -5,7 +5,7 @@ using WaterSSR;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class WaterRendererv3_OnEnable_Patch : ModulePatch
+	public class WaterRendererv3_OnEnable_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

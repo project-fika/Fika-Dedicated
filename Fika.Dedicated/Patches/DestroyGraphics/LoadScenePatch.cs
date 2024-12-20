@@ -10,7 +10,7 @@ using EFT.Interactive;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class LoadScenePatch : ModulePatch
+	public class LoadScenePatch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

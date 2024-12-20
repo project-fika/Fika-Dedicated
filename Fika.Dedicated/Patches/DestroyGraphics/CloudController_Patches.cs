@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class CloudController_OnEnable_Patch : ModulePatch
+	public class CloudController_OnEnable_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{
@@ -20,7 +20,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		}
 	}
 
-	internal class CloudController_UpdateAmbient_Patch : ModulePatch
+	public class CloudController_UpdateAmbient_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

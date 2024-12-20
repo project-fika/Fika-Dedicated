@@ -8,7 +8,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 	/// <summary>
 	/// This patch deletes various effects out of the player's camera that the dedicated will never see.
 	/// </summary>
-	internal class CameraNuker : ModulePatch
+	public class CameraNuker : ModulePatch
 	{
 		// Whitelisted types we can delete out of the camera that will not cause it to throw exceptions.
 		private static List<string> DeleteTypes = [

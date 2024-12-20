@@ -15,7 +15,7 @@ namespace Fika.Dedicated.Patches
 
 		// Token: 0x06000018 RID: 24 RVA: 0x000023A4 File Offset: 0x000005A4
 		[PatchPrefix]
-		private static bool Prefix(string message)
+		public static bool Prefix(string message)
 		{
 			Logger.LogError("ErrorScreen.Show: " + message);
 			return false;

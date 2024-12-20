@@ -25,7 +25,7 @@ namespace Fika.Dedicated.Patches.TextureValidateFormat
 		}
 
 		[PatchPostfix]
-		static void Postfix(ref bool __result)
+		public static void Postfix(ref bool __result)
 		{
 			__result = true;
 		}

@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class GClass3324_SetResolution_Patch : ModulePatch
+	public class GClass3324_SetResolution_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

@@ -18,7 +18,7 @@ namespace Fika.Dedicated.Patches
 		}
 
 		[PatchPostfix]
-		static void PatchPostfix()
+		public static void PatchPostfix()
 		{
 			FikaDedicatedPlugin.Instance.StartSetDedicatedStatusReadyRoutine();
 		}

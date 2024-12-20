@@ -7,7 +7,7 @@ using System.Reflection.Emit;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class GPUInstancerManager_Update_Patch : ModulePatch
+	public class GPUInstancerManager_Update_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

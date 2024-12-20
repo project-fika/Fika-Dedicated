@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches
 {
-	internal class ConsoleScreen_OnProfileReceive_Patch : ModulePatch
+	public class ConsoleScreen_OnProfileReceive_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

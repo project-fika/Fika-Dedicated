@@ -15,7 +15,7 @@ namespace Fika.Dedicated.Patches.VRAM
 
 		// Token: 0x06000024 RID: 36 RVA: 0x00002528 File Offset: 0x00000728
 		[PatchPrefix]
-		private static bool Prefix()
+		public static bool Prefix()
 		{
 			return false;
 		}

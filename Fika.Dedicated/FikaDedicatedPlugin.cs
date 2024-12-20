@@ -42,7 +42,7 @@ namespace Fika.Dedicated
 	[BepInDependency("com.SPT.custom", BepInDependency.DependencyFlags.HardDependency)]
 	public class FikaDedicatedPlugin : BaseUnityPlugin
 	{
-		public const string DediVersion = "1.2.1";
+		public const string DediVersion = "1.2.2";
 
 		public static FikaDedicatedPlugin Instance { get; private set; }
 		public static ManualLogSource FikaDedicatedLogger;

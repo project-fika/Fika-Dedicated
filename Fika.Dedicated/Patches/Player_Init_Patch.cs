@@ -14,7 +14,7 @@ namespace Fika.Dedicated.Patches
 		}
 
 		[PatchPostfix]
-		private static void Postfix(Player __instance)
+		public static void Postfix(Player __instance)
 		{
 			if (__instance.IsYourPlayer)
 			{

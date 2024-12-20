@@ -16,7 +16,7 @@ namespace Fika.Dedicated.Patches
 		}
 
 		[PatchPrefix]
-		private static bool Prefix(Player __instance)
+		public static bool Prefix(Player __instance)
 		{
 			if (__instance.IsYourPlayer)
 			{

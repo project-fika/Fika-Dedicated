@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class RainController_Awake_Patch : ModulePatch
+	public class RainController_Awake_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

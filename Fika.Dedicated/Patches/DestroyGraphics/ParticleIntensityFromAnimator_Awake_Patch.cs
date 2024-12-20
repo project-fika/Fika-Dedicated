@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class ParticleIntensityFromAnimator_Awake_Patch : ModulePatch
+	public class ParticleIntensityFromAnimator_Awake_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

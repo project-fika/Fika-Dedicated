@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class ScopeMaskRenderer_Awake_Patch : ModulePatch
+	public class ScopeMaskRenderer_Awake_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

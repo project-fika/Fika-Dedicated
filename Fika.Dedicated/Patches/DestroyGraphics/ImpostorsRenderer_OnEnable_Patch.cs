@@ -8,7 +8,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 	/// <summary>
 	/// This patch mostly deals with deleting the tree renderer.
 	/// </summary>
-	internal class ImpostorsRenderer_OnEnable_Patch : ModulePatch
+	public class ImpostorsRenderer_OnEnable_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

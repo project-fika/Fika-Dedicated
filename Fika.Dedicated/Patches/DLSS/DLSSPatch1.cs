@@ -16,7 +16,7 @@ namespace Fika.Dedicated.Patches.DLSS
 
 		// Token: 0x0600000C RID: 12 RVA: 0x00002268 File Offset: 0x00000468
 		[PatchPrefix]
-		private static bool Prefix(ref GraphicsDeviceType __result)
+		public static bool Prefix(ref GraphicsDeviceType __result)
 		{
 			__result = GraphicsDeviceType.Direct3D11;
 			return false;

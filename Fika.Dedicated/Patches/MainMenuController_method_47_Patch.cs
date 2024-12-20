@@ -11,7 +11,7 @@ namespace Fika.Dedicated.Patches
 		}
 
 		[PatchPrefix]
-		private static bool Prefix(ref bool __result)
+		public static bool Prefix(ref bool __result)
 		{
 			__result = true;
 			return false;

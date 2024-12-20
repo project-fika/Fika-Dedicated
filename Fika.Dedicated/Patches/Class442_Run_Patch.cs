@@ -7,7 +7,7 @@ namespace Fika.Dedicated.Patches
 	/// <summary>
 	/// THis prevents the season controller from running due to no graphics being used
 	/// </summary>
-	internal class Class442_Run_Patch : ModulePatch
+	public class Class442_Run_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

@@ -17,7 +17,7 @@ namespace Fika.Dedicated.Patches.VRAM
 
 		// Token: 0x0600001B RID: 27 RVA: 0x00002400 File Offset: 0x00000600
 		[PatchPrefix]
-		private static bool Prefix(EnvironmentUIRoot __instance, bool value)
+		public static bool Prefix(EnvironmentUIRoot __instance, bool value)
 		{
 			Transform cameraContainer = Traverse.Create(__instance).Field<Transform>("CameraContainer").Value;
 			cameraContainer.gameObject.SetActive(value);

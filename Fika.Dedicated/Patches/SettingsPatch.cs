@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches
 {
-	internal class SettingsPatch : ModulePatch
+	public class SettingsPatch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{
@@ -23,7 +23,7 @@ namespace Fika.Dedicated.Patches
 		}
 	}
 
-	internal static class FikaDedicatedSettingsManager
+	public static class FikaDedicatedSettingsManager
 	{
 		private static bool HasSet = false;
 

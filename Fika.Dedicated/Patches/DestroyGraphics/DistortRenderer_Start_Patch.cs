@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class DistortRenderer_Start_Patch : ModulePatch
+	public class DistortRenderer_Start_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

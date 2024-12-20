@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class TextureDecalsPainter_Awake_Patch : ModulePatch
+	public class TextureDecalsPainter_Awake_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class DistantShadow_Awake_Patch : ModulePatch
+	public class DistantShadow_Awake_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{
@@ -20,7 +20,7 @@ namespace Fika.Dedicated.Patches.DestroyGraphics
 		}
 	}
 
-	internal class DistantShadow_Update_Patch : ModulePatch
+	public class DistantShadow_Update_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

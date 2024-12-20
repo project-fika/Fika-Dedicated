@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class EffectsController_method_0_Patch : ModulePatch
+	public class EffectsController_method_0_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

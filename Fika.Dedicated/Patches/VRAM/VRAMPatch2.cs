@@ -17,7 +17,7 @@ namespace Fika.Dedicated.Patches.VRAM
 
 		// Token: 0x0600001E RID: 30 RVA: 0x00002468 File Offset: 0x00000668
 		[PatchPrefix]
-		private static bool Prefix(CameraClass __instance, Camera camera)
+		public static bool Prefix(CameraClass __instance, Camera camera)
 		{
 			__instance.Reset();
 			__instance.Camera = camera;

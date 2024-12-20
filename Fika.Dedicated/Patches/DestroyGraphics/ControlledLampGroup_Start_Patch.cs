@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	internal class ControlledLampGroup_Start_Patch : ModulePatch
+	public class ControlledLampGroup_Start_Patch : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{

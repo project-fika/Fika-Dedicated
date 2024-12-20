@@ -20,7 +20,7 @@ namespace Fika.Dedicated.Patches
 		}
 
 		[PatchPostfix]
-		static void PatchPostfix(DefaultUIButton ____mainMenuButton)
+		public static void PatchPostfix(DefaultUIButton ____mainMenuButton)
 		{
 			____mainMenuButton.OnClick.Invoke();
 		}

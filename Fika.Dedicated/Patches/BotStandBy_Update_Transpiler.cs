@@ -1,17 +1,19 @@
-﻿using GPUInstancer;
-using HarmonyLib;
+﻿using HarmonyLib;
 using SPT.Reflection.Patching;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Fika.Dedicated.Patches.DestroyGraphics
+namespace Fika.Dedicated.Patches
 {
-	public class GPUInstancerManager_Update_Patch : ModulePatch
+	/// <summary>
+	/// The purpose of this patch is to disable bot sleeping on the dedicated host
+	/// </summary>
+	public class BotStandBy_Update_Transpiler : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{
-			return typeof(GPUInstancerManager).GetMethod(nameof(GPUInstancerManager.Update));
+			return typeof(BotStandBy).GetMethod(nameof(BotStandBy.Update));
 		}
 
 		[PatchTranspiler]

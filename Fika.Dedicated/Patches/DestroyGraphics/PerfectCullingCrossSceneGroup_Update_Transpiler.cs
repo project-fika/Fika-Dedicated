@@ -1,18 +1,17 @@
 ﻿using HarmonyLib;
+using Koenigz.PerfectCulling.EFT;
 using SPT.Reflection.Patching;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using UnityEngine;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	public class AudioSourcePlayPatch : ModulePatch
+	internal class PerfectCullingCrossSceneGroup_Update_Transpiler : ModulePatch
 	{
 		protected override MethodBase GetTargetMethod()
 		{
-			return typeof(AudioSource).GetMethods().Where(x => x.Name == "Play" && x.GetParameters().Length == 0).SingleOrDefault();
+			return typeof(PerfectCullingCrossSceneGroup).GetMethod(nameof(PerfectCullingCrossSceneGroup.Update));
 		}
 
 		[PatchTranspiler]

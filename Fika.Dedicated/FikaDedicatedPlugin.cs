@@ -101,13 +101,15 @@ namespace Fika.Dedicated
 			new Class442_Run_Patch().Enable();
 			new Player_VisualPass_Patch().Enable();
 			new IsReflexAvailablePatch().Enable();
-			new AudioSourcePlayPatch().Enable();
-			new LevelSettings_ApplySettings_Patch().Enable();
-			new LevelSettings_ApplyTreeWindSettings_Patch().Enable();
+			new AudioSource_Play_Transpiler().Enable();
+			new LevelSettings_ApplySettings_Transpiler().Enable();
+			new LevelSettings_ApplyTreeWindSettings_Transpiler().Enable();
+			new MainMenuController_method_44_Patch().Enable();
+			new MainMenuController_method_45_Patch().Enable();
 
 			if (!ShouldBotsSleep.Value)
 			{
-				new BotStandBy_Update_Patch().Enable();
+				new BotStandBy_Update_Transpiler().Enable();
 			}
 
 			if (ShouldDestroyGraphics.Value)
@@ -212,7 +214,10 @@ namespace Fika.Dedicated
 
 		public void OnFikaStartRaid(StartDedicatedRequest request)
 		{
-			TarkovApplication tarkovApplication = (TarkovApplication)Singleton<ClientApplication<ISession>>.Instance;
+			if (!TarkovApplication.Exist(out TarkovApplication tarkovApplication))
+			{
+				throw new NullReferenceException("OnFikaStartRaid: Could not find TarkovApplication!");
+			}
 			ISession session = tarkovApplication.GetClientBackEndSession();
 			if (!session.LocationSettings.locations.TryGetValue(request.LocationId, out LocationSettingsClass.Location location))
 			{
@@ -223,9 +228,9 @@ namespace Fika.Dedicated
 			OfflineRaidSettingsMenuPatch_Override.UseCustomWeather = request.CustomWeather;
 
 			Logger.LogInfo($"Starting on location {location.Name}");
-			RaidSettings raidSettings = Traverse.Create(tarkovApplication).Field<RaidSettings>("_raidSettings").Value;
+			RaidSettings raidSettings = tarkovApplication.CurrentRaidSettings;
 			Logger.LogInfo("Initialized raid settings");
-			StartCoroutine(BeginFikaStartRaid(request, session, raidSettings, location));
+			StartCoroutine(BeginFikaStartRaid(request, session, raidSettings, tarkovApplication));
 		}
 
 		private IEnumerator RunPluginValidation()
@@ -310,7 +315,7 @@ namespace Fika.Dedicated
 			}
 		}
 
-		private IEnumerator BeginFikaStartRaid(StartDedicatedRequest request, ISession session, RaidSettings raidSettings, LocationSettingsClass.Location location)
+		private IEnumerator BeginFikaStartRaid(StartDedicatedRequest request, ISession session, RaidSettings raidSettings, TarkovApplication tarkovApplication)
 		{
 			Status = DedicatedStatus.IN_RAID;
 
@@ -362,34 +367,25 @@ namespace Fika.Dedicated
 
 			locationSelectionScreen.Location_0 = session.LocationSettings.locations[request.LocationId];
 			locationSelectionScreen.method_7(request.Time); // set time
-			locationSelectionScreen.method_11(); // location selection screen -> offline raid screen
-
-			MatchmakerOfflineRaidScreen offlineRaidScreen = menuUI.MatchmakerOfflineRaidScreen;
-			do
-			{
-				yield return StaticManager.Instance.WaitFrames(5, null);
-			} while (!offlineRaidScreen.isActiveAndEnabled);
-			yield return null;
-			offlineRaidScreen.method_4(); // offline raid screen -> insurance screen
-
-			if (raidSettings.Side != ESideType.Savage)
-			{
-				MatchmakerInsuranceScreen insuranceScreen = menuUI.MatchmakerInsuranceScreen;
-				do
-				{
-					yield return StaticManager.Instance.WaitFrames(5, null);
-				} while (!insuranceScreen.isActiveAndEnabled);
-				yield return null;
-				insuranceScreen.method_8(); // insurance screen -> accept screen 
-			}
-
-			yield return null;
+			locationSelectionScreen.method_11(); // location selection screen -> matchmaker accept screen (we skip with patches)
 
 			raidSettings.PlayersSpawnPlace = request.SpawnPlace;
 			raidSettings.MetabolismDisabled = request.MetabolismDisabled;
 			raidSettings.BotSettings = request.BotSettings;
 			raidSettings.WavesSettings = request.WavesSettings;
 			raidSettings.TimeAndWeatherSettings = request.TimeAndWeatherSettings;
+			raidSettings.isLocationTransition = false;
+			raidSettings.isInTransition = false;
+			raidSettings.BotSettings.BotAmount = request.WavesSettings.BotAmount;
+			raidSettings.RaidMode = ERaidMode.Local;
+			raidSettings.IsPveOffline = true;
+
+			MainMenuController mmc = Traverse.Create(tarkovApplication).Field<MainMenuController>("mainMenuController").Value;
+			Traverse mmcTraverse = Traverse.Create(mmc);
+			mmcTraverse.Field<RaidSettings>("raidSettings_0").Value = raidSettings;
+			mmcTraverse.Field<RaidSettings>("raidSettings_1").Value = raidSettings;
+
+			yield return null;			
 
 			MatchMakerAcceptScreen acceptScreen = menuUI.MatchMakerAcceptScreen;
 			do
@@ -444,7 +440,7 @@ namespace Fika.Dedicated
 				}
 			}
 
-			Logger.LogInfo($"Starting with: {JsonConvert.SerializeObject(request)}");
+			Logger.LogInfo($"Starting with: {JsonConvert.SerializeObject(raidSettings)}");
 
 			Task createMatchTask = FikaBackendUtils.CreateMatch(session.Profile.ProfileId, session.Profile.Info.Nickname, raidSettings);
 			while (!createMatchTask.IsCompleted)
@@ -463,7 +459,7 @@ namespace Fika.Dedicated
 			while (Status == DedicatedStatus.READY)
 			{
 				Task.Run(SetStatusToReady);
-				yield return new WaitForSeconds(15.0f);
+				yield return new WaitForSeconds(15f);
 			}
 
 			yield break;

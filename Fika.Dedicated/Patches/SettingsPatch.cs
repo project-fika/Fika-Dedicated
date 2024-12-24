@@ -78,6 +78,7 @@ namespace Fika.Dedicated.Patches
 			await gameSettings.Graphics.Settings.GameFramerate.SetValue(FikaDedicatedPlugin.UpdateRate.Value);
 
 			await gameSettings.Game.Settings.EnableHideoutPreload.SetValue(false);
+			await gameSettings.Game.Settings.Language.SetValue("en");
 
 			int ratio = EftResolution.smethod_0(1024, 768);
 			await gameSettings.Graphics.Settings.DisplaySettings.SetValue(new()
@@ -90,6 +91,7 @@ namespace Fika.Dedicated.Patches
 
 			await gameSettings.Sound.Save();
 			await gameSettings.Graphics.Save();
+			await gameSettings.Game.Save();
 
 			EFTHardSettings hardSettings = EFTHardSettings.Instance;
 			hardSettings.CULL_GROUNDER = 1000f;

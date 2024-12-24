@@ -106,6 +106,7 @@ namespace Fika.Dedicated
 			new LevelSettings_ApplyTreeWindSettings_Transpiler().Enable();
 			new MainMenuController_method_44_Patch().Enable();
 			new MainMenuController_method_45_Patch().Enable();
+			new LocaleManagerClass_String_0_Patch().Enable();
 
 			if (!ShouldBotsSleep.Value)
 			{

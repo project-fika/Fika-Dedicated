@@ -6,14 +6,14 @@ using System.Reflection.Emit;
 
 namespace Fika.Dedicated.Patches
 {
-	public class LevelSettings_ApplySettings_Patch : ModulePatch
+	public class LevelSettings_ApplyTreeWindSettings_Transpiler : ModulePatch
 	{
 		/// <summary>
 		/// Prevents unneccesary code from running
 		/// </summary>
 		protected override MethodBase GetTargetMethod()
 		{
-			return typeof(LevelSettings).GetMethod(nameof(LevelSettings.ApplySettings));
+			return typeof(LevelSettings).GetMethod(nameof(LevelSettings.ApplyTreeWindSettings));
 		}
 
 		[PatchTranspiler]

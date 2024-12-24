@@ -166,8 +166,8 @@ namespace Fika.Dedicated
 
 		private void SetupConfig()
 		{
-			UpdateRate = Config.Bind("Dedicated", "Send Rate", 60,
-				new ConfigDescription("How often the server should update (frame cap). Only works when running without '-nographics'",
+			UpdateRate = Config.Bind("Dedicated", "Update Rate", 60,
+				new ConfigDescription("How often the server should update (frame cap / tick rate). Only works if your machine can actually reach the selected setting",
 				new AcceptableValueRange<int>(30, 120)));
 
 			RAMCleanInterval = Config.Bind("Dedicated", "RAM Clean Interval", 5,

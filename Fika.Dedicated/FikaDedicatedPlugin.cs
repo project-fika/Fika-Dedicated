@@ -106,6 +106,8 @@ namespace Fika.Dedicated
 			new LevelSettings_ApplyTreeWindSettings_Transpiler().Enable();
 			new MainMenuController_method_44_Patch().Enable();
 			new MainMenuController_method_45_Patch().Enable();
+			new MainMenuController_method_72_Patch().Enable();
+			new MainMenuController_method_73_Patch().Enable();
 			new LocaleManagerClass_String_0_Patch().Enable();
 
 			if (!ShouldBotsSleep.Value)
@@ -347,8 +349,7 @@ namespace Fika.Dedicated
 			yield return null;
 
 			Action<bool> targetFactionCallback = raidSettings.Side == ESideType.Pmc ?
-				sideSelectionScreen.method_12 :
-				sideSelectionScreen.method_13;
+				sideSelectionScreen.method_12 : sideSelectionScreen.method_13;
 			targetFactionCallback(true); // select scav/pmc
 			yield return null;
 
@@ -366,7 +367,7 @@ namespace Fika.Dedicated
 			} while (!locationSelectionScreen.isActiveAndEnabled);
 			yield return null;
 
-			locationSelectionScreen.Location_0 = session.LocationSettings.locations[request.LocationId];
+			locationSelectionScreen.Location_0 = session.LocationSettings.locations[key: request.LocationId];
 			locationSelectionScreen.method_7(request.Time); // set time
 			locationSelectionScreen.method_11(); // location selection screen -> matchmaker accept screen (we skip with patches)
 

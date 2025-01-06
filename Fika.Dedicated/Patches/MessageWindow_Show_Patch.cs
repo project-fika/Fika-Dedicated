@@ -3,7 +3,7 @@ using SPT.Reflection.Patching;
 using System;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     public class MessageWindow_Show_Patch : ModulePatch
     {

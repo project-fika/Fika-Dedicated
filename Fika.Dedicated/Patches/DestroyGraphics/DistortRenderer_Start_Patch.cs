@@ -2,7 +2,7 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace Fika.Dedicated.Patches.DestroyGraphics
+namespace Fika.Headless.Patches.DestroyGraphics
 {
     public class DistortRenderer_Start_Patch : ModulePatch
     {

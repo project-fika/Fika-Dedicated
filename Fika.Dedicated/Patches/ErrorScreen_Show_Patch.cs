@@ -2,7 +2,7 @@
 using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     // Token: 0x02000008 RID: 8
     internal class ErrorScreen_Show_Patch : ModulePatch

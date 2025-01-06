@@ -2,7 +2,7 @@
 using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches.VRAM
+namespace Fika.Headless.Patches.VRAM
 {
     // Token: 0x0200000C RID: 12
     public class VRAMPatch4 : ModulePatch

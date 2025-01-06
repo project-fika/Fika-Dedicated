@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     public class LevelSettings_ApplySettings_Transpiler : ModulePatch
     {

@@ -1,7 +1,7 @@
 ﻿using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches.DestroyGraphics
+namespace Fika.Headless.Patches.DestroyGraphics
 {
     public class GClass3324_SetResolution_Patch : ModulePatch
     {

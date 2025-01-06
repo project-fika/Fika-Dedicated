@@ -2,7 +2,7 @@
 using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     public class HealthTreatmentScreen_IsAvailable_Patch : ModulePatch
     {

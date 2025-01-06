@@ -3,7 +3,7 @@ using SPT.Reflection.Patching;
 using System.Reflection;
 using UnityEngine;
 
-namespace Fika.Dedicated.Patches.DestroyGraphics
+namespace Fika.Headless.Patches.DestroyGraphics
 {
     public class GPUInstancerHiZOcclusionGenerator_Awake_Patch : ModulePatch
     {

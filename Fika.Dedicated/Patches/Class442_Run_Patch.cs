@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     /// <summary>
     /// THis prevents the season controller from running due to no graphics being used

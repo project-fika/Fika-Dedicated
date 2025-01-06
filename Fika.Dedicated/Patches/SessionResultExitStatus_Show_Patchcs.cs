@@ -4,7 +4,7 @@ using EFT.UI.SessionEnd;
 using SPT.Reflection.Patching;
 using System;
 using System.Reflection;
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     public class SessionResultExitStatusPatch : ModulePatch
     {

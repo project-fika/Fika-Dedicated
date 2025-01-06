@@ -2,7 +2,7 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace Fika.Dedicated.Patches.DestroyGraphics
+namespace Fika.Headless.Patches.DestroyGraphics
 {
     public class StaticDeferredDecal_OnEnable_Patch : ModulePatch
     {

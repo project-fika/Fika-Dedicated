@@ -4,7 +4,7 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-namespace Fika.Dedicated.Patches.VRAM
+namespace Fika.Headless.Patches.VRAM
 {
     // Token: 0x0200000A RID: 10
     public class VRAMPatch2 : ModulePatch

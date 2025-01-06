@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Fika.Dedicated.Patches.DestroyGraphics
+namespace Fika.Headless.Patches.DestroyGraphics
 {
     public class GPUInstancerManager_Update_Transpiler : ModulePatch
     {

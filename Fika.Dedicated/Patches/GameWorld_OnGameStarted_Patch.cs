@@ -1,34 +1,34 @@
 ﻿using Comfort.Common;
 using EFT;
 using Fika.Core.Coop.Players;
-using Fika.Dedicated.Classes;
+using Fika.Headless.Classes;
 using SPT.Reflection.Patching;
 using System.Reflection;
 using UnityEngine;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
-    public class GameWorld_OnGameStarted_Patch : ModulePatch
-    {
-        protected override MethodBase GetTargetMethod()
-        {
-            return typeof(GameWorld).GetMethod(nameof(GameWorld.OnGameStarted));
-        }
+	public class GameWorld_OnGameStarted_Patch : ModulePatch
+	{
+		protected override MethodBase GetTargetMethod()
+		{
+			return typeof(GameWorld).GetMethod(nameof(GameWorld.OnGameStarted));
+		}
 
-        [PatchPostfix]
-        public static void Postfix(GameWorld __instance)
-        {
-            DedicatedRaidController raidController = FikaDedicatedPlugin.raidController;
-            if (raidController == null)
-            {
-                FikaDedicatedPlugin.raidController = Singleton<GameWorld>.Instance.gameObject.AddComponent<DedicatedRaidController>();
-                raidController = FikaDedicatedPlugin.raidController;
+		[PatchPostfix]
+		public static void Postfix(GameWorld __instance)
+		{
+			HeadlessRaidController raidController = FikaHeadlessPlugin.raidController;
+			if (raidController == null)
+			{
+				FikaHeadlessPlugin.raidController = Singleton<GameWorld>.Instance.gameObject.AddComponent<HeadlessRaidController>();
+				raidController = FikaHeadlessPlugin.raidController;
 
-                raidController.MainPlayer = (CoopPlayer)__instance.MainPlayer;
-                raidController.MainPlayer.MovementContext.PitchLimit = new Vector2(-90, -90);
-            }
+				raidController.MainPlayer = (CoopPlayer)__instance.MainPlayer;
+				raidController.MainPlayer.MovementContext.PitchLimit = new Vector2(-90, -90);
+			}
 
-            CameraClass.Instance.SetOcclusionCullingEnabled(false);
-        }
-    }
+			CameraClass.Instance.SetOcclusionCullingEnabled(false);
+		}
+	}
 }

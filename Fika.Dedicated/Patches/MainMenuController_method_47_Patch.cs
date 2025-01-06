@@ -1,7 +1,7 @@
 ﻿using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     public class MainMenuController_method_47_Patch : ModulePatch
     {

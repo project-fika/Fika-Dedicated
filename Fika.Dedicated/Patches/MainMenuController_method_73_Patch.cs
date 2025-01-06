@@ -2,7 +2,7 @@
 using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     /// <summary>
     /// This patch ensures that the raid settings are skipped if you are playing as a scav

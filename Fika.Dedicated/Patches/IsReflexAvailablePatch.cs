@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     public class IsReflexAvailablePatch : ModulePatch
     {

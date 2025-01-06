@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 using WaterSSR;
 
-namespace Fika.Dedicated.Patches.DestroyGraphics
+namespace Fika.Headless.Patches.DestroyGraphics
 {
     public class WaterRendererv3_OnEnable_Patch : ModulePatch
     {

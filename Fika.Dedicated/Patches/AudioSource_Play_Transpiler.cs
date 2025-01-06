@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
 
-namespace Fika.Dedicated.Patches
+namespace Fika.Headless.Patches
 {
     public class AudioSource_Play_Transpiler : ModulePatch
     {

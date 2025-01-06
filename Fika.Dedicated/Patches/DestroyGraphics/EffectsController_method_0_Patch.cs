@@ -3,7 +3,7 @@ using EFT.CameraControl;
 using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace Fika.Dedicated.Patches.DestroyGraphics
+namespace Fika.Headless.Patches.DestroyGraphics
 {
     public class EffectsController_method_0_Patch : ModulePatch
     {

@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 
 
-namespace Fika.Dedicated.Patches.DestroyGraphics
+namespace Fika.Headless.Patches.DestroyGraphics
 {
     public class ScopeMaskRenderer_Awake_Patch : ModulePatch
     {

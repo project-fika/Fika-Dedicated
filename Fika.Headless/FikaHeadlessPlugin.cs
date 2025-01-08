@@ -326,7 +326,7 @@ namespace Fika.Headless
             CommonUI commonUI = MonoBehaviourSingleton<CommonUI>.Instance;
             MenuScreen menuScreen = commonUI.MenuScreen;
 
-            menuScreen.method_9(); // main menu -> faction selection screen
+            menuScreen.method_10(); // main menu -> faction selection screen
 
             MenuUI menuUI = MonoBehaviourSingleton<MenuUI>.Instance;
 
@@ -358,14 +358,13 @@ namespace Fika.Headless
 
             locationSelectionScreen.Location_0 = session.LocationSettings.locations[key: request.LocationId];
             locationSelectionScreen.method_7(request.Time); // set time
-            locationSelectionScreen.method_11(); // location selection screen -> matchmaker accept screen (we skip with patches)
+            locationSelectionScreen.method_13(); // location selection screen -> matchmaker accept screen (we skip with patches)
 
             raidSettings.PlayersSpawnPlace = request.SpawnPlace;
             raidSettings.MetabolismDisabled = request.MetabolismDisabled;
             raidSettings.BotSettings = request.BotSettings;
             raidSettings.WavesSettings = request.WavesSettings;
             raidSettings.TimeAndWeatherSettings = request.TimeAndWeatherSettings;
-            raidSettings.isLocationTransition = false;
             raidSettings.isInTransition = false;
             raidSettings.BotSettings.BotAmount = request.WavesSettings.BotAmount;
             raidSettings.RaidMode = ERaidMode.Local;
@@ -415,7 +414,7 @@ namespace Fika.Headless
                 {
                     Singleton<PreloaderUI>.Instance.ShowCriticalErrorScreen("ERROR FORCING IP",
                         $"'{ip}' is not a valid IP address to connect to! Check your 'Force IP' setting.",
-                        ErrorScreen.EButtonType.OkButton, 10f, null, null);
+                        ErrorScreen.EButtonType.OkButton, 10f);
                     yield break;
                 }
             }
@@ -426,7 +425,7 @@ namespace Fika.Headless
                 {
                     Singleton<PreloaderUI>.Instance.ShowCriticalErrorScreen("ERROR BINDING",
                         $"'{FikaPlugin.ForceBindIP.Value}' is not a valid IP address to bind to! Check your 'Force Bind IP' setting.",
-                        ErrorScreen.EButtonType.OkButton, 10f, null, null);
+                        ErrorScreen.EButtonType.OkButton, 10f);
                     yield break;
                 }
             }

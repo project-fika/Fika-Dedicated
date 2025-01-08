@@ -11,13 +11,13 @@ namespace Fika.Headless.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(Class442).GetMethod(nameof(Class442.Run));
+            return typeof(Class438).GetMethod(nameof(Class438.Run));
         }
 
         [PatchPrefix]
-        public static bool Prefix(Class442 __instance, ref Task __result, Class442.Interface3 ___interface3_0)
+        public static bool Prefix(Class438 __instance, ref Task __result, Class438.Interface3 ___interface3_0)
         {
-            ___interface3_0 = new Class442.Class452(__instance);
+            ___interface3_0 = new Class438.Class448(__instance);
             __result = Task.CompletedTask;
             return false;
         }

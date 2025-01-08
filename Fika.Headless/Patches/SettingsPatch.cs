@@ -10,7 +10,7 @@ namespace Fika.Headless.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(GClass2028).GetMethod(nameof(GClass2028.smethod_2));
+            return typeof(GClass2028).GetMethod(nameof(GClass2063.smethod_2));
         }
 
         [PatchPrefix]
@@ -28,7 +28,7 @@ namespace Fika.Headless.Patches
         internal static async Task Initalize()
         {
             await SetSettings(await SharedGameSettingsClass.InstantiateSingleton());
-            await GClass868.InstantiateSingleton();
+            await GClass875.InstantiateSingleton();
             await Task.Yield();
         }
 

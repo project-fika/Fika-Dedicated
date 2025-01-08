@@ -7,7 +7,7 @@ namespace Fika.Headless.Patches.DestroyGraphics
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(GClass3324).GetMethod(nameof(GClass3324.SetResolution));
+            return typeof(GClass3324).GetMethod(nameof(GClass3396.SetResolution));
         }
 
         [PatchPrefix]

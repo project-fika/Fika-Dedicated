@@ -5,18 +5,18 @@ using System.Reflection;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	public class EffectsController_method_0_Patch : ModulePatch
-	{
-		protected override MethodBase GetTargetMethod()
-		{
-			return typeof(EffectsController).GetMethod(nameof(EffectsController.method_0));
-		}
+    public class EffectsController_method_0_Patch : ModulePatch
+    {
+        protected override MethodBase GetTargetMethod()
+        {
+            return typeof(EffectsController).GetMethod(nameof(EffectsController.method_0));
+        }
 
-		[PatchPrefix]
-		public static bool Prefix(ref Player ___player_0, PlayerCameraController playerCameraController)
-		{
-			___player_0 = playerCameraController.Player;
-			return false;
-		}
-	}
+        [PatchPrefix]
+        public static bool Prefix(ref Player ___player_0, PlayerCameraController playerCameraController)
+        {
+            ___player_0 = playerCameraController.Player;
+            return false;
+        }
+    }
 }

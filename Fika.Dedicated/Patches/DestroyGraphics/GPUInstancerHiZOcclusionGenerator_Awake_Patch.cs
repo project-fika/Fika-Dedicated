@@ -5,18 +5,18 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches.DestroyGraphics
 {
-	public class GPUInstancerHiZOcclusionGenerator_Awake_Patch : ModulePatch
-	{
-		protected override MethodBase GetTargetMethod()
-		{
-			return typeof(GPUInstancerHiZOcclusionGenerator).GetMethod(nameof(GPUInstancerHiZOcclusionGenerator.Awake));
-		}
+    public class GPUInstancerHiZOcclusionGenerator_Awake_Patch : ModulePatch
+    {
+        protected override MethodBase GetTargetMethod()
+        {
+            return typeof(GPUInstancerHiZOcclusionGenerator).GetMethod(nameof(GPUInstancerHiZOcclusionGenerator.Awake));
+        }
 
-		[PatchPrefix]
-		public static bool Prefix(GPUInstancerHiZOcclusionGenerator __instance)
-		{
-			Object.Destroy(__instance);
-			return false;
-		}
-	}
+        [PatchPrefix]
+        public static bool Prefix(GPUInstancerHiZOcclusionGenerator __instance)
+        {
+            Object.Destroy(__instance);
+            return false;
+        }
+    }
 }

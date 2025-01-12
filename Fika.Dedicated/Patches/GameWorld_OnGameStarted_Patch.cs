@@ -8,27 +8,27 @@ using UnityEngine;
 
 namespace Fika.Dedicated.Patches
 {
-	public class GameWorld_OnGameStarted_Patch : ModulePatch
-	{
-		protected override MethodBase GetTargetMethod()
-		{
-			return typeof(GameWorld).GetMethod(nameof(GameWorld.OnGameStarted));
-		}
+    public class GameWorld_OnGameStarted_Patch : ModulePatch
+    {
+        protected override MethodBase GetTargetMethod()
+        {
+            return typeof(GameWorld).GetMethod(nameof(GameWorld.OnGameStarted));
+        }
 
-		[PatchPostfix]
-		public static void Postfix(GameWorld __instance)
-		{
-			DedicatedRaidController raidController = FikaDedicatedPlugin.raidController;
-			if (raidController == null)
-			{
-				FikaDedicatedPlugin.raidController = Singleton<GameWorld>.Instance.gameObject.AddComponent<DedicatedRaidController>();
-				raidController = FikaDedicatedPlugin.raidController;
+        [PatchPostfix]
+        public static void Postfix(GameWorld __instance)
+        {
+            DedicatedRaidController raidController = FikaDedicatedPlugin.raidController;
+            if (raidController == null)
+            {
+                FikaDedicatedPlugin.raidController = Singleton<GameWorld>.Instance.gameObject.AddComponent<DedicatedRaidController>();
+                raidController = FikaDedicatedPlugin.raidController;
 
-				raidController.MainPlayer = (CoopPlayer)__instance.MainPlayer;
-				raidController.MainPlayer.MovementContext.PitchLimit = new Vector2(-90, -90);
-			}
+                raidController.MainPlayer = (CoopPlayer)__instance.MainPlayer;
+                raidController.MainPlayer.MovementContext.PitchLimit = new Vector2(-90, -90);
+            }
 
-			CameraClass.Instance.SetOcclusionCullingEnabled(false);
-		}
-	}
+            CameraClass.Instance.SetOcclusionCullingEnabled(false);
+        }
+    }
 }

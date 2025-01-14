@@ -10,7 +10,7 @@ namespace Fika.Headless.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(GClass2028).GetMethod(nameof(GClass2063.smethod_2));
+            return typeof(GClass2063).GetMethod(nameof(GClass2063.smethod_2));
         }
 
         [PatchPrefix]

@@ -96,7 +96,7 @@ namespace Fika.Headless
             new ValidateFormatPatch2().Enable();
             new ValidateFormatPatch3().Enable();
             new GameWorld_OnGameStarted_Patch().Enable();
-            new MainMenuController_method_47_Patch().Enable();
+            new MainMenuController_method_48_Patch().Enable();
             new ConsoleScreen_OnProfileReceive_Patch().Enable();
             new Class442_Run_Patch().Enable();
             new Player_VisualPass_Patch().Enable();

@@ -3,11 +3,11 @@ using System.Reflection;
 
 namespace Fika.Headless.Patches
 {
-    public class MainMenuController_method_47_Patch : ModulePatch
+    public class MainMenuController_method_48_Patch : ModulePatch
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainMenuController).GetMethod(nameof(MainMenuController.method_47));
+            return typeof(MainMenuController).GetMethod(nameof(MainMenuController.method_48));
         }
 
         [PatchPrefix]

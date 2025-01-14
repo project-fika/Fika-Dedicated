@@ -18,7 +18,7 @@ namespace Fika.Headless.Patches
         [PatchPostfix]
         public static void Prefix(Profile profile)
         {
-            if (!profile.Nickname.Contains("dedicated_"))
+            if (!profile.Nickname.Contains("headless_"))
             {
                 if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
                 {
@@ -29,13 +29,13 @@ namespace Fika.Headless.Patches
                 }
                 else
                 {
-                    FikaHeadlessPlugin.FikaHeadlessLogger.LogError("Not running a dedicated profile! Read the documentation again! Exiting...");
+                    FikaHeadlessPlugin.FikaHeadlessLogger.LogError("Not running a headless client profile! Read the documentation again! Exiting...");
                 }
                 Application.Quit();
             }
             else
             {
-                ValidationUtil._crashHandler = "FikaDedicated";
+                ValidationUtil._crashHandler = "FikaHeadless";
                 FikaHeadlessPlugin.FikaHeadlessLogger.LogInfo("Profile verified");
             }
         }

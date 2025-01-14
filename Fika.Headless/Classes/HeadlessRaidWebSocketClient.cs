@@ -87,7 +87,7 @@ namespace Fika.Core.Networking
             switch (type)
             {
                 case "fikaDedicatedStartRaid":
-                    StartDedicatedRequest request = jsonObject.ToObject<StartDedicatedRequest>();
+                    StartHeadlessRequest request = jsonObject.ToObject<StartHeadlessRequest>();
                     FikaHeadlessPlugin.Instance.OnFikaStartRaid(request);
                     break;
                 case "fikaDedicatedKeepAlive":

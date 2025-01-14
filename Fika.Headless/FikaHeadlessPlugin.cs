@@ -54,7 +54,7 @@ namespace Fika.Headless
                 return SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows;
             }
         }
-        public DedicatedStatus Status { get; set; }
+        public HeadlessStatus Status { get; set; }
 
         private static HeadlessRaidWebSocketClient fikaHeadlessWebSocket;
         private float gcCounter;
@@ -137,7 +137,7 @@ namespace Fika.Headless
                 CleanupLogFiles();
             }
 
-            FikaBackendUtils.IsDedicated = true;
+            FikaBackendUtils.IsHeadless = true;
 
             fikaHeadlessWebSocket = new HeadlessRaidWebSocketClient();
 
@@ -204,7 +204,7 @@ namespace Fika.Headless
             }
         }
 
-        public void OnFikaStartRaid(StartDedicatedRequest request)
+        public void OnFikaStartRaid(StartHeadlessRequest request)
         {
             if (!TarkovApplication.Exist(out TarkovApplication tarkovApplication))
             {
@@ -307,12 +307,12 @@ namespace Fika.Headless
             }
         }
 
-        private IEnumerator BeginFikaStartRaid(StartDedicatedRequest request, ISession session, RaidSettings raidSettings, TarkovApplication tarkovApplication)
+        private IEnumerator BeginFikaStartRaid(StartHeadlessRequest request, ISession session, RaidSettings raidSettings, TarkovApplication tarkovApplication)
         {
-            Status = DedicatedStatus.IN_RAID;
+            Status = HeadlessStatus.IN_RAID;
 
-            SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, DedicatedStatus.IN_RAID);
-            Task statusTask = FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
+            SetHeadlessStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, HeadlessStatus.IN_RAID);
+            Task statusTask = FikaRequestHandler.SetHeadlessStatus(setDedicatedStatusRequest);
             while (!statusTask.IsCompleted)
             {
                 yield return new WaitForEndOfFrame();
@@ -437,7 +437,8 @@ namespace Fika.Headless
             {
                 yield return null;
             }
-            FikaBackendUtils.IsDedicatedGame = true;
+
+            FikaBackendUtils.IsHeadlessGame = true;
 
             verifyConnectionsRoutine = StartCoroutine(VerifyPlayersRoutine());
 
@@ -446,7 +447,7 @@ namespace Fika.Headless
 
         public IEnumerator SetDedicatedStatusReady()
         {
-            while (Status == DedicatedStatus.READY)
+            while (Status == HeadlessStatus.READY)
             {
                 Task.Run(SetStatusToReady);
                 yield return new WaitForSeconds(15f);
@@ -457,13 +458,13 @@ namespace Fika.Headless
 
         private async void SetStatusToReady()
         {
-            SetDedicatedStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, DedicatedStatus.READY);
-            await FikaRequestHandler.SetDedicatedStatus(setDedicatedStatusRequest);
+            SetHeadlessStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, HeadlessStatus.READY);
+            await FikaRequestHandler.SetHeadlessStatus(setDedicatedStatusRequest);
         }
 
-        public void StartSetDedicatedStatusReadyRoutine()
+        public void StartSetHeadlessStatusReadyRoutine()
         {
-            Status = invalidPluginsFound ? DedicatedStatus.IN_RAID : DedicatedStatus.READY;
+            Status = invalidPluginsFound ? HeadlessStatus.IN_RAID : HeadlessStatus.READY;
             StartCoroutine(SetDedicatedStatusReady());
         }
     }

@@ -79,7 +79,7 @@ namespace Fika.Headless.Classes
                             freeCameraController.ToggleCamera();
                         }
                         freeCam.SetCurrentPlayer(targetPlayer);
-                        freeCam.AttachDedicated(targetPlayer);
+                        freeCam.AttachHeadless(targetPlayer);
                         return;
                     }
                 }

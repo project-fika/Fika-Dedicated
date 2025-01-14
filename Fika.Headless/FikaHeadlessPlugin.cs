@@ -96,7 +96,7 @@ namespace Fika.Headless
             new ValidateFormatPatch2().Enable();
             new ValidateFormatPatch3().Enable();
             new GameWorld_OnGameStarted_Patch().Enable();
-            new MainMenuController_method_47_Patch().Enable();
+            new MainMenuController_method_48_Patch().Enable();
             new ConsoleScreen_OnProfileReceive_Patch().Enable();
             new Class442_Run_Patch().Enable();
             new Player_VisualPass_Patch().Enable();
@@ -104,10 +104,10 @@ namespace Fika.Headless
             new AudioSource_Play_Transpiler().Enable();
             new LevelSettings_ApplySettings_Transpiler().Enable();
             new LevelSettings_ApplyTreeWindSettings_Transpiler().Enable();
-            new MainMenuController_method_44_Patch().Enable();
             new MainMenuController_method_45_Patch().Enable();
-            new MainMenuController_method_72_Patch().Enable();
+            new MainMenuController_method_46_Patch().Enable();
             new MainMenuController_method_73_Patch().Enable();
+            new MainMenuController_method_74_Patch().Enable();
             new LocaleManagerClass_String_0_Patch().Enable();
 
             if (!ShouldBotsSleep.Value)

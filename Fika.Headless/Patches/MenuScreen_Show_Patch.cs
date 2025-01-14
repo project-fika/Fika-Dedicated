@@ -20,7 +20,7 @@ namespace Fika.Headless.Patches
         [PatchPostfix]
         public static void PatchPostfix()
         {
-            FikaHeadlessPlugin.Instance.StartSetDedicatedStatusReadyRoutine();
+            FikaHeadlessPlugin.Instance.StartSetHeadlessStatusReadyRoutine();
         }
     }
 }

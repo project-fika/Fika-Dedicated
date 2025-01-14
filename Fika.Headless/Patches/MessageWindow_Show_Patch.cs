@@ -11,8 +11,7 @@ namespace Fika.Headless.Patches
         {
             return typeof(MessageWindow).GetMethod(nameof(MessageWindow.Show), [typeof(string),
                 typeof(string),
-                typeof(Action),
-                typeof(Action),
+                typeof(bool),
                 typeof(float)]);
         }
 

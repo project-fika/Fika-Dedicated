@@ -30,7 +30,7 @@ namespace Fika.Core.Networking
         {
             Host = RequestHandler.Host.Replace("http", "ws");
             SessionId = RequestHandler.SessionId;
-            Url = $"{Host}/fika/dedicatedraidservice/";
+            Url = $"{Host}/fika/headlessraidservice/";
 
             _webSocket = new WebSocket(Url)
             {

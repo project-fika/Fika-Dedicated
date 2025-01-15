@@ -140,7 +140,7 @@ namespace Fika.Headless
 
             FikaBackendUtils.IsHeadless = true;
 
-            fikaHeadlessWebSocket = new HeadlessRaidWebSocketClient();
+            fikaHeadlessWebSocket = gameObject.AddComponent<HeadlessRaidWebSocketClient>();
 
             StartCoroutine(RunPluginValidation());
         }

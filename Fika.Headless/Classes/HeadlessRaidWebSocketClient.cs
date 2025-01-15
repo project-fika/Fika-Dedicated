@@ -86,11 +86,11 @@ namespace Fika.Core.Networking
 
             switch (type)
             {
-                case "fikaDedicatedStartRaid":
+                case "fikaHeadlessStartRaid":
                     StartHeadlessRequest request = jsonObject.ToObject<StartHeadlessRequest>();
                     FikaHeadlessPlugin.Instance.OnFikaStartRaid(request);
                     break;
-                case "fikaDedicatedKeepAlive":
+                case "fikaHeadlessKeepAlive":
                     _webSocket.Send("keepalive");
                     break;
             }

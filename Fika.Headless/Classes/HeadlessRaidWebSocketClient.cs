@@ -92,7 +92,7 @@ namespace Fika.Core.Networking
             switch (type)
             {
                 case "fikaHeadlessStartRaid":
-                    StartHeadlessRequest request = AsyncWorker.RunOnBackgroundThread(jsonObject.ToObject<StartHeadlessRequest>).Result;
+                    StartHeadlessRequest request = jsonObject.ToObject<StartHeadlessRequest>();
                     AsyncWorker.RunInMainTread(() =>
                     {
                         FikaHeadlessPlugin.Instance.OnFikaStartRaid(request);

@@ -54,7 +54,7 @@ namespace Fika.Headless
                 return SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows;
             }
         }
-        public HeadlessStatus Status { get; set; }
+        public EHeadlessStatus Status { get; set; }
 
         private static HeadlessRaidWebSocketClient fikaHeadlessWebSocket;
         private float gcCounter;
@@ -309,9 +309,9 @@ namespace Fika.Headless
 
         private IEnumerator BeginFikaStartRaid(StartHeadlessRequest request, ISession session, RaidSettings raidSettings, TarkovApplication tarkovApplication)
         {
-            Status = HeadlessStatus.IN_RAID;
+            Status = EHeadlessStatus.IN_RAID;
 
-            SetHeadlessStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, HeadlessStatus.IN_RAID);
+            SetHeadlessStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, EHeadlessStatus.IN_RAID);
             Task statusTask = FikaRequestHandler.SetHeadlessStatus(setDedicatedStatusRequest);
             while (!statusTask.IsCompleted)
             {
@@ -447,7 +447,7 @@ namespace Fika.Headless
 
         public IEnumerator SetDedicatedStatusReady()
         {
-            while (Status == HeadlessStatus.READY)
+            while (Status == EHeadlessStatus.READY)
             {
                 Task.Run(SetStatusToReady);
                 yield return new WaitForSeconds(15f);
@@ -458,13 +458,13 @@ namespace Fika.Headless
 
         private async void SetStatusToReady()
         {
-            SetHeadlessStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, HeadlessStatus.READY);
+            SetHeadlessStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, EHeadlessStatus.READY);
             await FikaRequestHandler.SetHeadlessStatus(setDedicatedStatusRequest);
         }
 
         public void StartSetHeadlessStatusReadyRoutine()
         {
-            Status = invalidPluginsFound ? HeadlessStatus.IN_RAID : HeadlessStatus.READY;
+            Status = invalidPluginsFound ? EHeadlessStatus.IN_RAID : EHeadlessStatus.READY;
             StartCoroutine(SetDedicatedStatusReady());
         }
     }

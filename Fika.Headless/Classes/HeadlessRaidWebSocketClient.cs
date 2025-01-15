@@ -1,4 +1,5 @@
 ﻿using BepInEx.Logging;
+using Diz.Utils;
 using EFT.UI;
 using Fika.Core.Networking.Http;
 using Fika.Headless;
@@ -13,7 +14,7 @@ using WebSocketSharp;
 
 namespace Fika.Core.Networking
 {
-    public class HeadlessRaidWebSocketClient : MonoBehaviour
+    public class HeadlessRaidWebSocketClient
     {
         private static ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("Fika.HeadlessWebSocket");
 
@@ -29,8 +30,6 @@ namespace Fika.Core.Networking
         }
 
         private WebSocket _webSocket;
-        // Add a queue for incoming messages, so they can be brought to the main thread in a nice way.
-        private ConcurrentQueue<StartHeadlessRequest> messagesQueue = new();
 
         public HeadlessRaidWebSocketClient()
         {
@@ -57,14 +56,6 @@ namespace Fika.Core.Networking
             logger.LogInfo($"WS Connect()");
             logger.LogInfo($"Attempting to connect to {Url}...");
             _webSocket.Connect();
-        }
-
-        public void Update()
-        {
-            while (messagesQueue.TryDequeue(out StartHeadlessRequest request))
-            {
-                FikaHeadlessPlugin.Instance.OnFikaStartRaid(request);
-            }
         }
 
         public void Close()
@@ -101,8 +92,11 @@ namespace Fika.Core.Networking
             switch (type)
             {
                 case "fikaHeadlessStartRaid":
-                    StartHeadlessRequest request = jsonObject.ToObject<StartHeadlessRequest>();
-                    messagesQueue.Enqueue(request);
+                    StartHeadlessRequest request = AsyncWorker.RunOnBackgroundThread(jsonObject.ToObject<StartHeadlessRequest>).Result;
+                    AsyncWorker.RunInMainTread(() =>
+                    {
+                        FikaHeadlessPlugin.Instance.OnFikaStartRaid(request);
+                    });
                     break;
                 case "fikaHeadlessKeepAlive":
                     _webSocket.Send("keepalive");

@@ -109,7 +109,8 @@ namespace Fika.Headless
             new MainMenuController_method_73_Patch().Enable();
             new MainMenuController_method_74_Patch().Enable();
             new LocaleManagerClass_String_0_Patch().Enable();
-            new LocalePatches().Enable();
+            // TODO: Fix
+            //new LocalePatches().Enable();
 
             if (!ShouldBotsSleep.Value)
             {
@@ -140,7 +141,7 @@ namespace Fika.Headless
 
             FikaBackendUtils.IsHeadless = true;
 
-            fikaHeadlessWebSocket = gameObject.AddComponent<HeadlessRaidWebSocketClient>();
+            fikaHeadlessWebSocket = new();
 
             StartCoroutine(RunPluginValidation());
         }

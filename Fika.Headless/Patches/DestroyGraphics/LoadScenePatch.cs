@@ -37,7 +37,7 @@ namespace Fika.Headless.Patches.DestroyGraphics
                 yield return null;
             }
 
-            FikaHeadlessPlugin.FikaHeadlessLogger.LogInfo($"Scene {sceneName} is fully loaded.");
+            FikaHeadlessPlugin.FikaHeadlessLogger.LogDebug($"Scene {sceneName} is fully loaded.");
 
             Scene loadedScene = SceneManager.GetSceneByName(sceneName);
             if (loadedScene.IsValid())

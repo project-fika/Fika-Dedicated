@@ -197,10 +197,7 @@ namespace Fika.Headless
             {
                 Logger.LogDebug("Clearing memory");
                 gcCounter = 0;
-                //MemoryControllerClass.EmptyWorkingSet();
-                GarbageCollector.GCMode = GarbageCollector.Mode.Enabled;
-                GC.Collect();
-                GarbageCollector.GCMode = GarbageCollector.Mode.Disabled;
+                MemoryControllerClass.Collect(2, GCCollectionMode.Forced, true, true, true);
             }
         }
 

@@ -16,7 +16,7 @@ using Fika.Core.UI.Custom;
 using Fika.Core.UI.Patches;
 using Fika.Headless.Classes;
 using Fika.Headless.Patches;
-using Fika.Headless.Patches.DestroyGraphics;
+using Fika.Headless.Patches.Audio;
 using Fika.Headless.Patches.DLSS;
 using Fika.Headless.Patches.TextureValidateFormat;
 using Fika.Headless.Patches.VRAM;
@@ -109,6 +109,7 @@ namespace Fika.Headless
             new MainMenuController_method_73_Patch().Enable();
             new MainMenuController_method_74_Patch().Enable();
             new LocaleManagerClass_String_0_Patch().Enable();
+            new TarkovApplication_method_39_Patch().Enable();
             // TODO: Fix
             //new LocalePatches().Enable();
 
@@ -119,8 +120,10 @@ namespace Fika.Headless
 
             if (ShouldDestroyGraphics.Value)
             {
-                DestroyGraphicsAutoloader.EnableDestroyGraphicsPatches();
+                HeadlessAutoPatcher.EnableDestroyGraphicsPatches();
             }
+
+            HeadlessAutoPatcher.EnableDisableAudioPatches();
 
             //InvokeRepeating("ClearRenderables", 1f, 1f);
 

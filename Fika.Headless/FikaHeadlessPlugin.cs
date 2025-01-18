@@ -110,6 +110,8 @@ namespace Fika.Headless
             new MainMenuController_method_74_Patch().Enable();
             new LocaleManagerClass_String_0_Patch().Enable();
             new TarkovApplication_method_39_Patch().Enable();
+            new MovementContext_AnimatorStatesLateUpdate_Update().Enable();
+            new ProceduralWeaponAnimation_StartFovCoroutine_Patch().Enable();
 
             if (!ShouldBotsSleep.Value)
             {

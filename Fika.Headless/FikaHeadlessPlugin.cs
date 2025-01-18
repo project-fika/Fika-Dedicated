@@ -110,8 +110,6 @@ namespace Fika.Headless
             new MainMenuController_method_74_Patch().Enable();
             new LocaleManagerClass_String_0_Patch().Enable();
             new TarkovApplication_method_39_Patch().Enable();
-            // TODO: Fix
-            //new LocalePatches().Enable();
 
             if (!ShouldBotsSleep.Value)
             {

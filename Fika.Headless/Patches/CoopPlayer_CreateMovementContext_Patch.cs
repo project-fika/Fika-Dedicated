@@ -27,11 +27,7 @@ namespace Fika.Headless.Patches
                 return false;
             }
 
-            LayerMask observedMask = EFTHardSettings.Instance.MOVEMENT_MASK;
-            __instance.MovementContext = HeadlessMovementContext.Create(__instance, new Func<IAnimator>(__instance.GetBodyAnimatorCommon),
-                new Func<ICharacterController>(__instance.GetCharacterControllerCommon), observedMask);
-
-            return false;
+            return true;
         }
     }
 }

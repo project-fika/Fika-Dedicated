@@ -96,7 +96,7 @@ namespace Fika.Headless
             new ValidateFormatPatch2().Enable();
             new ValidateFormatPatch3().Enable();
             new GameWorld_OnGameStarted_Patch().Enable();
-            new MainMenuController_method_48_Patch().Enable();
+            new MainMenuControllerClass_method_48_Patch().Enable();
             new ConsoleScreen_OnProfileReceive_Patch().Enable();
             new Class442_Run_Patch().Enable();
             new Player_VisualPass_Patch().Enable();
@@ -104,10 +104,10 @@ namespace Fika.Headless
             new AudioSource_Play_Transpiler().Enable();
             new LevelSettings_ApplySettings_Transpiler().Enable();
             new LevelSettings_ApplyTreeWindSettings_Transpiler().Enable();
-            new MainMenuController_method_45_Patch().Enable();
-            new MainMenuController_method_46_Patch().Enable();
-            new MainMenuController_method_73_Patch().Enable();
-            new MainMenuController_method_74_Patch().Enable();
+            new MainMenuControllerClass_method_45_Patch().Enable();
+            new MainMenuControllerClass_method_46_Patch().Enable();
+            new MainMenuControllerClass_method_73_Patch().Enable();
+            new MainMenuControllerClass_method_74_Patch().Enable();
             new LocaleManagerClass_String_0_Patch().Enable();
             new TarkovApplication_method_39_Patch().Enable();
             new MovementContext_AnimatorStatesLateUpdate_Update().Enable();
@@ -372,7 +372,7 @@ namespace Fika.Headless
             raidSettings.RaidMode = ERaidMode.Local;
             raidSettings.IsPveOffline = true;
 
-            MainMenuController mmc = Traverse.Create(tarkovApplication).Field<MainMenuController>("mainMenuController").Value;
+            MainMenuControllerClass mmc = Traverse.Create(tarkovApplication).Field<MainMenuControllerClass>("mainMenuController").Value;
             Traverse mmcTraverse = Traverse.Create(mmc);
             mmcTraverse.Field<RaidSettings>("raidSettings_0").Value = raidSettings;
             mmcTraverse.Field<RaidSettings>("raidSettings_1").Value = raidSettings;

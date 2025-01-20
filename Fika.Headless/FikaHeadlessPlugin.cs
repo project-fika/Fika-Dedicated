@@ -238,6 +238,7 @@ namespace Fika.Headless
             FikaPlugin.AutoExtract.Value = true;
             FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
             FikaPlugin.ConnectionTimeout.Value = 30;
+            FikaPlugin.UseNamePlates.Value = false;
 
             FikaPlugin.Instance.AllowFreeCam = true;
             FikaPlugin.Instance.AllowSpectateFreeCam = true;

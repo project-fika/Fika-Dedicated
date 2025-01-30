@@ -94,18 +94,18 @@ namespace Fika.Headless
             new ValidateFormatPatch2().Enable();
             new ValidateFormatPatch3().Enable();
             new GameWorld_OnGameStarted_Patch().Enable();
-            new MainMenuControllerClass_method_49_Patch().Enable();
+            new MainMenuControllerClass_method_50_Patch().Enable();
             new ConsoleScreen_OnProfileReceive_Patch().Enable();
-            new Class442_Run_Patch().Enable();
+            new Class438_Run_Patch().Enable();
             new Player_VisualPass_Patch().Enable();
             new IsReflexAvailablePatch().Enable();
             new AudioSource_Play_Transpiler().Enable();
             new LevelSettings_ApplySettings_Transpiler().Enable();
             new LevelSettings_ApplyTreeWindSettings_Transpiler().Enable();
-            new MainMenuControllerClass_method_45_Patch().Enable();
             new MainMenuControllerClass_method_46_Patch().Enable();
-            new MainMenuControllerClass_method_73_Patch().Enable();
+            new MainMenuControllerClass_method_46_Patch().Enable();
             new MainMenuControllerClass_method_74_Patch().Enable();
+            new MainMenuControllerClass_method_75_Patch().Enable();
             new LocaleManagerClass_String_0_Patch().Enable();
             new TarkovApplication_method_39_Patch().Enable();
             new ProceduralWeaponAnimation_StartFovCoroutine_Transpiler().Enable();
@@ -340,7 +340,7 @@ namespace Fika.Headless
 
             yield return null;
 
-            sideSelectionScreen.method_17(); // faction selection screen -> location selection screen
+            sideSelectionScreen.method_18(); // faction selection screen -> location selection screen
             yield return null;
 
             MatchMakerSelectionLocationScreen locationSelectionScreen = menuUI.MatchMakerSelectionLocationScreen;

@@ -16,7 +16,7 @@ namespace Fika.Headless.Patches
         [PatchPrefix]
         public static bool Prefix(MainMenuControllerClass __instance)
         {
-            __instance.method_47();
+            __instance.method_78();
             return false;
         }
     }

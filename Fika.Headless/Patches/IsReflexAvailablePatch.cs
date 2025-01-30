@@ -8,7 +8,7 @@ namespace Fika.Headless.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(GClass3248).GetMethods().Where(x => x.ReturnType == typeof(bool)).FirstOrDefault();
+            return typeof(GClass3250).GetMethods().Where(x => x.ReturnType == typeof(bool)).FirstOrDefault();
         }
 
         [PatchPrefix]

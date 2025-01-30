@@ -332,11 +332,11 @@ namespace Fika.Headless
             yield return null;
 
             Action<bool> targetFactionCallback = raidSettings.Side == ESideType.Pmc ?
-                sideSelectionScreen.method_12 : sideSelectionScreen.method_13;
+                sideSelectionScreen.method_13 : sideSelectionScreen.method_14;
             targetFactionCallback(true); // select scav/pmc
             yield return null;
 
-            sideSelectionScreen.method_11(request.Side); // select side
+            sideSelectionScreen.method_12(request.Side); // select side
 
             yield return null;
 
@@ -351,8 +351,8 @@ namespace Fika.Headless
             yield return null;
 
             locationSelectionScreen.Location_0 = session.LocationSettings.locations[key: request.LocationId];
-            locationSelectionScreen.method_7(request.Time); // set time
-            locationSelectionScreen.method_13(); // location selection screen -> matchmaker accept screen (we skip with patches)
+            locationSelectionScreen.method_8(request.Time); // set time
+            locationSelectionScreen.method_14(); // location selection screen -> matchmaker accept screen (we skip with patches)
 
             raidSettings.PlayersSpawnPlace = request.SpawnPlace;
             raidSettings.MetabolismDisabled = request.MetabolismDisabled;

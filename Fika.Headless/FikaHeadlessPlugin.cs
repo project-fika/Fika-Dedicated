@@ -56,7 +56,7 @@ namespace Fika.Headless
         }
         public EHeadlessStatus Status { get; set; }
 
-        private static HeadlessRaidWebSocketClient fikaHeadlessWebSocket;
+        private static HeadlessWebSocket FikaHeadlessWebSocket;
         private float gcCounter;
         private Coroutine verifyConnectionsRoutine;
         private bool invalidPluginsFound = false;
@@ -88,7 +88,6 @@ namespace Fika.Headless
             new SettingsPatch().Enable();
             new SessionResultExitStatusPatch().Enable();
             new MessageWindow_Show_Patch().Enable();
-            new MenuScreen_Show_Patch().Enable();
             new HealthTreatmentScreen_IsAvailable_Patch().Enable();
             new CoopPlayer_CreateMovementContext_Patch().Enable();
             new Player_Init_Patch().Enable();
@@ -143,7 +142,7 @@ namespace Fika.Headless
 
             FikaBackendUtils.IsHeadless = true;
 
-            fikaHeadlessWebSocket = new();
+            FikaHeadlessWebSocket = new();
 
             StartCoroutine(RunPluginValidation());
         }
@@ -284,7 +283,10 @@ namespace Fika.Headless
 
             Logger.LogInfo("Plugins verified successfully");
 
-            fikaHeadlessWebSocket.Connect();
+            if (!invalidPluginsFound)
+            {
+                FikaHeadlessWebSocket.Connect();
+            }
         }
 
         private IEnumerator VerifyPlayersRoutine()
@@ -312,13 +314,6 @@ namespace Fika.Headless
         private IEnumerator BeginFikaStartRaid(StartHeadlessRequest request, ISession session, RaidSettings raidSettings, TarkovApplication tarkovApplication)
         {
             Status = EHeadlessStatus.IN_RAID;
-
-            SetHeadlessStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, EHeadlessStatus.IN_RAID);
-            Task statusTask = FikaRequestHandler.SetHeadlessStatus(setDedicatedStatusRequest);
-            while (!statusTask.IsCompleted)
-            {
-                yield return new WaitForEndOfFrame();
-            }
 
             /*
              * Runs through the menus. Eventually this can be replaced
@@ -445,29 +440,6 @@ namespace Fika.Headless
             verifyConnectionsRoutine = StartCoroutine(VerifyPlayersRoutine());
 
             fikaMatchMakerScript.AcceptButton.OnClick.Invoke();
-        }
-
-        public IEnumerator SetDedicatedStatusReady()
-        {
-            while (Status == EHeadlessStatus.READY)
-            {
-                Task.Run(SetStatusToReady);
-                yield return new WaitForSeconds(15f);
-            }
-
-            yield break;
-        }
-
-        private async void SetStatusToReady()
-        {
-            SetHeadlessStatusRequest setDedicatedStatusRequest = new(RequestHandler.SessionId, EHeadlessStatus.READY);
-            await FikaRequestHandler.SetHeadlessStatus(setDedicatedStatusRequest);
-        }
-
-        public void StartSetHeadlessStatusReadyRoutine()
-        {
-            Status = invalidPluginsFound ? EHeadlessStatus.IN_RAID : EHeadlessStatus.READY;
-            StartCoroutine(SetDedicatedStatusReady());
         }
     }
 }

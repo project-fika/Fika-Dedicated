@@ -1,20 +1,17 @@
 ﻿using BepInEx.Logging;
 using Diz.Utils;
-using EFT.UI;
-using Fika.Core.Networking.Http;
+using Fika.Core.Networking.Websocket;
+using Fika.Core.Networking.Websocket.Headless;
 using Fika.Headless;
 using Newtonsoft.Json.Linq;
 using SPT.Common.Http;
 using System;
-using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.Networking.Match;
 using WebSocketSharp;
 
 namespace Fika.Core.Networking
 {
-    public class HeadlessRaidWebSocketClient
+    public class HeadlessWebSocket
     {
         private static ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("Fika.HeadlessWebSocket");
 
@@ -31,11 +28,11 @@ namespace Fika.Core.Networking
 
         private WebSocket _webSocket;
 
-        public HeadlessRaidWebSocketClient()
+        public HeadlessWebSocket()
         {
             Host = RequestHandler.Host.Replace("http", "ws");
             SessionId = RequestHandler.SessionId;
-            Url = $"{Host}/fika/headlessraidservice/";
+            Url = $"{Host}/fika/headless/client";
 
             _webSocket = new WebSocket(Url)
             {
@@ -65,7 +62,7 @@ namespace Fika.Core.Networking
 
         private void WebSocket_OnOpen(object sender, EventArgs e)
         {
-            logger.LogInfo("Connected to FikaDedicatedRaidWebSocket as server");
+            logger.LogInfo("Connected to HeadlessWebSocket");
         }
 
         private void WebSocket_OnMessage(object sender, MessageEventArgs e)
@@ -87,26 +84,24 @@ namespace Fika.Core.Networking
                 return;
             }
 
-            string type = jsonObject["type"].Value<string>();
+            EFikaHeadlessWSMessageTypes type = (EFikaHeadlessWSMessageTypes)Enum.Parse(typeof(EFikaHeadlessWSMessageTypes), jsonObject.Value<string>("type"));
 
             switch (type)
             {
-                case "fikaHeadlessStartRaid":
-                    StartHeadlessRequest request = jsonObject.ToObject<StartHeadlessRequest>();
+                case EFikaHeadlessWSMessageTypes.HeadlessStartRaid:
+                    StartRaid data = e.Data.ParseJsonTo<StartRaid>();
+
                     AsyncWorker.RunInMainTread(() =>
                     {
-                        FikaHeadlessPlugin.Instance.OnFikaStartRaid(request);
+                        FikaHeadlessPlugin.Instance.OnFikaStartRaid(data.StartRequest);
                     });
-                    break;
-                case "fikaHeadlessKeepAlive":
-                    _webSocket.Send("keepalive");
                     break;
             }
         }
 
         private void WebSocket_OnError(object sender, ErrorEventArgs e)
         {
-            logger.LogInfo($"FikaDedicatedRaidWebSocket error: {e.Message}");
+            logger.LogInfo($"HeadlessWebSocket error: {e.Message}");
         }
 
         private void WebSocket_OnClose(object sender, CloseEventArgs closeEventArgs)

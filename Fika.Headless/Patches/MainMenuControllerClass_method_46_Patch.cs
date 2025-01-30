@@ -4,7 +4,8 @@ using System.Reflection;
 namespace Fika.Headless.Patches
 {
     /// <summary>
-    /// This patch simulates clicking "Next" by calling the method bound to the event of the button
+    /// This patch simulates clicking "Next" by calling the method bound to the event of the button <br/>
+    /// <see cref="EFT.UI.Matchmaker.MatchmakerOfflineRaidScreen.CreateRaidSettingsForProfileClass"/>
     /// </summary>
     internal class MainMenuControllerClass_method_46_Patch : ModulePatch
     {

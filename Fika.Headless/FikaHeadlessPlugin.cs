@@ -103,7 +103,7 @@ namespace Fika.Headless
             new LevelSettings_ApplySettings_Transpiler().Enable();
             new LevelSettings_ApplyTreeWindSettings_Transpiler().Enable();
             new MainMenuControllerClass_method_46_Patch().Enable();
-            new MainMenuControllerClass_method_46_Patch().Enable();
+            new MainMenuControllerClass_method_47_Patch().Enable();
             new MainMenuControllerClass_method_74_Patch().Enable();
             new MainMenuControllerClass_method_75_Patch().Enable();
             new LocaleManagerClass_String_0_Patch().Enable();
@@ -121,8 +121,6 @@ namespace Fika.Headless
             }
 
             HeadlessAutoPatcher.EnableDisableAudioPatches();
-
-            //InvokeRepeating("ClearRenderables", 1f, 1f);
 
             new TarkovApplication_method_18_Patch().Disable();
             new MenuScreen_Awake_Patch().Disable();
@@ -324,6 +322,9 @@ namespace Fika.Headless
 
             MenuUI menuUI = MonoBehaviourSingleton<MenuUI>.Instance;
 
+#if DEBUG
+            FikaHeadlessLogger.LogWarning("Finding MatchMakerSideSelectionScreen");
+#endif
             MatchMakerSideSelectionScreen sideSelectionScreen = menuUI.MatchMakerSideSelectionScreen;
             do
             {
@@ -331,18 +332,15 @@ namespace Fika.Headless
             } while (!sideSelectionScreen.isActiveAndEnabled);
             yield return null;
 
-            Action<bool> targetFactionCallback = raidSettings.Side == ESideType.Pmc ?
-                sideSelectionScreen.method_13 : sideSelectionScreen.method_14;
-            targetFactionCallback(true); // select scav/pmc
-            yield return null;
-
             sideSelectionScreen.method_12(request.Side); // select side
-
             yield return null;
 
             sideSelectionScreen.method_18(); // faction selection screen -> location selection screen
             yield return null;
 
+#if DEBUG
+            FikaHeadlessLogger.LogWarning("Finding MatchMakerSelectionLocationScreen"); 
+#endif
             MatchMakerSelectionLocationScreen locationSelectionScreen = menuUI.MatchMakerSelectionLocationScreen;
             do
             {
@@ -371,6 +369,9 @@ namespace Fika.Headless
 
             yield return null;
 
+#if DEBUG
+            FikaHeadlessLogger.LogWarning("Finding MatchMakerAcceptScreen");
+#endif
             MatchMakerAcceptScreen acceptScreen = menuUI.MatchMakerAcceptScreen;
             do
             {

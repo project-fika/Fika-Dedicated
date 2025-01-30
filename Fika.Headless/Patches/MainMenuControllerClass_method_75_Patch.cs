@@ -19,7 +19,7 @@ namespace Fika.Headless.Patches
         {
             if (___raidSettings_0.IsScav)
             {
-                __instance.method_47();
+                __instance.method_48();
             }
         }
     }

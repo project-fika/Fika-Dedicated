@@ -54,7 +54,6 @@ namespace Fika.Headless
                 return SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows;
             }
         }
-        public EHeadlessStatus Status { get; set; }
 
         private static HeadlessWebSocket FikaHeadlessWebSocket;
         private float gcCounter;
@@ -313,8 +312,6 @@ namespace Fika.Headless
 
         private IEnumerator BeginFikaStartRaid(StartHeadlessRequest request, ISession session, RaidSettings raidSettings, TarkovApplication tarkovApplication)
         {
-            Status = EHeadlessStatus.IN_RAID;
-
             /*
              * Runs through the menus. Eventually this can be replaced
              * but it works for now and I was getting a CTD with other method

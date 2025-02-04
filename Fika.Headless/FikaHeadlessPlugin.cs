@@ -29,6 +29,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -310,83 +311,18 @@ namespace Fika.Headless
 
         private IEnumerator BeginFikaStartRaid(StartHeadlessRequest request, ISession session, RaidSettings raidSettings, TarkovApplication tarkovApplication)
         {
-            /*
-             * Runs through the menus. Eventually this can be replaced
-             * but it works for now and I was getting a CTD with other method
-            */
-
-            CommonUI commonUI = MonoBehaviourSingleton<CommonUI>.Instance;
-            MenuScreen menuScreen = commonUI.MenuScreen;
-
-            menuScreen.method_10(); // main menu -> faction selection screen
-
-            MenuUI menuUI = MonoBehaviourSingleton<MenuUI>.Instance;
-
-#if DEBUG
-            FikaHeadlessLogger.LogWarning("Finding MatchMakerSideSelectionScreen");
-#endif
-            MatchMakerSideSelectionScreen sideSelectionScreen = menuUI.MatchMakerSideSelectionScreen;
-            do
-            {
-                yield return StaticManager.Instance.WaitFrames(5, null);
-            } while (!sideSelectionScreen.isActiveAndEnabled);
-            yield return null;
-
-            sideSelectionScreen.method_12(request.Side); // select side
-            yield return null;
-
-            sideSelectionScreen.method_18(); // faction selection screen -> location selection screen
-            yield return null;
-
-#if DEBUG
-            FikaHeadlessLogger.LogWarning("Finding MatchMakerSelectionLocationScreen"); 
-#endif
-            MatchMakerSelectionLocationScreen locationSelectionScreen = menuUI.MatchMakerSelectionLocationScreen;
-            do
-            {
-                yield return StaticManager.Instance.WaitFrames(5, null);
-            } while (!locationSelectionScreen.isActiveAndEnabled);
-            yield return null;
-
-            locationSelectionScreen.Location_0 = session.LocationSettings.locations[key: request.LocationId];
-            locationSelectionScreen.method_8(request.Time); // set time
-            locationSelectionScreen.method_14(); // location selection screen -> matchmaker accept screen (we skip with patches)
-
             raidSettings.PlayersSpawnPlace = request.SpawnPlace;
             raidSettings.MetabolismDisabled = request.MetabolismDisabled;
             raidSettings.BotSettings = request.BotSettings;
             raidSettings.WavesSettings = request.WavesSettings;
             raidSettings.TimeAndWeatherSettings = request.TimeAndWeatherSettings;
+            raidSettings.SelectedLocation = session.LocationSettings.locations.Values.FirstOrDefault(location => location._Id == request.LocationId);
             raidSettings.isInTransition = false;
             raidSettings.BotSettings.BotAmount = request.WavesSettings.BotAmount;
             raidSettings.RaidMode = ERaidMode.Local;
             raidSettings.IsPveOffline = true;
 
-            MainMenuControllerClass mmc = Traverse.Create(tarkovApplication).Field<MainMenuControllerClass>("mainMenuController").Value;
-            Traverse mmcTraverse = Traverse.Create(mmc);
-            mmcTraverse.Field<RaidSettings>("raidSettings_0").Value = raidSettings;
-            mmcTraverse.Field<RaidSettings>("raidSettings_1").Value = raidSettings;
-
-            yield return null;
-
-#if DEBUG
-            FikaHeadlessLogger.LogWarning("Finding MatchMakerAcceptScreen");
-#endif
-            MatchMakerAcceptScreen acceptScreen = menuUI.MatchMakerAcceptScreen;
-            do
-            {
-                yield return StaticManager.Instance.WaitFrames(5, null);
-            } while (!acceptScreen.isActiveAndEnabled);
-            yield return null;
-
-            yield return new WaitForSeconds(1f);
-            MatchMakerUIScript fikaMatchMakerScript;
-            do
-            {
-                yield return StaticManager.Instance.WaitFrames(5, null);
-                fikaMatchMakerScript = acceptScreen.gameObject.GetComponent<MatchMakerUIScript>();
-            } while (fikaMatchMakerScript == null);
-            yield return null;
+            MainMenuControllerClass mainMenuController = Traverse.Create(tarkovApplication).Field<MainMenuControllerClass>("_menuOperation").Value;
 
             if (FikaPlugin.ForceIP.Value != "")
             {
@@ -437,7 +373,7 @@ namespace Fika.Headless
 
             verifyConnectionsRoutine = StartCoroutine(VerifyPlayersRoutine());
 
-            fikaMatchMakerScript.AcceptButton.OnClick.Invoke();
+            mainMenuController.method_59(raidSettings);
         }
     }
 }

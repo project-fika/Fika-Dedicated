@@ -218,9 +218,7 @@ namespace Fika.Headless
             OfflineRaidSettingsMenuPatch_Override.UseCustomWeather = request.CustomWeather;
 
             Logger.LogInfo($"Starting on location {location.Name}");
-            RaidSettings raidSettings = tarkovApplication.CurrentRaidSettings;
-            Logger.LogInfo("Initialized raid settings");
-            StartCoroutine(BeginFikaStartRaid(request, session, raidSettings, tarkovApplication));
+            StartCoroutine(BeginFikaStartRaid(request, session, tarkovApplication));
         }
 
         private IEnumerator RunPluginValidation()
@@ -309,20 +307,27 @@ namespace Fika.Headless
             }
         }
 
-        private IEnumerator BeginFikaStartRaid(StartHeadlessRequest request, ISession session, RaidSettings raidSettings, TarkovApplication tarkovApplication)
+        private IEnumerator BeginFikaStartRaid(StartHeadlessRequest request, ISession session, TarkovApplication tarkovApplication)
         {
-            raidSettings.PlayersSpawnPlace = request.SpawnPlace;
-            raidSettings.MetabolismDisabled = request.MetabolismDisabled;
-            raidSettings.BotSettings = request.BotSettings;
-            raidSettings.WavesSettings = request.WavesSettings;
-            raidSettings.TimeAndWeatherSettings = request.TimeAndWeatherSettings;
-            raidSettings.SelectedLocation = session.LocationSettings.locations.Values.FirstOrDefault(location => location._Id == request.LocationId);
-            raidSettings.isInTransition = false;
-            raidSettings.BotSettings.BotAmount = request.WavesSettings.BotAmount;
-            raidSettings.RaidMode = ERaidMode.Local;
-            raidSettings.IsPveOffline = true;
+            RaidSettings raidSettings = new RaidSettings
+            {
+                Side = request.Side,
+                PlayersSpawnPlace = request.SpawnPlace,
+                MetabolismDisabled = !request.MetabolismDisabled,
+                BotSettings = request.BotSettings,
+                WavesSettings = request.WavesSettings,
+                TimeAndWeatherSettings = request.TimeAndWeatherSettings,
+                SelectedLocation = session.LocationSettings.locations.Values.FirstOrDefault(location => location._Id == request.LocationId),
+                isInTransition = false,
+                RaidMode = ERaidMode.Local,
+                IsPveOffline = true
+            };
 
-            MainMenuControllerClass mainMenuController = Traverse.Create(tarkovApplication).Field<MainMenuControllerClass>("_menuOperation").Value;
+            raidSettings.BotSettings.BotAmount = request.WavesSettings.BotAmount;
+
+            Traverse.Create(tarkovApplication).Field<RaidSettings>("_raidSettings").Value = raidSettings;
+
+            Logger.LogInfo("Initialized raid settings");
 
             if (FikaPlugin.ForceIP.Value != "")
             {
@@ -373,7 +378,7 @@ namespace Fika.Headless
 
             verifyConnectionsRoutine = StartCoroutine(VerifyPlayersRoutine());
 
-            mainMenuController.method_59(raidSettings);
+            tarkovApplication.method_37(raidSettings.TimeAndWeatherSettings);
         }
     }
 }

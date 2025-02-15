@@ -309,18 +309,18 @@ namespace Fika.Headless
 
         private IEnumerator BeginFikaStartRaid(StartHeadlessRequest request, ISession session, TarkovApplication tarkovApplication)
         {
-            RaidSettings raidSettings = new RaidSettings
+            RaidSettings raidSettings = new()
             {
                 Side = request.Side,
                 PlayersSpawnPlace = request.SpawnPlace,
-                MetabolismDisabled = !request.MetabolismDisabled,
+                MetabolismDisabled = request.MetabolismDisabled,
                 BotSettings = request.BotSettings,
                 WavesSettings = request.WavesSettings,
                 TimeAndWeatherSettings = request.TimeAndWeatherSettings,
                 SelectedLocation = session.LocationSettings.locations.Values.FirstOrDefault(location => location._Id == request.LocationId),
                 isInTransition = false,
                 RaidMode = ERaidMode.Local,
-                IsPveOffline = true
+                IsPveOffline = true,
             };
 
             raidSettings.BotSettings.BotAmount = request.WavesSettings.BotAmount;

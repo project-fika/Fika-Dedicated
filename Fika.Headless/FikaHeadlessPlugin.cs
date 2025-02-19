@@ -317,10 +317,11 @@ namespace Fika.Headless
                 BotSettings = request.BotSettings,
                 WavesSettings = request.WavesSettings,
                 TimeAndWeatherSettings = request.TimeAndWeatherSettings,
+                SelectedDateTime = request.Time,
                 SelectedLocation = session.LocationSettings.locations.Values.FirstOrDefault(location => location._Id == request.LocationId),
                 isInTransition = false,
                 RaidMode = ERaidMode.Local,
-                IsPveOffline = true,
+                IsPveOffline = true
             };
 
             raidSettings.BotSettings.BotAmount = request.WavesSettings.BotAmount;

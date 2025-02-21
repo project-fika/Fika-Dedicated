@@ -97,7 +97,7 @@ namespace Fika.Headless
             new GameWorld_OnGameStarted_Patch().Enable();
             new MainMenuControllerClass_method_50_Patch().Enable();
             new ConsoleScreen_OnProfileReceive_Patch().Enable();
-            new Class438_Run_Patch().Enable();
+            new Class437_Run_Patch().Enable();
             new Player_VisualPass_Patch().Enable();
             new IsReflexAvailablePatch().Enable();
             new AudioSource_Play_Transpiler().Enable();

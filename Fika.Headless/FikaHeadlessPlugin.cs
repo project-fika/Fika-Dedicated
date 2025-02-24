@@ -391,9 +391,12 @@ namespace Fika.Headless
         {          
             currentRaidCount++;
 
-            if (currentRaidCount >= restartAfterAmountOfRaids)
+            if(restartAfterAmountOfRaids != 0)
             {
-                Application.Quit();
+                if (currentRaidCount >= restartAfterAmountOfRaids)
+                {
+                    Application.Quit();
+                }
             }
         }
 

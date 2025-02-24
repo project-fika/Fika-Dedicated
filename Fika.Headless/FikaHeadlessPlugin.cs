@@ -391,7 +391,7 @@ namespace Fika.Headless
         {          
             currentRaidCount++;
 
-            if(restartAfterAmountOfRaids != 0)
+            if (restartAfterAmountOfRaids != 0)
             {
                 if (currentRaidCount >= restartAfterAmountOfRaids)
                 {

@@ -10,9 +10,11 @@ using Fika.Core;
 using Fika.Core.Coop.GameMode;
 using Fika.Core.Coop.Patches;
 using Fika.Core.Coop.Utils;
+using Fika.Core.Models;
 using Fika.Core.Networking;
 using Fika.Core.Networking.Http;
 using Fika.Core.UI.Custom;
+using Fika.Core.UI.Models;
 using Fika.Core.UI.Patches;
 using Fika.Headless.Classes;
 using Fika.Headless.Patches;
@@ -28,6 +30,7 @@ using SPT.Custom.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -60,7 +63,8 @@ namespace Fika.Headless
         private float gcCounter;
         private Coroutine verifyConnectionsRoutine;
         private bool invalidPluginsFound = false;
-
+        private int currentRaidCount = 0;
+        private int restartAfterAmountOfRaids = 0;
 
         public static ConfigEntry<int> UpdateRate { get; private set; }
         public static ConfigEntry<int> RAMCleanInterval { get; private set; }
@@ -75,6 +79,7 @@ namespace Fika.Headless
 
             FikaHeadlessLogger = Logger;
 
+            GetHeadlessConfig();
             SetupConfig();
 
             new DLSSPatch1().Enable();
@@ -380,6 +385,28 @@ namespace Fika.Headless
             verifyConnectionsRoutine = StartCoroutine(VerifyPlayersRoutine());
 
             tarkovApplication.method_37(raidSettings.TimeAndWeatherSettings);
+        }
+
+        public void OnSessionResultExitStatus_Show()
+        {          
+            currentRaidCount++;
+
+            if (restartAfterAmountOfRaids != 0)
+            {
+                if (currentRaidCount >= restartAfterAmountOfRaids)
+                {
+                    Application.Quit();
+                }
+            }
+        }
+
+        private void GetHeadlessConfig()
+        {
+            HeadlessConfigModel headlessConfig = FikaRequestHandler.GetHeadlessConfig();
+
+            restartAfterAmountOfRaids = headlessConfig.RestartAfterAmountOfRaids;
+
+            headlessConfig.LogValues();
         }
     }
 }

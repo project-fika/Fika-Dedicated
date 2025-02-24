@@ -22,6 +22,7 @@ namespace Fika.Headless.Patches
         [PatchPostfix]
         public static void PatchPostfix(DefaultUIButton ____mainMenuButton)
         {
+            FikaHeadlessPlugin.Instance.OnSessionResultExitStatus_Show();
             ____mainMenuButton.OnClick.Invoke();
         }
     }

@@ -63,8 +63,8 @@ namespace Fika.Headless
         private float gcCounter;
         private Coroutine verifyConnectionsRoutine;
         private bool invalidPluginsFound = false;
-        private static int currentRaidCount = 0;
-        private static int restartAfterAmountOfRaids = 3;
+        private int currentRaidCount = 0;
+        private int restartAfterAmountOfRaids = 0;
 
         public static ConfigEntry<int> UpdateRate { get; private set; }
         public static ConfigEntry<int> RAMCleanInterval { get; private set; }

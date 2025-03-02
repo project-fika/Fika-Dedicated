@@ -16,7 +16,7 @@ namespace Fika.Headless.Patches
         }
 
         [PatchPostfix]
-        public static GClass3539 PatchPostfix(GClass3539 __result, MessageWindow __instance)
+        public static GClass3546 PatchPostfix(GClass3546 __result, MessageWindow __instance)
         {
             __instance.Close(ECloseState.Accept);
             return __result;

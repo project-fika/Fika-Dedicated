@@ -11,7 +11,7 @@ namespace Fika.Headless.Patches
         protected override MethodBase GetTargetMethod()
         {
             return typeof(SessionResultExitStatus).GetMethod(nameof(SessionResultExitStatus.Show), [typeof(Profile),
-                typeof(GClass1947),
+                typeof(GClass1952),
                 typeof(ESideType),
                 typeof(ExitStatus),
                 typeof(TimeSpan),

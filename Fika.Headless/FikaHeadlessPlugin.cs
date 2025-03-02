@@ -115,6 +115,7 @@ namespace Fika.Headless
             new LocaleManagerClass_String_0_Patch().Enable();
             new TarkovApplication_method_39_Patch().Enable();
             new ProceduralWeaponAnimation_StartFovCoroutine_Transpiler().Enable();
+            new SkipRaidSettingsOnlinePvePatch().Enable();
 
             if (!ShouldBotsSleep.Value)
             {
@@ -326,7 +327,8 @@ namespace Fika.Headless
                 SelectedLocation = session.LocationSettings.locations.Values.FirstOrDefault(location => location._Id == request.LocationId),
                 isInTransition = false,
                 RaidMode = ERaidMode.Local,
-                IsPveOffline = true
+                IsPveOffline = true,
+                OnlinePveRaid = false
             };
 
             raidSettings.BotSettings.BotAmount = request.WavesSettings.BotAmount;

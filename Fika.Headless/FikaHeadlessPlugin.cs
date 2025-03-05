@@ -13,6 +13,7 @@ using Fika.Core.Coop.Utils;
 using Fika.Core.Models;
 using Fika.Core.Networking;
 using Fika.Core.Networking.Http;
+using Fika.Core.Networking.Models;
 using Fika.Core.UI.Custom;
 using Fika.Core.UI.Models;
 using Fika.Core.UI.Patches;
@@ -79,7 +80,7 @@ namespace Fika.Headless
 
             FikaHeadlessLogger = Logger;
 
-            GetHeadlessConfig();
+            GetHeadlessRestartAfterRaidAmount();
             SetupConfig();
 
             new DLSSPatch1().Enable();
@@ -402,13 +403,11 @@ namespace Fika.Headless
             }
         }
 
-        private void GetHeadlessConfig()
+        private void GetHeadlessRestartAfterRaidAmount()
         {
-            HeadlessConfigModel headlessConfig = FikaRequestHandler.GetHeadlessConfig();
+            RestartAfterRaidAmountModel headlessConfig = FikaRequestHandler.GetHeadlessRestartAfterRaidAmount();
 
-            restartAfterAmountOfRaids = headlessConfig.RestartAfterAmountOfRaids;
-
-            headlessConfig.LogValues();
+            restartAfterAmountOfRaids = headlessConfig.Amount;
         }
     }
 }

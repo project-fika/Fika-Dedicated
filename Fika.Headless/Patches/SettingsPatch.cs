@@ -68,6 +68,7 @@ namespace Fika.Headless.Patches
             await gameSettings.Graphics.Settings.MipStreaming.SetValue(false);
             await gameSettings.Graphics.Settings.SdTarkovStreets.SetValue(true);
             await gameSettings.Graphics.Settings.DLSSMode.SetValue(EDLSSMode.Off);
+            await gameSettings.Graphics.Settings.DLSSPreset.SetValue(EDLSSPreset.Default);
             await gameSettings.Graphics.Settings.FSR2Mode.SetValue(EFSR2Mode.Off);
             await gameSettings.Graphics.Settings.FSR3Mode.SetValue(EFSR3Mode.Off);
             await gameSettings.Graphics.Settings.CloudsQuality.SetValue(CloudsMode.Low);

@@ -184,9 +184,9 @@ namespace Fika.Headless
                 new ConfigDescription("How often the server should update (frame cap / tick rate). Only works if your machine can actually reach the selected setting",
                 new AcceptableValueRange<int>(30, 120)));
 
-            RAMCleanInterval = Config.Bind("Headless", "RAM Clean Interval", 5,
-                new ConfigDescription("How often in minutes the RAM cleaner should run",
-                new AcceptableValueRange<int>(1, 30)));
+            RAMCleanInterval = Config.Bind("Headless", "RAM Clean Interval", 15,
+                new ConfigDescription("How often in minutes the RAM cleaner should run outside of raids",
+                new AcceptableValueRange<int>(5, 30)));
 
             ShouldBotsSleep = Config.Bind("Headless", "Bot sleeping", false,
                 new ConfigDescription("Should the headless host allow bots to sleep? (BSG bot sleeping logic)"));

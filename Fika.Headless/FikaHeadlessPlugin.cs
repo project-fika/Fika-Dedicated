@@ -146,6 +146,7 @@ namespace Fika.Headless
             }
 
             FikaBackendUtils.IsHeadless = true;
+            FikaPlugin.UseFikaGC.Value = true;
 
             FikaHeadlessWebSocket = new();
 
@@ -201,7 +202,7 @@ namespace Fika.Headless
         {
             gcCounter += Time.unscaledDeltaTime;
 
-            if (gcCounter > (RAMCleanInterval.Value * 60) && FikaGlobals.IsInRaid())
+            if (gcCounter > (RAMCleanInterval.Value * 60) && !FikaGlobals.IsInRaid())
             {
                 Logger.LogDebug("Clearing memory");
                 gcCounter = 0;

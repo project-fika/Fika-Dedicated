@@ -117,6 +117,7 @@ namespace Fika.Headless
             new TarkovApplication_method_39_Patch().Enable();
             new ProceduralWeaponAnimation_StartFovCoroutine_Transpiler().Enable();
             new SkipRaidSettingsOnlinePvePatch().Enable();
+            new WindowBreaker_method_11_Transpiler().Enable();
 
             if (!ShouldBotsSleep.Value)
             {

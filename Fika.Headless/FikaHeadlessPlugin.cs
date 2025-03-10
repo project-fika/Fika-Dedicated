@@ -63,7 +63,7 @@ namespace Fika.Headless
         private static HeadlessWebSocket FikaHeadlessWebSocket;
         private float gcCounter;
         private Coroutine verifyConnectionsRoutine;
-        private bool invalidPluginsFound = false;
+        private bool invalidPluginsFound;
         private int currentRaidCount = 0;
         private int restartAfterAmountOfRaids = 0;
 
@@ -145,8 +145,7 @@ namespace Fika.Headless
                 CleanupLogFiles();
             }
 
-            FikaBackendUtils.IsHeadless = true;
-            FikaPlugin.UseFikaGC.Value = true;
+            FikaBackendUtils.IsHeadless = true;            
 
             FikaHeadlessWebSocket = new();
 
@@ -235,13 +234,14 @@ namespace Fika.Headless
             VerifyPlugins();
             while (FikaPlugin.OfficialVersion == null)
             {
-                yield return new WaitForSeconds(1);
+                yield return null;
             }
 
             FikaPlugin.AutoExtract.Value = true;
             FikaPlugin.QuestTypesToShareAndReceive.Value = 0;
             FikaPlugin.ConnectionTimeout.Value = 30;
             FikaPlugin.UseNamePlates.Value = false;
+            FikaPlugin.UseFikaGC.Value = true;
 
             FikaPlugin.Instance.AllowFreeCam = true;
             FikaPlugin.Instance.AllowSpectateFreeCam = true;
@@ -249,6 +249,8 @@ namespace Fika.Headless
 
         private void VerifyPlugins()
         {
+            Logger.LogInfo("Verifying plugins");
+
             List<string> invalidPluginList =
             [
                 "com.Amanda.Graphics",
@@ -284,6 +286,8 @@ namespace Fika.Headless
                 Thread.Sleep(-1);
                 return;
             }
+
+            invalidPluginsFound = false;
 
             Logger.LogInfo("Plugins verified successfully");
 

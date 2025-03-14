@@ -5,17 +5,13 @@ using BepInEx.Logging;
 using Comfort.Common;
 using EFT;
 using EFT.UI;
-using EFT.UI.Matchmaker;
 using Fika.Core;
 using Fika.Core.Coop.GameMode;
 using Fika.Core.Coop.Patches;
 using Fika.Core.Coop.Utils;
-using Fika.Core.Models;
 using Fika.Core.Networking;
 using Fika.Core.Networking.Http;
 using Fika.Core.Networking.Models;
-using Fika.Core.UI.Custom;
-using Fika.Core.UI.Models;
 using Fika.Core.UI.Patches;
 using Fika.Headless.Classes;
 using Fika.Headless.Patches;
@@ -25,20 +21,17 @@ using Fika.Headless.Patches.TextureValidateFormat;
 using Fika.Headless.Patches.VRAM;
 using HarmonyLib;
 using Newtonsoft.Json;
-using SPT.Common.Http;
 using SPT.Custom.Patches;
 using SPT.Custom.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Scripting;
 
 namespace Fika.Headless
 {
@@ -146,7 +139,7 @@ namespace Fika.Headless
                 CleanupLogFiles();
             }
 
-            FikaBackendUtils.IsHeadless = true;            
+            FikaBackendUtils.IsHeadless = true;
 
             FikaHeadlessWebSocket = new();
 
@@ -206,6 +199,7 @@ namespace Fika.Headless
             {
                 Logger.LogDebug("Clearing memory");
                 gcCounter = 0;
+                Resources.UnloadUnusedAssets().Await();
                 MemoryControllerClass.Collect(2, GCCollectionMode.Forced, true, true, true);
             }
         }
@@ -397,7 +391,7 @@ namespace Fika.Headless
         }
 
         public void OnSessionResultExitStatus_Show()
-        {          
+        {
             currentRaidCount++;
 
             if (restartAfterAmountOfRaids != 0)

@@ -15,6 +15,15 @@ namespace Fika.Headless.Patches.Audio
         [PatchPrefix]
         public static bool Prefix(BaseAmbientSoundPlayer __instance)
         {
+            SoundPlayerRoomObserverComponent[] soundPlayers = __instance.gameObject.GetComponents<SoundPlayerRoomObserverComponent>();
+            if (soundPlayers != null && soundPlayers.Length > 0)
+            {
+                Logger.LogInfo($"Destroying {soundPlayers.Length} SoundPlayerRoomObserverComponents");
+                for (int i = 0; i < soundPlayers.Length; i++)
+                {
+                    GameObject.Destroy(soundPlayers[i]);
+                }
+            }
             GameObject.Destroy(__instance);
             return false;
         }

@@ -5,6 +5,6 @@
 call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
 
 cd ../Build/BepInEx/plugins
-sn -Ra Fika.Dedicated.dll ../../../Properties/signing/private.snk
+sn -Ra Fika.Headless.dll ../../../Properties/signing/private.snk
 
 pause

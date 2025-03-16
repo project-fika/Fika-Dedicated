@@ -10,20 +10,16 @@ namespace Fika.Headless.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(SessionResultExitStatus).GetMethod(nameof(SessionResultExitStatus.Show), [typeof(Profile),
-                typeof(GClass1952),
-                typeof(ESideType),
-                typeof(ExitStatus),
-                typeof(TimeSpan),
-                typeof(ISession),
-                typeof(bool)]);
+            return typeof(SessionResultExitStatus).GetMethod(nameof(SessionResultExitStatus.Show),
+                [typeof(Profile), typeof(GClass1952), typeof(ESideType),
+                typeof(ExitStatus), typeof(TimeSpan), typeof(ISession), typeof(bool)]);
         }
 
         [PatchPostfix]
         public static void PatchPostfix(DefaultUIButton ____mainMenuButton)
         {
-            FikaHeadlessPlugin.Instance.OnSessionResultExitStatus_Show();
             ____mainMenuButton.OnClick.Invoke();
+            FikaHeadlessPlugin.Instance.OnSessionResultExitStatus_Show();
         }
     }
 }

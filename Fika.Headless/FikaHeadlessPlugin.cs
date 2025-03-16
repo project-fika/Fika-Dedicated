@@ -111,6 +111,7 @@ namespace Fika.Headless
             new ProceduralWeaponAnimation_StartFovCoroutine_Transpiler().Enable();
             new SkipRaidSettingsOnlinePvePatch().Enable();
             new WindowBreaker_method_11_Transpiler().Enable();
+            new GClass3597_HasItems_Patch().Enable();
 
             if (!ShouldBotsSleep.Value)
             {

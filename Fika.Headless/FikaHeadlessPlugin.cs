@@ -40,7 +40,7 @@ namespace Fika.Headless
     [BepInDependency("com.SPT.custom", BepInDependency.DependencyFlags.HardDependency)]
     public class FikaHeadlessPlugin : BaseUnityPlugin
     {
-        public const string HeadlessVersion = "1.3.0";
+        public const string HeadlessVersion = "1.3.1";
 
         public static FikaHeadlessPlugin Instance { get; private set; }
         public static ManualLogSource FikaHeadlessLogger;

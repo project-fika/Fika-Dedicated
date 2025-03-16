@@ -17,7 +17,14 @@ namespace Fika.Headless.Patches
         [PatchPrefix]
         public static bool Prefix(string message)
         {
-            Logger.LogError("ErrorScreen.Show: " + message);
+            if (!string.IsNullOrEmpty(message))
+            {
+                Logger.LogError("ErrorScreen.Show: " + message);
+            }
+            else
+            {
+                Logger.LogWarning("Received an empty error");
+            }
             return false;
         }
     }
